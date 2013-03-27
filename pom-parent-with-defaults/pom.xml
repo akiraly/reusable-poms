@@ -1,0 +1,14 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.github.reusable-poms</groupId>
+		<artifactId>reusable-poms-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>pom-parent-with-defaults</artifactId>
+	<packaging>pom</packaging>
+
+	<name>Maven parent pom with maven default plugins preconfigured</name>
+	<description>This is a parent pom that contains version and configs for the most widely used maven plugins.</description>
+</project>
