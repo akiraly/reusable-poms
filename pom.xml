@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.reusable-poms</groupId>
 	<artifactId>reusable-poms-parent</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>Reusable maven pom parents and archetypes with sensible defaults</name>
@@ -242,8 +242,9 @@ This project contains reusable maven parent poms and maven project archetypes wi
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>2.14</version>
 					<configuration>
-						<parallel>both</parallel>
-						<threadCount>2</threadCount>
+						<argLine>-Dfile.encoding=UTF-8 -Duser.timezone=GMT</argLine>
+						<forkCount>1.5C</forkCount>
+						<forkedProcessTimeoutInSeconds>5</forkedProcessTimeoutInSeconds>
 					</configuration>
 				</plugin>
 			</plugins>
@@ -283,5 +284,6 @@ This project contains reusable maven parent poms and maven project archetypes wi
 	<modules>
 		<module>pom-parent-with-defaults</module>
 		<module>pom-parent-with-java-util-libs</module>
+		<module>simple-java-project-with-util-libs-archetype</module>
 	</modules>
 </project>
