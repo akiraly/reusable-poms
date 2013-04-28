@@ -17,7 +17,7 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
 					<configuration>
-						<argLine>-Dfile.encoding=UTF-8 -Duser.timezone=GMT -Dlogback.configurationFile=logback-test-config.xml</argLine>
+						<argLine>-Dfile.encoding=UTF-8 -Duser.timezone=GMT -Dlogback.configurationFile=${artifactId}-logback-test.xml</argLine>
 					</configuration>
 				</plugin>
 			</plugins>
