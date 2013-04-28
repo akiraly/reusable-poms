@@ -13,7 +13,7 @@
 
 	<properties>
 		<dependency.hamcrest.version>1.3</dependency.hamcrest.version>
-		<dependency.logback.version>1.0.11</dependency.logback.version>
+		<dependency.logback.version>1.0.12</dependency.logback.version>
 		<dependency.slf4j.version>1.7.5</dependency.slf4j.version>
 	</properties>
 
@@ -34,7 +34,7 @@
 			<dependency>
 				<groupId>commons-codec</groupId>
 				<artifactId>commons-codec</artifactId>
-				<version>1.7</version>
+				<version>1.8</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-io</groupId>
