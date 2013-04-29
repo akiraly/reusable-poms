@@ -20,6 +20,8 @@
 
 	<logger name="org" level="warn" />
 
+	<logger name="$package" level="debug" />
+
 	<root level="debug">
 		<appender-ref ref="appender-console" />
 	</root>
