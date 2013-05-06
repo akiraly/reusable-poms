@@ -60,9 +60,9 @@ This project contains reusable maven parent poms and maven project archetypes wi
 		<maven.javadoc.plugin.version>2.9</maven.javadoc.plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<custom.plugin.surefire.version>2.14.1</custom.plugin.surefire.version>
-		<custom.project.groupId>com.github.akiraly.reusable-poms</custom.project.groupId>
-		<custom.project.version>1.0.0-SNAPSHOT</custom.project.version>
+		<reusable-poms.plugin.surefire.version>2.14.1</reusable-poms.plugin.surefire.version>
+		<reusable-poms.project.groupId>com.github.akiraly.reusable-poms</reusable-poms.project.groupId>
+		<reusable-poms.project.version>1.0.0-SNAPSHOT</reusable-poms.project.version>
 	</properties>
 
 	<prerequisites>
@@ -171,6 +171,9 @@ This project contains reusable maven parent poms and maven project archetypes wi
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-resources-plugin</artifactId>
 					<version>2.6</version>
+					<configuration>
+						<escapeString>\</escapeString>
+					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -258,7 +261,7 @@ This project contains reusable maven parent poms and maven project archetypes wi
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
-					<version>${custom.plugin.surefire.version}</version>
+					<version>${reusable-poms.plugin.surefire.version}</version>
 					<configuration>
 						<argLine>-Dfile.encoding=UTF-8 -Duser.timezone=GMT</argLine>
 						<forkCount>1.5C</forkCount>
