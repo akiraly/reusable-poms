@@ -61,8 +61,6 @@ This project contains reusable maven parent poms and maven project archetypes wi
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<reusable-poms.plugin.surefire.version>2.14.1</reusable-poms.plugin.surefire.version>
-		<reusable-poms.project.groupId>com.github.akiraly.reusable-poms</reusable-poms.project.groupId>
-		<reusable-poms.project.version>1.0.0-SNAPSHOT</reusable-poms.project.version>
 	</properties>
 
 	<prerequisites>
