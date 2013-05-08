@@ -25,8 +25,8 @@ This project contains reusable maven parent poms and maven project archetypes wi
 
 	<scm>
 		<url>https://github.com/akiraly/reusable-poms</url>
-		<connection>scm:git:git://github.com/akiraly/reusable-poms.git</connection>
-		<developerConnection>scm:git:git@github.com:akiraly/reusable-poms.git</developerConnection>
+		<connection>scm:git:ssh://github.com/akiraly/reusable-poms.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/akiraly/reusable-poms.git</developerConnection>
 	</scm>
 
 	<issueManagement>
