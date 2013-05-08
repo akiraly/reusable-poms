@@ -1,10 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.github.akiraly.reusable-poms</groupId>
 	<artifactId>reusable-poms-parent</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1</version>
 	<packaging>pom</packaging>
 
 	<name>Reusable maven pom parents and archetypes with sensible defaults</name>
@@ -27,7 +26,8 @@ This project contains reusable maven parent poms and maven project archetypes wi
 		<url>https://github.com/akiraly/reusable-poms</url>
 		<connection>scm:git:ssh://github.com/akiraly/reusable-poms.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com:akiraly/reusable-poms.git</developerConnection>
-	</scm>
+	  <tag>reusable-poms-parent-1</tag>
+  </scm>
 
 	<issueManagement>
 		<system>github</system>
