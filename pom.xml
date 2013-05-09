@@ -325,5 +325,10 @@ This project contains reusable maven parent poms and maven project archetypes wi
 	</modules>
 
 	<!-- to make release run something like this: -->
+	<!-- make sure git is on path: set PATH=%PATH%;"c:\Program Files (x86)\Git\bin\" -->
+	<!-- setup ssh connection: run: -->
+	<!-- ssh-agent -->
+	<!-- and setup env vars and the temp dir and run: -->
+	<!-- ssh-add /c/Users/kiral_000/ssh/id_rsa -->
 	<!-- mvn release:clean release:prepare release:perform -Darguments="-Dgpg.passphrase=${passphrase}" -->
 </project>
