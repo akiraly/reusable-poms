@@ -1,18 +1,19 @@
 package $package;
 
-import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 import javax.annotation.Nonnull;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 @Nonnull
 public class App {
-	private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
+	private final String message;
 
-	public static void main(String[] args) {
-		checkArgument(args != null, "Expected not null arguments.");
-		LOGGER.info("Hello World!");
+	public App(String message) {
+		this.message = checkNotNull(message,
+				"Expected not null message argument.");
+	}
+
+	public String getMessage() {
+		return message;
 	}
 }
