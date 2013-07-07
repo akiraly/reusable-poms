@@ -11,10 +11,6 @@
 	<name>Maven parent pom with some generic java utility libs</name>
 	<description>Guava, commons-*, logging, ...</description>
 
-	<properties>
-		<dependency.hamcrest.version>1.3</dependency.hamcrest.version>
-	</properties>
-
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -69,7 +65,7 @@
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
-				<version>4.11</version>
+				<version>${dependency.junit.version}</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>

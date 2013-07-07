@@ -14,11 +14,18 @@
 
 	<properties>
 		<dependency.hibernate.version>4.2.2.Final</dependency.hibernate.version>
-		<dependency.querydsl.version>3.2.0</dependency.querydsl.version>
+		<dependency.querydsl.version>3.2.1</dependency.querydsl.version>
 	</properties>
 
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>com.github.akiraly.reusable-poms</groupId>
+				<artifactId>tomcat-juli-over-slf4j</artifactId>
+				<version>3-SNAPSHOT</version>
+				<scope>runtime</scope>
+			</dependency>
+
 			<dependency>
 				<groupId>com.mysema.querydsl</groupId>
 				<artifactId>querydsl-apt</artifactId>
@@ -29,6 +36,18 @@
 				<groupId>com.mysema.querydsl</groupId>
 				<artifactId>querydsl-jpa</artifactId>
 				<version>${dependency.querydsl.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.tomcat</groupId>
+				<artifactId>tomcat-jdbc</artifactId>
+				<version>${dependency.tomcat.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.apache.tomcat</groupId>
+						<artifactId>tomcat-juli</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 
 			<dependency>
@@ -68,12 +87,22 @@
 	</dependencyManagement>
 	<dependencies>
 		<dependency>
+			<groupId>com.github.akiraly.reusable-poms</groupId>
+			<artifactId>tomcat-juli-over-slf4j</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>com.mysema.querydsl</groupId>
 			<artifactId>querydsl-apt</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.mysema.querydsl</groupId>
 			<artifactId>querydsl-jpa</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-jdbc</artifactId>
 		</dependency>
 
 		<dependency>
