@@ -57,10 +57,10 @@ This project contains reusable maven parent poms and maven project archetypes wi
 	</distributionManagement>
 
 	<properties>
-		<maven.javadoc.plugin.version>2.9</maven.javadoc.plugin.version>
+		<maven.javadoc.plugin.version>2.9.1</maven.javadoc.plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<reusable-poms.plugin.surefire.version>2.14.1</reusable-poms.plugin.surefire.version>
+		<reusable-poms.plugin.surefire.version>2.15</reusable-poms.plugin.surefire.version>
 	</properties>
 
 	<prerequisites>
@@ -184,7 +184,7 @@ This project contains reusable maven parent poms and maven project archetypes wi
 							<plugin>
 								<groupId>org.apache.maven.plugins</groupId>
 								<artifactId>maven-project-info-reports-plugin</artifactId>
-								<version>2.6</version>
+								<version>2.7</version>
 								<configuration>
 									<dependencyDetailsEnabled>false</dependencyDetailsEnabled>
 									<dependencyLocationsEnabled>false</dependencyLocationsEnabled>
@@ -261,15 +261,20 @@ This project contains reusable maven parent poms and maven project archetypes wi
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>${reusable-poms.plugin.surefire.version}</version>
 					<configuration>
-						<argLine>-Dfile.encoding=UTF-8 -Duser.timezone=GMT</argLine>
-						<forkCount>1.5C</forkCount>
-						<forkedProcessTimeoutInSeconds>5</forkedProcessTimeoutInSeconds>
+						<forkCount>1C</forkCount>
+						<forkedProcessTimeoutInSeconds>60</forkedProcessTimeoutInSeconds>
+						<parallel>methods</parallel>
+						<threadCount>1</threadCount>
+						<systemPropertyVariables>
+							<file.encoding>UTF-8</file.encoding>
+							<user.timezone>UTC</user.timezone>
+						</systemPropertyVariables>
 					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>versions-maven-plugin</artifactId>
-					<version>2.0</version>
+					<version>2.1</version>
 				</plugin>
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>

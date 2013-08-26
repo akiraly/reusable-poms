@@ -9,19 +9,5 @@
 	<groupId>\${groupId}</groupId>
 	<artifactId>\${artifactId}</artifactId>
 	<version>\${version}</version>
-
-	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<version>\${reusable-poms.plugin.surefire.version}</version>
-					<configuration>
-						<argLine>-Dfile.encoding=UTF-8 -Duser.timezone=GMT -Dlogback.configurationFile=\${groupId}/\${artifactId}/logback-test.xml</argLine>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
 </project>

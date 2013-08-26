@@ -41,7 +41,7 @@ public class InvokeJuliTest {
 
 	private final int beforeCount = getCount();
 
-	@Test
+	@Test(timeout = 100)
 	public void testIsEnabledAPI() {
 		// assume that we are running over slf4j-jdk14
 		Log log = LogFactory.getLog(InvokeJuliTest.class);
@@ -54,7 +54,7 @@ public class InvokeJuliTest {
 		assertCallCount(6);
 	}
 
-	@Test
+	@Test(timeout = 150)
 	public void testPrintAPI() {
 		Log log = LogFactory.getLog(InvokeJuliTest.class);
 		Exception e = new Exception("just testing");
@@ -98,7 +98,7 @@ public class InvokeJuliTest {
 		assertCallCount(24);
 	}
 
-	@Test
+	@Test(timeout = 150)
 	public void testJdbcPool() {
 		LogFactory.getLog(DataSource.class).info("info test");
 		LogFactory.getLog(ConnectionPool.class).warn("warn test");

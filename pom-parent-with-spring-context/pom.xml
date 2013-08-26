@@ -12,11 +12,21 @@
 	<description>Libs for spring context and testing support</description>
 
 	<properties>
-		<dependency.spring.version>3.2.3.RELEASE</dependency.spring.version>
+		<dependency.spring.version>3.2.4.RELEASE</dependency.spring.version>
 	</properties>
 
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aop</artifactId>
+				<version>${dependency.spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-asm</artifactId>
+				<version>${dependency.spring.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-core</artifactId>
