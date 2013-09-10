@@ -1,4 +1,4 @@
-package $package;
+package $package.entity;
 
 import javax.annotation.Nonnull;
 import javax.persistence.CascadeType;
