@@ -13,8 +13,8 @@
 	<description>Libs for spring context and testing support</description>
 
 	<properties>
-		<dependency.hibernate.version>4.2.4.Final</dependency.hibernate.version>
-		<dependency.querydsl.version>3.2.2</dependency.querydsl.version>
+		<dependency.hibernate.version>4.2.5.Final</dependency.hibernate.version>
+		<dependency.querydsl.version>3.2.3</dependency.querydsl.version>
 	</properties>
 
 	<dependencyManagement>
