@@ -1,4 +1,4 @@
-package $package;
+package ${package};
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
