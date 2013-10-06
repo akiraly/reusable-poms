@@ -356,6 +356,7 @@ This project contains reusable maven parent poms and maven project archetypes wi
 		<module>simple-java-project-with-spring-context-archetype</module>
 		<module>simple-java-project-with-spring-hibernate-querydsl-archetype</module>
 		<module>tomcat-juli-over-slf4j</module>
+		<module>ver4j</module>
 	</modules>
 
 	<!-- to make release run something like this: -->

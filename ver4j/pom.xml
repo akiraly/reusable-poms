@@ -1,0 +1,14 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.github.akiraly.reusable-poms</groupId>
+		<artifactId>pom-parent-with-java-util-libs</artifactId>
+		<version>3-SNAPSHOT</version>
+		<relativePath>../pom-parent-with-java-util-libs</relativePath>
+	</parent>
+	<artifactId>ver4j</artifactId>
+
+	<name>Some simple verification libraries to check arguments, states, results</name>
+	<description>Verify your assumptions runtime</description>
+</project>
