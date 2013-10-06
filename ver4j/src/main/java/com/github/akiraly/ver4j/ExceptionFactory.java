@@ -5,4 +5,8 @@ import javax.annotation.Nonnull;
 @Nonnull
 public interface ExceptionFactory {
 	RuntimeException notNullException(String name);
+
+	RuntimeException isTrueException(String name);
+
+	RuntimeException isFalseException(String name);
 }

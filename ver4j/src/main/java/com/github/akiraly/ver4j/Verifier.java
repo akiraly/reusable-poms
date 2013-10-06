@@ -15,4 +15,14 @@ public class Verifier {
 			throw exceptionFactory.notNullException(name);
 		return object;
 	}
+
+	public void isTrue(boolean check, String name) {
+		if (!check)
+			throw exceptionFactory.isTrueException(name);
+	}
+
+	public void isFalse(boolean check, String name) {
+		if (check)
+			throw exceptionFactory.isFalseException(name);
+	}
 }
