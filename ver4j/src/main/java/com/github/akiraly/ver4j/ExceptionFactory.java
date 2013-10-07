@@ -6,7 +6,5 @@ import javax.annotation.Nonnull;
 public interface ExceptionFactory {
 	RuntimeException notNullException(String name);
 
-	RuntimeException isTrueException(String name);
-
-	RuntimeException isFalseException(String name);
+	RuntimeException newException(String message, Object... params);
 }

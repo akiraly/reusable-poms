@@ -4,9 +4,9 @@ import javax.annotation.Nonnull;
 
 @Nonnull
 public abstract class AExceptionFactory implements ExceptionFactory {
-	protected final RuntimeException newException(String template,
-			Object... params) {
-		return createException(String.format(template, params));
+	@Override
+	public final RuntimeException newException(String message, Object... params) {
+		return createException(String.format(message, params));
 	}
 
 	protected abstract RuntimeException createException(String message);

@@ -16,13 +16,12 @@ public class Verifier {
 		return object;
 	}
 
-	public void isTrue(boolean check, String name) {
+	public void isTrue(boolean check, String message, Object... params) {
 		if (!check)
-			throw exceptionFactory.isTrueException(name);
+			throw exceptionFactory.newException(message, params);
 	}
 
-	public void isFalse(boolean check, String name) {
-		if (check)
-			throw exceptionFactory.isFalseException(name);
+	public void isFalse(boolean check, String message, Object... params) {
+		isTrue(!check, message, params);
 	}
 }

@@ -22,27 +22,33 @@ public abstract class Verify {
 		return INSTANCE.resultNotNull(object, name);
 	}
 
-	public static void argIsTrue(boolean check, String name) {
-		INSTANCE.argIsTrue(check, name);
+	public static void argIsTrue(boolean check, String message,
+			Object... params) {
+		INSTANCE.argIsTrue(check, message, params);
 	}
 
-	public static void stateIsTrue(boolean check, String name) {
-		INSTANCE.stateIsTrue(check, name);
+	public static void stateIsTrue(boolean check, String message,
+			Object... params) {
+		INSTANCE.stateIsTrue(check, message, params);
 	}
 
-	public static void resultIsTrue(boolean check, String name) {
-		INSTANCE.resultIsTrue(check, name);
+	public static void resultIsTrue(boolean check, String message,
+			Object... params) {
+		INSTANCE.resultIsTrue(check, message, params);
 	}
 
-	public static void argIsFalse(boolean check, String name) {
-		INSTANCE.argIsFalse(check, name);
+	public static void argIsFalse(boolean check, String message,
+			Object... params) {
+		INSTANCE.argIsFalse(check, message, params);
 	}
 
-	public static void stateIsFalse(boolean check, String name) {
-		INSTANCE.stateIsFalse(check, name);
+	public static void stateIsFalse(boolean check, String message,
+			Object... params) {
+		INSTANCE.stateIsFalse(check, message, params);
 	}
 
-	public static void resultIsFalse(boolean check, String name) {
-		INSTANCE.resultIsFalse(check, name);
+	public static void resultIsFalse(boolean check, String message,
+			Object... params) {
+		INSTANCE.resultIsFalse(check, message, params);
 	}
 }

@@ -34,28 +34,28 @@ public class CompositeVerifier {
 		return resultV.notNull(object, name);
 	}
 
-	public void argIsTrue(boolean check, String name) {
-		argV.isTrue(check, name);
+	public void argIsTrue(boolean check, String message, Object... params) {
+		argV.isTrue(check, message, params);
 	}
 
-	public void stateIsTrue(boolean check, String name) {
-		stateV.isTrue(check, name);
+	public void stateIsTrue(boolean check, String message, Object... params) {
+		stateV.isTrue(check, message, params);
 	}
 
-	public void resultIsTrue(boolean check, String name) {
-		resultV.isTrue(check, name);
+	public void resultIsTrue(boolean check, String message, Object... params) {
+		resultV.isTrue(check, message, params);
 	}
 
-	public void argIsFalse(boolean check, String name) {
-		argV.isFalse(check, name);
+	public void argIsFalse(boolean check, String message, Object... params) {
+		argV.isFalse(check, message, params);
 	}
 
-	public void stateIsFalse(boolean check, String name) {
-		stateV.isFalse(check, name);
+	public void stateIsFalse(boolean check, String message, Object... params) {
+		stateV.isFalse(check, message, params);
 	}
 
-	public void resultIsFalse(boolean check, String name) {
-		resultV.isFalse(check, name);
+	public void resultIsFalse(boolean check, String message, Object... params) {
+		resultV.isFalse(check, message, params);
 	}
 
 }
