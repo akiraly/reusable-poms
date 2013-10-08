@@ -3,12 +3,40 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.github.akiraly.reusable-poms</groupId>
-		<artifactId>pom-parent-with-java-util-libs</artifactId>
+		<artifactId>pom-parent-with-defaults</artifactId>
 		<version>3-SNAPSHOT</version>
-		<relativePath>../pom-parent-with-java-util-libs</relativePath>
+		<relativePath>../pom-parent-with-defaults</relativePath>
 	</parent>
 	<artifactId>ver4j</artifactId>
 
 	<name>Some simple verification libraries to check arguments, states, results</name>
 	<description>Verify your assumptions runtime</description>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.google.code.findbugs</groupId>
+				<artifactId>jsr305</artifactId>
+				<version>${dependency.jsr305.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${dependency.junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	<dependencies>
+		<dependency>
+			<groupId>com.google.code.findbugs</groupId>
+			<artifactId>jsr305</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+	</dependencies>
 </project>

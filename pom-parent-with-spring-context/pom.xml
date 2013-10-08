@@ -11,10 +11,6 @@
 	<name>Maven parent pom with spring context (and stuff from parent: java-util-libs)</name>
 	<description>Libs for spring context and testing support</description>
 
-	<properties>
-		<dependency.spring.version>3.2.4.RELEASE</dependency.spring.version>
-	</properties>
-
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
