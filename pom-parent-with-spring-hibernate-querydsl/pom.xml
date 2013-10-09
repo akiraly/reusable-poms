@@ -3,185 +3,28 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.github.akiraly.reusable-poms</groupId>
-		<artifactId>pom-parent-with-spring-context</artifactId>
+		<artifactId>pom-parent-with-spring-hibernate-querydsl-core</artifactId>
 		<version>3-SNAPSHOT</version>
-		<relativePath>../pom-parent-with-spring-context</relativePath>
+		<relativePath>../pom-parent-with-spring-hibernate-querydsl-core</relativePath>
 	</parent>
 	<artifactId>pom-parent-with-spring-hibernate-querydsl</artifactId>
 	<packaging>pom</packaging>
 	<name>Maven parent pom for db projects with spring context, hibernate and querydsl (and stuff from parent: with-spring-context)</name>
-	<description>Libs for spring context and testing support</description>
+	<description>Libs for spring context, hibernate, querydsl and testing support</description>
 
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>com.github.akiraly.reusable-poms</groupId>
-				<artifactId>tomcat-juli-over-slf4j</artifactId>
+				<artifactId>uow</artifactId>
 				<version>3-SNAPSHOT</version>
-				<scope>runtime</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>com.mysema.querydsl</groupId>
-				<artifactId>querydsl-apt</artifactId>
-				<version>${dependency.querydsl.version}</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>com.mysema.querydsl</groupId>
-				<artifactId>querydsl-jpa</artifactId>
-				<version>${dependency.querydsl.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.apache.tomcat</groupId>
-				<artifactId>tomcat-jdbc</artifactId>
-				<version>${dependency.tomcat.version}</version>
-				<exclusions>
-					<exclusion>
-						<groupId>org.apache.tomcat</groupId>
-						<artifactId>tomcat-juli</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-core</artifactId>
-				<version>${dependency.hibernate.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-entitymanager</artifactId>
-				<version>${dependency.hibernate.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.hibernate.javax.persistence</groupId>
-				<artifactId>hibernate-jpa-2.0-api</artifactId>
-				<version>${dependency.hibernate-jpa-2.0-api.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-jdbc</artifactId>
-				<version>${dependency.spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-orm</artifactId>
-				<version>${dependency.spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-tx</artifactId>
-				<version>${dependency.spring.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.data</groupId>
-				<artifactId>spring-data-jpa</artifactId>
-				<version>${dependency.spring-data-jpa.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.h2database</groupId>
-				<artifactId>h2</artifactId>
-				<version>${dependency.h2.version}</version>
-				<scope>test</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
 		<dependency>
 			<groupId>com.github.akiraly.reusable-poms</groupId>
-			<artifactId>tomcat-juli-over-slf4j</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.mysema.querydsl</groupId>
-			<artifactId>querydsl-apt</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.mysema.querydsl</groupId>
-			<artifactId>querydsl-jpa</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>tomcat-jdbc</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-tx</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-jpa</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
+			<artifactId>uow</artifactId>
 		</dependency>
 	</dependencies>
-
-	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>com.mysema.maven</groupId>
-					<artifactId>apt-maven-plugin</artifactId>
-					<version>1.1.0</version>
-					<executions>
-						<execution>
-							<goals>
-								<goal>process</goal>
-							</goals>
-							<configuration>
-								<outputDirectory>target/generated-sources/java</outputDirectory>
-								<processor>com.mysema.query.apt.jpa.JPAAnnotationProcessor</processor>
-							</configuration>
-						</execution>
-					</executions>
-					<dependencies>
-						<dependency>
-							<groupId>com.mysema.querydsl</groupId>
-							<artifactId>querydsl-apt</artifactId>
-							<version>${dependency.querydsl.version}</version>
-						</dependency>
-						<dependency>
-							<groupId>com.mysema.querydsl</groupId>
-							<artifactId>querydsl-jpa</artifactId>
-							<classifier>apt</classifier>
-							<version>${dependency.querydsl.version}</version>
-						</dependency>
-					</dependencies>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-		<plugins>
-			<plugin>
-				<groupId>com.mysema.maven</groupId>
-				<artifactId>apt-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
-
 </project>

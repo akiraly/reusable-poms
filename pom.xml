@@ -351,12 +351,14 @@ This project contains reusable maven parent poms and maven project archetypes wi
 		<module>pom-parent-with-java-log-libs</module>
 		<module>pom-parent-with-java-util-libs</module>
 		<module>pom-parent-with-spring-context</module>
+		<module>pom-parent-with-spring-hibernate-querydsl-core</module>
 		<module>pom-parent-with-spring-hibernate-querydsl</module>
 		<module>simple-java-project-with-util-libs-archetype</module>
 		<module>simple-java-project-with-spring-context-archetype</module>
 		<module>simple-java-project-with-spring-hibernate-querydsl-archetype</module>
 		<module>tomcat-juli-over-slf4j</module>
 		<module>ver4j</module>
+		<module>uow</module>
 	</modules>
 
 	<!-- to make release run something like this: -->
