@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.github.akiraly.reusable-poms</groupId>
 		<artifactId>pom-parent-with-defaults</artifactId>
-		<version>3</version>
+		<version>4-SNAPSHOT</version>
 		<relativePath>../pom-parent-with-defaults</relativePath>
 	</parent>
 	<artifactId>ver4j</artifactId>
