@@ -1,4 +1,4 @@
-package com.github.akiraly.uow;
+package com.github.akiraly.db4j.uow;
 
 import javax.annotation.Nonnull;
 

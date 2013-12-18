@@ -6,8 +6,7 @@
 		<version>4-SNAPSHOT</version>
 		<relativePath>../pom-parent-with-spring-hibernate-querydsl-core</relativePath>
 	</parent>
-	<artifactId>uow</artifactId>
+	<artifactId>db4j</artifactId>
 
-	<name>UnitOfWork</name>
-	<description>Some utility classes for audit and db handling</description>
+	<description>Common classes for dealing hibernate, spring data and auditing</description>
 </project>

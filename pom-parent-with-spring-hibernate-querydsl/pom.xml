@@ -8,14 +8,14 @@
 	</parent>
 	<artifactId>pom-parent-with-spring-hibernate-querydsl</artifactId>
 	<packaging>pom</packaging>
-	<name>Maven parent pom for db projects with spring context, hibernate and querydsl (and stuff from parent: with-spring-context)</name>
+	<name>Maven parent pom for db projects with spring context, hibernate and querydsl (and stuff from parent: with-spring-context) and db4j</name>
 	<description>Libs for spring context, hibernate, querydsl and testing support</description>
 
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>com.github.akiraly.reusable-poms</groupId>
-				<artifactId>uow</artifactId>
+				<artifactId>db4j</artifactId>
 				<version>4-SNAPSHOT</version>
 			</dependency>
 		</dependencies>
@@ -23,7 +23,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.github.akiraly.reusable-poms</groupId>
-			<artifactId>uow</artifactId>
+			<artifactId>db4j</artifactId>
 		</dependency>
 	</dependencies>
 </project>

@@ -1,4 +1,4 @@
-package com.github.akiraly.uow;
+package com.github.akiraly.db4j.uow;
 
 import static com.github.akiraly.ver4j.Verify.argNotNull;
 

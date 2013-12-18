@@ -20,7 +20,7 @@
 
 	<logger name="org" level="warn" />
 
-	<logger name="com.github.akiraly.uow" level="debug" />
+	<logger name="com.github.akiraly.db4j" level="debug" />
 
 	<root level="debug">
 		<appender-ref ref="appender-console" />

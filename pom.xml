@@ -64,7 +64,7 @@ This project contains reusable maven parent poms and maven project archetypes wi
 	</properties>
 
 	<prerequisites>
-		<maven>3.0.5</maven>
+		<maven>3.1.1</maven>
 	</prerequisites>
 
 	<build>
@@ -347,6 +347,7 @@ This project contains reusable maven parent poms and maven project archetypes wi
 	</build>
 
 	<modules>
+		<module>db4j</module>
 		<module>pom-parent-with-defaults</module>
 		<module>pom-parent-with-java-log-libs</module>
 		<module>pom-parent-with-java-util-libs</module>
@@ -358,7 +359,6 @@ This project contains reusable maven parent poms and maven project archetypes wi
 		<module>simple-java-project-with-spring-hibernate-querydsl-archetype</module>
 		<module>tomcat-juli-over-slf4j</module>
 		<module>ver4j</module>
-		<module>uow</module>
 	</modules>
 
 	<!-- to make release run something like this: -->

@@ -8,8 +8,7 @@
 	</parent>
 	<artifactId>ver4j</artifactId>
 
-	<name>Some simple verification libraries to check arguments, states, results</name>
-	<description>Verify your assumptions runtime</description>
+	<description>Some simple verification libraries to check your argument, state and result related assumptions runtime</description>
 
 	<dependencyManagement>
 		<dependencies>
