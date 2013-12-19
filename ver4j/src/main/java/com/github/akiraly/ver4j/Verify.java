@@ -22,6 +22,21 @@ public abstract class Verify {
 		return INSTANCE.resultNotNull(object, name);
 	}
 
+	public static <E, C extends Iterable<E>> C argNotEmpty(C collection,
+			String name) {
+		return INSTANCE.argNotEmpty(collection, name);
+	}
+
+	public static <E, C extends Iterable<E>> C stateNotEmpty(C collection,
+			String name) {
+		return INSTANCE.stateNotEmpty(collection, name);
+	}
+
+	public static <E, C extends Iterable<E>> C resultNotEmpty(C collection,
+			String name) {
+		return INSTANCE.resultNotEmpty(collection, name);
+	}
+
 	public static void argIsTrue(boolean check, String message,
 			Object... params) {
 		INSTANCE.argIsTrue(check, message, params);

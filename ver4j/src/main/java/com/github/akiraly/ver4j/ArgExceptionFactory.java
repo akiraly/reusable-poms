@@ -10,6 +10,11 @@ public class ArgExceptionFactory extends AExceptionFactory {
 	}
 
 	@Override
+	public RuntimeException notEmptyException(String name) {
+		return newException("Collection argument \"%s\" is null.", name);
+	}
+
+	@Override
 	protected RuntimeException createException(String message) {
 		return new IllegalArgumentException(message);
 	}

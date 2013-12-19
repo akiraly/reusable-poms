@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.github.akiraly.reusable-poms</groupId>
@@ -8,7 +9,7 @@
 	</parent>
 	<artifactId>ver4j</artifactId>
 
-	<description>Some simple verification libraries to check your argument, state and result related assumptions runtime</description>
+	<description>Some simple verification methods to check your argument, state and result related assumptions runtime</description>
 
 	<dependencyManagement>
 		<dependencies>
@@ -16,6 +17,11 @@
 				<groupId>com.google.code.findbugs</groupId>
 				<artifactId>jsr305</artifactId>
 				<version>${dependency.jsr305.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${dependency.guava.version}</version>
 			</dependency>
 
 			<dependency>
@@ -30,6 +36,10 @@
 		<dependency>
 			<groupId>com.google.code.findbugs</groupId>
 			<artifactId>jsr305</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
 		</dependency>
 
 		<dependency>

@@ -10,6 +10,11 @@ public class StateExceptionFactory extends AExceptionFactory {
 	}
 
 	@Override
+	public RuntimeException notEmptyException(String name) {
+		return newException("Collection state \"%s\" is empty.", name);
+	}
+
+	@Override
 	protected RuntimeException createException(String message) {
 		return new IllegalStateException(message);
 	}

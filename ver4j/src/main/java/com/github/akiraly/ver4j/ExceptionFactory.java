@@ -7,4 +7,6 @@ public interface ExceptionFactory {
 	RuntimeException notNullException(String name);
 
 	RuntimeException newException(String message, Object... params);
+
+	RuntimeException notEmptyException(String name);
 }

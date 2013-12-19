@@ -10,6 +10,11 @@ public class ResultExceptionFactory extends AExceptionFactory {
 	}
 
 	@Override
+	public RuntimeException notEmptyException(String name) {
+		return newException("Collection result \"%s\" is empty.", name);
+	}
+
+	@Override
 	protected RuntimeException createException(String message) {
 		return new IllegalResultException(message);
 	}

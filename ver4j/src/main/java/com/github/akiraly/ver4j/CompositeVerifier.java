@@ -34,6 +34,18 @@ public class CompositeVerifier {
 		return resultV.notNull(object, name);
 	}
 
+	public <E, C extends Iterable<E>> C argNotEmpty(C collection, String name) {
+		return argV.notEmpty(collection, name);
+	}
+
+	public <E, C extends Iterable<E>> C stateNotEmpty(C collection, String name) {
+		return stateV.notEmpty(collection, name);
+	}
+
+	public <E, C extends Iterable<E>> C resultNotEmpty(C collection, String name) {
+		return resultV.notEmpty(collection, name);
+	}
+
 	public void argIsTrue(boolean check, String message, Object... params) {
 		argV.isTrue(check, message, params);
 	}
