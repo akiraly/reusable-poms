@@ -10,17 +10,22 @@ import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import com.google.common.base.Optional;
 
 @Nonnull
-public class UowTest extends AbstractUowTest {
+public class UowNotPersistedIfNotNeededTest extends AbstractUowTest {
 	@Test(timeout = 8000)
-	public void testPersistStandaloneUow() {
-		final String uow1User = "u100";
+	public void testUowNotPersistedIfNotNeeded() {
+		final String uow1User = "u300";
 		final Uow uow1 = new Uow(uow1User);
+		final Foo foo = new Foo();
+
 		transactionTemplate().execute(new TransactionCallbackWithoutResult() {
 			@Override
 			protected void doInTransactionWithoutResult(TransactionStatus status) {
 				TestCaseHandler handler = testCaseHandlerFactory().get();
-				handler.uowDao().persist(uow1);
-				Assert.assertNotNull(uow1.getId());
+				Assert.assertEquals(0, handler.fooDao().count());
+				handler.fooDao().persist(foo);
+				Assert.assertNotNull(foo.getId());
+				Assert.assertNull(uow1.getId());
+				Assert.assertEquals(1, handler.fooDao().count());
 			}
 		});
 
@@ -28,11 +33,9 @@ public class UowTest extends AbstractUowTest {
 			@Override
 			protected void doInTransactionWithoutResult(TransactionStatus status) {
 				TestCaseHandler handler = testCaseHandlerFactory().get();
-				Optional<Uow> uow1Loaded = handler.uowDao().find(uow1.getId());
-				assertPresent(uow1Loaded);
-				Assert.assertEquals(uow1User, uow1Loaded.get().getUser());
-				Assert.assertEquals(uow1, uow1Loaded.get());
-
+				Assert.assertEquals(1, handler.fooDao().count());
+				Optional<Foo> fooLoaded = handler.fooDao().find(foo.getId());
+				assertPresent(fooLoaded);
 			}
 		});
 	}
