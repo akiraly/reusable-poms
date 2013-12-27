@@ -18,6 +18,7 @@ public class UowDaoFactory extends AbstractDaoFactory<Long, Uow, UowDao>
 
 	@Override
 	public UowDao get() {
-		return new UowDao(entityInformation(), newRepository());
+		return new UowDao(entityManagerOrFail(), entityInformation(),
+				newRepository());
 	}
 }

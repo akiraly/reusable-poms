@@ -14,10 +14,16 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 public class Uow extends AbstractPersistable<Long> {
 	private static final long serialVersionUID = -6140188419595214529L;
 
-	private final String user;
+	private String user;
 
 	public Uow(String user) {
 		this.user = argNotNull(user, "user");
+	}
+
+	/**
+	 * For Hibernate
+	 */
+	protected Uow() {
 	}
 
 	public String getUser() {

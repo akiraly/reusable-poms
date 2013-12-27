@@ -10,20 +10,20 @@ import com.github.akiraly.db4j.EntityInformation;
 import com.google.common.base.Optional;
 
 @Nonnull
-public class UowDao extends AbstractDao<Long, Uow> {
-	public UowDao(EntityManager entityManager,
-			EntityInformation<Long, Uow> entityInformation,
-			QueryDslJpaRepository<Uow, Long> repository) {
+public class AuditedFooDao extends AbstractDao<Long, AuditedFoo> {
+	public AuditedFooDao(EntityManager entityManager,
+			EntityInformation<Long, AuditedFoo> entityInformation,
+			QueryDslJpaRepository<AuditedFoo, Long> repository) {
 		super(entityManager, entityInformation, repository);
 	}
 
 	@Override
-	public void persist(Uow entity) {
+	public void persist(AuditedFoo entity) {
 		super.persist(entity);
 	}
 
 	@Override
-	public Optional<Uow> find(Long key) {
+	public Optional<AuditedFoo> find(Long key) {
 		return super.find(key);
 	}
 }
