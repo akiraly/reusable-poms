@@ -12,13 +12,13 @@ public class Verifier {
 		this.exceptionFactory = exceptionFactory;
 	}
 
-	public <T> T notNull(T object, String name) {
+	public <T> T notNull(T object, Object name) {
 		if (object == null)
 			throw exceptionFactory.notNullException(name);
 		return object;
 	}
 
-	public <E, C extends Iterable<E>> C notEmpty(C collection, String name) {
+	public <E, C extends Iterable<E>> C notEmpty(C collection, Object name) {
 		if (isEmpty(notNull(collection, name)))
 			throw exceptionFactory.notEmptyException(name);
 		return collection;

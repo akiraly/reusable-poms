@@ -10,30 +10,30 @@ public abstract class Verify {
 		// no-op
 	}
 
-	public static <T> T argNotNull(T object, String name) {
+	public static <T> T argNotNull(T object, Object name) {
 		return INSTANCE.argNotNull(object, name);
 	}
 
-	public static <T> T stateNotNull(T object, String name) {
+	public static <T> T stateNotNull(T object, Object name) {
 		return INSTANCE.stateNotNull(object, name);
 	}
 
-	public static <T> T resultNotNull(T object, String name) {
+	public static <T> T resultNotNull(T object, Object name) {
 		return INSTANCE.resultNotNull(object, name);
 	}
 
 	public static <E, C extends Iterable<E>> C argNotEmpty(C collection,
-			String name) {
+			Object name) {
 		return INSTANCE.argNotEmpty(collection, name);
 	}
 
 	public static <E, C extends Iterable<E>> C stateNotEmpty(C collection,
-			String name) {
+			Object name) {
 		return INSTANCE.stateNotEmpty(collection, name);
 	}
 
 	public static <E, C extends Iterable<E>> C resultNotEmpty(C collection,
-			String name) {
+			Object name) {
 		return INSTANCE.resultNotEmpty(collection, name);
 	}
 

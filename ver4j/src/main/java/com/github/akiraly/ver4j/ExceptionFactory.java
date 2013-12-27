@@ -4,9 +4,11 @@ import javax.annotation.Nonnull;
 
 @Nonnull
 public interface ExceptionFactory {
-	RuntimeException notNullException(String name);
+	RuntimeException notNullException(Object name);
 
 	RuntimeException newException(String message, Object... params);
 
-	RuntimeException notEmptyException(String name);
+	RuntimeException newException(Object message);
+
+	RuntimeException notEmptyException(Object name);
 }

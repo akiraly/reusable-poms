@@ -5,12 +5,12 @@ import javax.annotation.Nonnull;
 @Nonnull
 public class ArgExceptionFactory extends AExceptionFactory {
 	@Override
-	public RuntimeException notNullException(String name) {
+	public RuntimeException notNullException(Object name) {
 		return newException("Argument \"%s\" is null.", name);
 	}
 
 	@Override
-	public RuntimeException notEmptyException(String name) {
+	public RuntimeException notEmptyException(Object name) {
 		return newException("Collection argument \"%s\" is null.", name);
 	}
 

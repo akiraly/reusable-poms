@@ -5,12 +5,12 @@ import javax.annotation.Nonnull;
 @Nonnull
 public class StateExceptionFactory extends AExceptionFactory {
 	@Override
-	public RuntimeException notNullException(String name) {
+	public RuntimeException notNullException(Object name) {
 		return newException("State \"%s\" is null.", name);
 	}
 
 	@Override
-	public RuntimeException notEmptyException(String name) {
+	public RuntimeException notEmptyException(Object name) {
 		return newException("Collection state \"%s\" is empty.", name);
 	}
 
