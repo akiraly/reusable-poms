@@ -4,12 +4,14 @@ import static com.github.akiraly.ver4j.Verify.argNotNull;
 
 import javax.annotation.Nonnull;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.Immutable;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Nonnull
 @Entity
+@Table(name = "uow")
 @Immutable
 public class Uow extends AbstractPersistable<Long> {
 	private static final long serialVersionUID = -6140188419595214529L;

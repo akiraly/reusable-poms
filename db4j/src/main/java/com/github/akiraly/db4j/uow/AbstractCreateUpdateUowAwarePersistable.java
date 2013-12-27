@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 import javax.annotation.Nonnull;
 import javax.persistence.CascadeType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
@@ -17,6 +18,7 @@ public abstract class AbstractCreateUpdateUowAwarePersistable<PK extends Seriali
 	private static final long serialVersionUID = -2367224059203020147L;
 
 	@ManyToOne(optional = false, cascade = { CascadeType.PERSIST })
+	@JoinColumn(name = "update_uow_id", nullable = false)
 	private Uow updateUow;
 
 	protected AbstractCreateUpdateUowAwarePersistable(Uow createUow) {

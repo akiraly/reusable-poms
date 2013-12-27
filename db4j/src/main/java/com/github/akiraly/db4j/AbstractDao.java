@@ -51,4 +51,8 @@ public abstract class AbstractDao<PK extends Serializable, E extends AbstractPer
 		return Optional.fromNullable(entityManager().find(entityClass(),
 				argNotNull(key, "key")));
 	}
+
+	protected long count() {
+		return repository().count();
+	}
 }

@@ -74,9 +74,11 @@ public class UowTest {
 			@Override
 			protected void doInTransactionWithoutResult(TransactionStatus status) {
 				TestCaseHandler handler = testCaseHandlerFactory.get();
+				Assert.assertEquals(0, handler.auditedFooDao.count());
 				handler.auditedFooDao.persist(auditedFoo);
 				Assert.assertNotNull(auditedFoo.getId());
 				Assert.assertNotNull(uow1.getId());
+				Assert.assertEquals(1, handler.auditedFooDao.count());
 			}
 		});
 
@@ -84,6 +86,7 @@ public class UowTest {
 			@Override
 			protected void doInTransactionWithoutResult(TransactionStatus status) {
 				TestCaseHandler handler = testCaseHandlerFactory.get();
+				Assert.assertEquals(1, handler.auditedFooDao.count());
 				Optional<AuditedFoo> fooLoaded = handler.auditedFooDao
 						.find(auditedFoo.getId());
 				assertPresent(fooLoaded);
@@ -133,6 +136,35 @@ public class UowTest {
 		});
 	}
 
+	@Test(timeout = 8000)
+	public void testUowNotPersistedIfNotNeeded() {
+		final String uow1User = "u300";
+		final Uow uow1 = new Uow(uow1User);
+		final Foo foo = new Foo();
+
+		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+			@Override
+			protected void doInTransactionWithoutResult(TransactionStatus status) {
+				TestCaseHandler handler = testCaseHandlerFactory.get();
+				Assert.assertEquals(0, handler.fooDao.count());
+				handler.fooDao.persist(foo);
+				Assert.assertNotNull(foo.getId());
+				Assert.assertNull(uow1.getId());
+				Assert.assertEquals(1, handler.fooDao.count());
+			}
+		});
+
+		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+			@Override
+			protected void doInTransactionWithoutResult(TransactionStatus status) {
+				TestCaseHandler handler = testCaseHandlerFactory.get();
+				Assert.assertEquals(1, handler.fooDao.count());
+				Optional<Foo> fooLoaded = handler.fooDao.find(foo.getId());
+				assertPresent(fooLoaded);
+			}
+		});
+	}
+
 	private static void assertPresent(Optional<?> o) {
 		Assert.assertNotNull(o);
 		Assert.assertTrue(o.isPresent());
@@ -175,42 +207,54 @@ public class UowTest {
 		}
 
 		@Bean
+		public FooDaoFactory fooDaoFactory(
+				EntityManagerFactory entityManagerFactory) {
+			return new FooDaoFactory(entityManagerFactory);
+		}
+
+		@Bean
 		public TestCaseHandlerFactory testCaseHandlerFactory(
 				UowDaoFactory uowDaoFactory,
-				AuditedFooDaoFactory auditedFooDaoFactory) {
+				AuditedFooDaoFactory auditedFooDaoFactory,
+				FooDaoFactory fooDaoFactory) {
 			return new TestCaseHandlerFactory(auditedFooDaoFactory,
-					uowDaoFactory);
+					fooDaoFactory, uowDaoFactory);
 		}
 	}
 
 	@Nonnull
 	static class TestCaseHandlerFactory implements Supplier<TestCaseHandler> {
 		private final AuditedFooDaoFactory auditedFooDaoFactory;
+		private final FooDaoFactory fooDaoFactory;
 		private final UowDaoFactory uowDaoFactory;
 
 		public TestCaseHandlerFactory(
 				AuditedFooDaoFactory auditedFooDaoFactory,
-				UowDaoFactory uowDaoFactory) {
+				FooDaoFactory fooDaoFactory, UowDaoFactory uowDaoFactory) {
 			this.auditedFooDaoFactory = argNotNull(auditedFooDaoFactory,
 					"auditedFooDaoFactory");
+			this.fooDaoFactory = argNotNull(fooDaoFactory, "fooDaoFactory");
 			this.uowDaoFactory = argNotNull(uowDaoFactory, "uowDaoFactory");
 		}
 
 		@Override
 		public TestCaseHandler get() {
 			return new TestCaseHandler(auditedFooDaoFactory.get(),
-					uowDaoFactory.get());
+					fooDaoFactory.get(), uowDaoFactory.get());
 		}
 	}
 
 	@Nonnull
 	private static class TestCaseHandler {
 		private final AuditedFooDao auditedFooDao;
+		private final FooDao fooDao;
 
 		private final UowDao uowDao;
 
-		public TestCaseHandler(AuditedFooDao auditedFooDao, UowDao uowDao) {
+		public TestCaseHandler(AuditedFooDao auditedFooDao, FooDao fooDao,
+				UowDao uowDao) {
 			this.auditedFooDao = argNotNull(auditedFooDao, "auditedFooDao");
+			this.fooDao = argNotNull(fooDao, "fooDao");
 			this.uowDao = argNotNull(uowDao, "uowDao");
 		}
 	}
