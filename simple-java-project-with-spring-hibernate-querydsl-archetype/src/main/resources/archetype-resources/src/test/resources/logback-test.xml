@@ -16,17 +16,17 @@
 
 	<logger name="eu" level="warn" />
 
+	<logger name="h2database" level="info" />
+
 	<logger name="java" level="warn" />
 
 	<logger name="javax" level="warn" />
 
 	<logger name="net" level="warn" />
 
-	<logger name="org.hibernate" level="warn" />
+	<!-- logger name="org.hibernate.tool.hbm2ddl" level="debug" />
 
-	<logger name="org.hibernate.tool.hbm2ddl" level="debug" />
-
-	<logger name="org.hibernate.SQL" level="debug" />
+	<logger name="org.hibernate.SQL" level="debug" /-->
 
 	<logger name="org" level="warn" />
 

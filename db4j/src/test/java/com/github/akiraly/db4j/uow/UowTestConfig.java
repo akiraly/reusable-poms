@@ -17,9 +17,9 @@ import com.github.akiraly.db4j.CommonDbConfig;
 import com.google.common.collect.ImmutableSet;
 
 @Configuration
-@Import({ UowConfig.class })
+@Import({ UowConfig.class, CommonDbConfig.class })
 @Nonnull
-class UowTestConfig extends CommonDbConfig {
+class UowTestConfig {
 	@Bean
 	public DataSource dataSource() {
 		org.apache.tomcat.jdbc.pool.DataSource dataSource = new org.apache.tomcat.jdbc.pool.DataSource();
@@ -27,7 +27,8 @@ class UowTestConfig extends CommonDbConfig {
 		dataSource.setValidationQuery("SELECT 1");
 		dataSource.setDataSource(new EmbeddedDatabaseBuilder()
 				.setType(EmbeddedDatabaseType.H2)
-				.setName(UowTest.class.getName() + "db").build());
+				.setName(UowTest.class.getName() + "db")
+				.addScript("db_init.sql").build());
 
 		return dataSource;
 	}
@@ -35,11 +36,6 @@ class UowTestConfig extends CommonDbConfig {
 	@Bean
 	public Database dbType() {
 		return Database.H2;
-	}
-
-	@Override
-	protected boolean showSql() {
-		return true;
 	}
 
 	@Bean
