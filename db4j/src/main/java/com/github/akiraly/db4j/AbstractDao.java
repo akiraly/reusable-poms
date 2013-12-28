@@ -1,6 +1,7 @@
 package com.github.akiraly.db4j;
 
 import static com.github.akiraly.ver4j.Verify.argNotNull;
+import static com.google.common.base.Optional.fromNullable;
 
 import java.io.Serializable;
 
@@ -48,7 +49,7 @@ public abstract class AbstractDao<PK extends Serializable, E extends AbstractPer
 	}
 
 	protected Optional<E> find(PK key) {
-		return Optional.fromNullable(entityManager().find(entityClass(),
+		return fromNullable(entityManager().find(entityClass(),
 				argNotNull(key, "key")));
 	}
 
