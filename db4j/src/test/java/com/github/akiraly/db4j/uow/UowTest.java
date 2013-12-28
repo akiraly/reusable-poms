@@ -32,7 +32,6 @@ public class UowTest extends AbstractUowTest {
 				assertPresent(uow1Loaded);
 				Assert.assertEquals(uow1User, uow1Loaded.get().getUser());
 				Assert.assertEquals(uow1, uow1Loaded.get());
-
 			}
 		});
 	}
