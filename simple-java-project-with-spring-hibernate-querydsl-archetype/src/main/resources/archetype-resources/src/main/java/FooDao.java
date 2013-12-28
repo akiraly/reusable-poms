@@ -1,35 +1,35 @@
 package ${package};
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import javax.annotation.Nonnull;
+import javax.persistence.EntityManager;
 
 import org.springframework.data.jpa.repository.support.QueryDslJpaRepository;
 
+import com.github.akiraly.db4j.AbstractDao;
+import com.github.akiraly.db4j.EntityInformation;
 import com.google.common.base.Optional;
 
-import foo.bar.baz.entity.Bar;
-import foo.bar.baz.entity.Foo;
-
 @Nonnull
-public class FooDao {
-	private final QueryDslJpaRepository<Foo, Long> repository;
-
-	private final Bar bar;
-
-	public FooDao(QueryDslJpaRepository<Foo, Long> repository, Bar bar) {
-		this.repository = checkNotNull(repository,
-				"Expected not null repository.");
-		this.bar = checkNotNull(bar, "Expected not null bar.");
+public class FooDao extends AbstractDao<Long, Foo> {
+	public FooDao(EntityManager entityManager,
+			EntityInformation<Long, Foo> entityInformation,
+			QueryDslJpaRepository<Foo, Long> repository) {
+		super(entityManager, entityInformation, repository);
 	}
 
-	public Foo persist(Foo entity) {
-		entity.setBar(bar);
-		return repository
-				.save(checkNotNull(entity, "Expected not null entity."));
+	@Override
+	public void persist(Foo entity) {
+		super.persist(entity);
 	}
 
-	public Optional<Foo> byId(long id) {
-		return Optional.fromNullable(repository.findOne(id));
+	@Override
+	public Optional<Foo> find(Long key) {
+		return super.find(key);
+	}
+
+	@Override
+	public long count() {
+		return super.count();
 	}
 }
+

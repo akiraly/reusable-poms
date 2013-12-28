@@ -26,7 +26,7 @@ import foo.bar.baz.entity.Foo;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { CommonAppConfig.class, AppTest.Config.class })
 @Nonnull
-public class AppTest {
+public class FooTest {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AppTest.class);
 
 	@Autowired

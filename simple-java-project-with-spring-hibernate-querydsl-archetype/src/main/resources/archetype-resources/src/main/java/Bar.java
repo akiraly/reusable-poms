@@ -1,4 +1,4 @@
-package ${package}.entity;
+package ${package};
 
 import javax.annotation.Nonnull;
 import javax.persistence.Entity;
