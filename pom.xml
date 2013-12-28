@@ -60,7 +60,7 @@ This project contains reusable maven parent poms and maven project archetypes wi
 		<maven.javadoc.plugin.version>2.9.1</maven.javadoc.plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<reusable-poms.plugin.surefire.version>2.15</reusable-poms.plugin.surefire.version>
+		<reusable-poms.plugin.surefire.version>2.16</reusable-poms.plugin.surefire.version>
 	</properties>
 
 	<prerequisites>
@@ -106,7 +106,7 @@ This project contains reusable maven parent poms and maven project archetypes wi
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-deploy-plugin</artifactId>
-					<version>2.7</version>
+					<version>2.8.1</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -125,7 +125,7 @@ This project contains reusable maven parent poms and maven project archetypes wi
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-install-plugin</artifactId>
-					<version>2.4</version>
+					<version>2.5.1</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -160,7 +160,7 @@ This project contains reusable maven parent poms and maven project archetypes wi
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-release-plugin</artifactId>
-					<version>2.4.1</version>
+					<version>2.4.2</version>
 					<configuration>
 						<autoVersionSubmodules>true</autoVersionSubmodules>
 					</configuration>
@@ -235,7 +235,7 @@ This project contains reusable maven parent poms and maven project archetypes wi
 							<plugin>
 								<groupId>org.apache.maven.plugins</groupId>
 								<artifactId>maven-checkstyle-plugin</artifactId>
-								<version>2.10</version>
+								<version>2.11</version>
 								<configuration>
 									<configLocation>src/site/checkstyle/config.xml</configLocation>
 								</configuration>
@@ -263,7 +263,8 @@ This project contains reusable maven parent poms and maven project archetypes wi
 					<configuration>
 						<forkCount>1C</forkCount>
 						<forkedProcessTimeoutInSeconds>60</forkedProcessTimeoutInSeconds>
-						<parallel>methods</parallel>
+						<parallel>all</parallel>
+						<parallelTestsTimeoutForcedInSeconds>60</parallelTestsTimeoutForcedInSeconds>
 						<threadCount>1</threadCount>
 						<argLine>-Dfile.encoding=UTF-8</argLine>
 						<systemPropertyVariables>
