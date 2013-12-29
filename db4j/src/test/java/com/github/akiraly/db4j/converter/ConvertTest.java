@@ -12,6 +12,7 @@ import javax.annotation.Nonnull;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.google.common.base.Optional;
@@ -19,7 +20,13 @@ import com.google.common.base.Optional;
 @Nonnull
 public class ConvertTest {
 
-	@Test(timeout = 800)
+	@BeforeClass
+	public static void beforeClass() {
+		// trigger the initialization of joda lib
+		new DateTime(DateTimeZone.UTC);
+	}
+
+	@Test(timeout = 500)
 	public void testDate2UtcDateTime() {
 		Date date = new Date();
 		DateTime dateTime = Convert.date2UtcDateTime(date);
@@ -28,7 +35,7 @@ public class ConvertTest {
 		assertEquals(date, dateTime.toDate());
 	}
 
-	@Test(timeout = 800)
+	@Test(timeout = 500)
 	public void testDate2OptUtcDateTime() {
 		assertFalse(Convert.date2OptUtcDateTime(null).isPresent());
 
@@ -40,7 +47,7 @@ public class ConvertTest {
 		assertEquals(date, dateTime.get().toDate());
 	}
 
-	@Test(timeout = 800)
+	@Test(timeout = 500)
 	public void testDateTime2Date() {
 		DateTime dateTime = new DateTime(DateTimeZone.UTC);
 		Date date = Convert.dateTime2Date(dateTime);
