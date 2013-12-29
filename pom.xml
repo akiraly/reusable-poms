@@ -3,7 +3,7 @@
 
 	<groupId>com.github.akiraly.reusable-poms</groupId>
 	<artifactId>reusable-poms-parent</artifactId>
-	<version>4-SNAPSHOT</version>
+	<version>4</version>
 	<packaging>pom</packaging>
 
 	<name>Reusable maven pom parents and archetypes with sensible defaults</name>
@@ -26,7 +26,7 @@ This project contains reusable maven parent poms and maven project archetypes wi
 		<url>https://github.com/akiraly/reusable-poms</url>
 		<connection>scm:git:git://github.com/akiraly/reusable-poms.git</connection>
 		<developerConnection>scm:git:git@github.com:akiraly/reusable-poms.git</developerConnection>
-		<tag>HEAD</tag>
+		<tag>reusable-poms-parent-4</tag>
 	</scm>
 
 	<issueManagement>

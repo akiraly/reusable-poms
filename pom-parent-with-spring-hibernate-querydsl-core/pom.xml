@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.github.akiraly.reusable-poms</groupId>
 		<artifactId>pom-parent-with-spring-context</artifactId>
-		<version>4-SNAPSHOT</version>
+		<version>4</version>
 		<relativePath>../pom-parent-with-spring-context</relativePath>
 	</parent>
 	<artifactId>pom-parent-with-spring-hibernate-querydsl-core</artifactId>
@@ -16,7 +16,7 @@
 			<dependency>
 				<groupId>com.github.akiraly.reusable-poms</groupId>
 				<artifactId>tomcat-juli-over-slf4j</artifactId>
-				<version>4-SNAPSHOT</version>
+				<version>4</version>
 				<scope>runtime</scope>
 			</dependency>
 
