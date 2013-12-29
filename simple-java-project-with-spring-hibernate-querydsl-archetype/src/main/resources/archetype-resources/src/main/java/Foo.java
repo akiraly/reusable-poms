@@ -11,9 +11,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
+import com.github.akiraly.db4j.converter.Convert;
 import com.google.common.base.Optional;
 
 @Nonnull
@@ -48,12 +48,11 @@ public class Foo extends AbstractPersistable<Long> {
 	}
 
 	public Optional<DateTime> getDt() {
-		return dt != null ? Optional.of(new DateTime(dt, DateTimeZone.UTC))
-				: null;
+		return Convert.date2OptUtcDateTime(dt);
 	}
 
 	public void setDt(Optional<DateTime> dt) {
-		this.dt = dt.isPresent() ? dt.get().toDate() : null;
+		this.dt = Convert.dateTime2Date(dt);
 	}
 
 	@Override

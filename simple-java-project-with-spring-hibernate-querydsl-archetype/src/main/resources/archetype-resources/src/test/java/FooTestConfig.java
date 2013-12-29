@@ -33,5 +33,4 @@ public class FooTestConfig {
 	public Database dbType() {
 		return Database.H2;
 	}
-
 }
