@@ -3,8 +3,8 @@ reusable-poms
 
 This project contains reusable maven parent poms and maven project archetypes with sensible defaults, for example pre-configured with the latest maven plugin versions or already defining some common libraries as dependencies (commons-lang, guava, etc).
 
-*Howto use the archetypes to generate new projects:*
----------------------------------------------------
+**Howto use the archetypes to generate new projects:**
+------------------------------------------------------
 
 Please replace `groupId`, `artifactId` and `version` values with yours.
 
