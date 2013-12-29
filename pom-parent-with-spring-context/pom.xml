@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.github.akiraly.reusable-poms</groupId>
 		<artifactId>pom-parent-with-java-util-libs</artifactId>
-		<version>4</version>
+		<version>5-SNAPSHOT</version>
 		<relativePath>../pom-parent-with-java-util-libs</relativePath>
 	</parent>
 	<artifactId>pom-parent-with-spring-context</artifactId>
