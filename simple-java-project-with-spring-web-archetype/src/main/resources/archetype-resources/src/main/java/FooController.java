@@ -4,6 +4,7 @@ import javax.annotation.Nonnull;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.collect.ImmutableMap;
@@ -24,6 +25,7 @@ public class FooController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
+	@ResponseBody
 	public ImmutableMap<Long, Foo> foos() {
 		return foos;
 	}
