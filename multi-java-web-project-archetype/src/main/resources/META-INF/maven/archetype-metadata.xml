@@ -2,26 +2,26 @@
 	<modules>
 		<module name="${rootArtifactId}-core" id="${rootArtifactId}-core" dir="__rootArtifactId__-core">
 			<fileSets>
-				<fileSet filtered="true" packaged="true">
+				<fileSet filtered="true" packaged="true" encoding="UTF-8">
 					<directory>src/main/java</directory>
 				</fileSet>
-				<fileSet filtered="true" packaged="true">
+				<fileSet filtered="true" packaged="true" encoding="UTF-8">
 					<directory>src/test/java</directory>
 				</fileSet>
-				<fileSet filtered="true" packaged="false">
+				<fileSet filtered="true" packaged="false" encoding="UTF-8">
 					<directory>src/test/resources</directory>
 				</fileSet>
 			</fileSets>
 		</module>
 		<module name="${rootArtifactId}-web" id="${rootArtifactId}-web" dir="__rootArtifactId__-web">
 			<fileSets>
-				<fileSet filtered="true" packaged="true">
+				<fileSet filtered="true" packaged="true" encoding="UTF-8">
 					<directory>src/main/java</directory>
 				</fileSet>
-				<fileSet filtered="true" packaged="true">
+				<fileSet filtered="true" packaged="true" encoding="UTF-8">
 					<directory>src/test/java</directory>
 				</fileSet>
-				<fileSet filtered="true" packaged="false">
+				<fileSet filtered="true" packaged="false" encoding="UTF-8">
 					<directory>src/test/resources</directory>
 				</fileSet>
 			</fileSets>

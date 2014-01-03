@@ -1,12 +1,12 @@
 <archetype-descriptor name="simple-java-project-with-util-libs-archetype">
 	<fileSets>
-		<fileSet filtered="true" packaged="true">
+		<fileSet filtered="true" packaged="true" encoding="UTF-8">
 			<directory>src/main/java</directory>
 		</fileSet>
-		<fileSet filtered="true" packaged="true">
+		<fileSet filtered="true" packaged="true" encoding="UTF-8">
 			<directory>src/test/java</directory>
 		</fileSet>
-		<fileSet filtered="true" packaged="false">
+		<fileSet filtered="true" packaged="false" encoding="UTF-8">
 			<directory>src/test/resources</directory>
 		</fileSet>
 	</fileSets>

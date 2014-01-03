@@ -10,10 +10,29 @@
 	<artifactId>multi-java-web-project-archetype</artifactId>
 	<name>Multimodule java web/jpa application template with spring, hibernate, querydsl and utility libraries</name>
 
+	<dependencies>
+		<dependency>
+			<groupId>com.github.akiraly.reusable-poms</groupId>
+			<artifactId>simple-java-project-with-spring-hibernate-querydsl-archetype</artifactId>
+			<version>5-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.github.akiraly.reusable-poms</groupId>
+			<artifactId>simple-java-project-with-spring-web-archetype</artifactId>
+			<version>5-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
 	<build>
 		<plugins>
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
+				<!-- The content of the submodules is copied from the already existing, 
+					standalone archetypes. This is not ideal because we need the source directories 
+					to be present when compiling this archetype but this way we are not duplicating 
+					the resources. -->
 				<executions>
 					<execution>
 						<id>copy-core-resources</id>
