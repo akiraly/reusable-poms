@@ -349,6 +349,7 @@ This project contains reusable maven parent poms and maven project archetypes wi
 
 	<modules>
 		<module>db4j</module>
+		<module>multi-java-web-project-archetype</module>
 		<module>pom-parent-with-defaults</module>
 		<module>pom-parent-with-java-log-libs</module>
 		<module>pom-parent-with-java-util-libs</module>

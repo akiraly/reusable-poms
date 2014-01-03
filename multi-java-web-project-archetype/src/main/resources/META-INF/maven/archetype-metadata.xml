@@ -1,0 +1,30 @@
+<archetype-descriptor name="multi-java-web-project-archetype">
+	<modules>
+		<module name="${rootArtifactId}-core" id="${rootArtifactId}-core" dir="__rootArtifactId__-core">
+			<fileSets>
+				<fileSet filtered="true" packaged="true">
+					<directory>src/main/java</directory>
+				</fileSet>
+				<fileSet filtered="true" packaged="true">
+					<directory>src/test/java</directory>
+				</fileSet>
+				<fileSet filtered="true" packaged="false">
+					<directory>src/test/resources</directory>
+				</fileSet>
+			</fileSets>
+		</module>
+		<module name="${rootArtifactId}-web" id="${rootArtifactId}-web" dir="__rootArtifactId__-web">
+			<fileSets>
+				<fileSet filtered="true" packaged="true">
+					<directory>src/main/java</directory>
+				</fileSet>
+				<fileSet filtered="true" packaged="true">
+					<directory>src/test/java</directory>
+				</fileSet>
+				<fileSet filtered="true" packaged="false">
+					<directory>src/test/resources</directory>
+				</fileSet>
+			</fileSets>
+		</module>
+	</modules>
+</archetype-descriptor>
