@@ -273,6 +273,11 @@ This project contains reusable maven parent poms and maven project archetypes wi
 					</configuration>
 				</plugin>
 				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>2.4</version>
+				</plugin>
+				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>versions-maven-plugin</artifactId>
 					<version>2.1</version>
@@ -357,6 +362,7 @@ This project contains reusable maven parent poms and maven project archetypes wi
 		<module>pom-parent-with-spring-hibernate-querydsl-core</module>
 		<module>pom-parent-with-spring-hibernate-querydsl</module>
 		<module>pom-parent-with-spring-web</module>
+		<module>pom-parent-with-war</module>
 		<module>simple-java-project-with-util-libs-archetype</module>
 		<module>simple-java-project-with-spring-context-archetype</module>
 		<module>simple-java-project-with-spring-hibernate-querydsl-archetype</module>
