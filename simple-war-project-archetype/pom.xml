@@ -6,7 +6,7 @@
 		<version>5-SNAPSHOT</version>
 		<relativePath>../pom-parent-with-defaults</relativePath>
 	</parent>
-	<artifactId>simple-war-project</artifactId>
+	<artifactId>simple-war-project-archetype</artifactId>
 	<name>Simple java web application with angular</name>
 
 	<build>
