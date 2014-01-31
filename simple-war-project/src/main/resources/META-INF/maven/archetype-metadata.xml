@@ -1,0 +1,7 @@
+<archetype-descriptor name="simple-war-project">
+	<fileSets>
+		<fileSet filtered="true" packaged="true" encoding="UTF-8">
+			<directory>src/main/webapp</directory>
+		</fileSet>
+	</fileSets>
+</archetype-descriptor>

@@ -37,6 +37,11 @@
 					<groupId>org.eclipse.jetty</groupId>
 					<artifactId>jetty-maven-plugin</artifactId>
 					<version>${dependency.jetty.version}</version>
+					<configuration>
+						<webApp>
+							<overrideDescriptor>jetty-run-web.xml</overrideDescriptor>
+						</webApp>
+					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
