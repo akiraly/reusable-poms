@@ -29,12 +29,12 @@
 		<dependency.jsr305.version>2.0.3</dependency.jsr305.version>
 		<dependency.junit.version>4.11</dependency.junit.version>
 		<dependency.log4j.version>1.2.17</dependency.log4j.version>
-		<dependency.logback.version>1.0.13</dependency.logback.version>
+		<dependency.logback.version>1.1.0</dependency.logback.version>
 		<dependency.querydsl.version>3.3.0</dependency.querydsl.version>
 		<dependency.servlet-api.version>3.1.0</dependency.servlet-api.version>
 		<dependency.slf4j.version>1.7.5</dependency.slf4j.version>
 		<dependency.spring.version>4.0.1.RELEASE</dependency.spring.version>
 		<dependency.spring-data-jpa.version>1.4.3.RELEASE</dependency.spring-data-jpa.version>
-		<dependency.tomcat.version>8.0.0-RC10</dependency.tomcat.version>
+		<dependency.tomcat.version>8.0.1</dependency.tomcat.version>
 	</properties>
 </project>
