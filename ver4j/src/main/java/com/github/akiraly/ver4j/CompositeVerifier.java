@@ -1,5 +1,7 @@
 package com.github.akiraly.ver4j;
 
+import java.util.Collection;
+
 import javax.annotation.Nonnull;
 
 @Nonnull
@@ -34,16 +36,42 @@ public class CompositeVerifier {
 		return resultV.notNull(object, name);
 	}
 
-	public <E, C extends Iterable<E>> C argNotEmpty(C collection, Object name) {
+	public <E, C extends Collection<E>> C argNotEmpty(C collection, Object name) {
 		return argV.notEmpty(collection, name);
 	}
 
-	public <E, C extends Iterable<E>> C stateNotEmpty(C collection, Object name) {
+	public <E, C extends Collection<E>> C stateNotEmpty(C collection,
+			Object name) {
 		return stateV.notEmpty(collection, name);
 	}
 
-	public <E, C extends Iterable<E>> C resultNotEmpty(C collection, Object name) {
+	public <E, C extends Collection<E>> C resultNotEmpty(C collection,
+			Object name) {
 		return resultV.notEmpty(collection, name);
+	}
+
+	public <E, I extends Iterable<E>> I argNotEmpty(I iterable, Object name) {
+		return argV.notEmpty(iterable, name);
+	}
+
+	public <E, I extends Iterable<E>> I stateNotEmpty(I iterable, Object name) {
+		return stateV.notEmpty(iterable, name);
+	}
+
+	public <E, I extends Iterable<E>> I resultNotEmpty(I iterable, Object name) {
+		return resultV.notEmpty(iterable, name);
+	}
+
+	public <T> T[] argNotEmpty(T[] array, Object name) {
+		return argV.notEmpty(array, name);
+	}
+
+	public <T> T[] stateNotEmpty(T[] array, Object name) {
+		return stateV.notEmpty(array, name);
+	}
+
+	public <T> T[] resultNotEmpty(T[] array, Object name) {
+		return resultV.notEmpty(array, name);
 	}
 
 	public void argIsTrue(boolean check, String message, Object... params) {

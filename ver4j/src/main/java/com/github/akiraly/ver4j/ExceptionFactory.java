@@ -10,5 +10,9 @@ public interface ExceptionFactory {
 
 	RuntimeException newException(Object message);
 
-	RuntimeException notEmptyException(Object name);
+	RuntimeException notEmptyCollectionException(Object name);
+
+	RuntimeException notEmptyIterableException(Object name);
+
+	RuntimeException notEmptyArrayException(Object name);
 }

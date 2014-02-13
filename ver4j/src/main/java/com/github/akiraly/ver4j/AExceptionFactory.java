@@ -10,9 +10,27 @@ public abstract class AExceptionFactory implements ExceptionFactory {
 	}
 
 	@Override
-	public RuntimeException newException(Object message) {
+	public final RuntimeException newException(Object message) {
 		return createException(String.valueOf(message));
 	}
+
+	@Override
+	public final RuntimeException notEmptyCollectionException(Object name) {
+		return notEmptyException("Collection", name);
+	}
+
+	@Override
+	public final RuntimeException notEmptyIterableException(Object name) {
+		return notEmptyException("Iterable", name);
+	}
+
+	@Override
+	public final RuntimeException notEmptyArrayException(Object name) {
+		return notEmptyException("Array", name);
+	}
+
+	protected abstract RuntimeException notEmptyException(String type,
+			Object name);
 
 	protected abstract RuntimeException createException(String message);
 }

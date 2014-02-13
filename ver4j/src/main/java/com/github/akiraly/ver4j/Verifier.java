@@ -2,6 +2,8 @@ package com.github.akiraly.ver4j;
 
 import static com.google.common.collect.Iterables.isEmpty;
 
+import java.util.Collection;
+
 import javax.annotation.Nonnull;
 
 @Nonnull
@@ -18,10 +20,22 @@ public class Verifier {
 		return object;
 	}
 
-	public <E, C extends Iterable<E>> C notEmpty(C collection, Object name) {
-		if (isEmpty(notNull(collection, name)))
-			throw exceptionFactory.notEmptyException(name);
+	public <E, I extends Iterable<E>> I notEmpty(I iterable, Object name) {
+		if (isEmpty(notNull(iterable, name)))
+			throw exceptionFactory.notEmptyIterableException(name);
+		return iterable;
+	}
+
+	public <E, C extends Collection<E>> C notEmpty(C collection, Object name) {
+		if (notNull(collection, name).isEmpty())
+			throw exceptionFactory.notEmptyCollectionException(name);
 		return collection;
+	}
+
+	public <T> T[] notEmpty(T[] array, Object name) {
+		if (notNull(array, name).length < 1)
+			throw exceptionFactory.notEmptyArrayException(name);
+		return array;
 	}
 
 	public void isTrue(boolean check, String message, Object... params) {

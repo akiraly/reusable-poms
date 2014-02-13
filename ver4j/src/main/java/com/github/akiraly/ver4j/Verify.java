@@ -1,5 +1,7 @@
 package com.github.akiraly.ver4j;
 
+import java.util.Collection;
+
 import javax.annotation.Nonnull;
 
 @Nonnull
@@ -22,19 +24,46 @@ public abstract class Verify {
 		return INSTANCE.resultNotNull(object, name);
 	}
 
-	public static <E, C extends Iterable<E>> C argNotEmpty(C collection,
+	public static <E, I extends Iterable<E>> I argNotEmpty(I iterable,
+			Object name) {
+		return INSTANCE.argNotEmpty(iterable, name);
+	}
+
+	public static <E, I extends Iterable<E>> I stateNotEmpty(I iterable,
+			Object name) {
+		return INSTANCE.stateNotEmpty(iterable, name);
+	}
+
+	public static <E, I extends Iterable<E>> I resultNotEmpty(I iterable,
+			Object name) {
+		return INSTANCE.resultNotEmpty(iterable, name);
+	}
+
+	public static <E, C extends Collection<E>> C argNotEmpty(C collection,
 			Object name) {
 		return INSTANCE.argNotEmpty(collection, name);
 	}
 
-	public static <E, C extends Iterable<E>> C stateNotEmpty(C collection,
+	public static <E, C extends Collection<E>> C stateNotEmpty(C collection,
 			Object name) {
 		return INSTANCE.stateNotEmpty(collection, name);
 	}
 
-	public static <E, C extends Iterable<E>> C resultNotEmpty(C collection,
+	public static <E, C extends Collection<E>> C resultNotEmpty(C collection,
 			Object name) {
 		return INSTANCE.resultNotEmpty(collection, name);
+	}
+
+	public static <T> T[] argNotEmpty(T[] array, Object name) {
+		return INSTANCE.argNotEmpty(array, name);
+	}
+
+	public static <T> T[] stateNotEmpty(T[] array, Object name) {
+		return INSTANCE.stateNotEmpty(array, name);
+	}
+
+	public static <T> T[] resultNotEmpty(T[] array, Object name) {
+		return INSTANCE.resultNotEmpty(array, name);
 	}
 
 	public static void argIsTrue(boolean check, String message,

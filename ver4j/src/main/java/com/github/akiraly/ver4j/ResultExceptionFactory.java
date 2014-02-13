@@ -10,8 +10,8 @@ public class ResultExceptionFactory extends AExceptionFactory {
 	}
 
 	@Override
-	public RuntimeException notEmptyException(Object name) {
-		return newException("Collection result \"%s\" is empty.", name);
+	protected RuntimeException notEmptyException(String type, Object name) {
+		return newException("%s result \"%s\" is empty.", type, name);
 	}
 
 	@Override
