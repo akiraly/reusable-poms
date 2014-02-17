@@ -39,7 +39,7 @@
 					<version>${dependency.jetty.version}</version>
 					<configuration>
 						<webApp>
-							<overrideDescriptor>jetty-run-web.xml</overrideDescriptor>
+							<overrideDescriptor>cfg/jetty-run-web.xml</overrideDescriptor>
 						</webApp>
 					</configuration>
 				</plugin>
@@ -53,6 +53,16 @@
 			<plugin>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>bundle-manifest</id>
+						<phase>none</phase>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

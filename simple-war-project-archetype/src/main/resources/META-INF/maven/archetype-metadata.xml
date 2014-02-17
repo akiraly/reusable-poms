@@ -3,5 +3,8 @@
 		<fileSet filtered="true" packaged="false" encoding="UTF-8">
 			<directory>src/main/webapp</directory>
 		</fileSet>
+		<fileSet filtered="false" packaged="false" encoding="UTF-8">
+			<directory>cfg</directory>
+		</fileSet>
 	</fileSets>
 </archetype-descriptor>
