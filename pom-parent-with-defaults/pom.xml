@@ -33,8 +33,8 @@
 		<dependency.querydsl.version>3.3.1</dependency.querydsl.version>
 		<dependency.servlet-api.version>3.1.0</dependency.servlet-api.version>
 		<dependency.slf4j.version>1.7.6</dependency.slf4j.version>
-		<dependency.spring.version>4.0.1.RELEASE</dependency.spring.version>
-		<dependency.spring-data-jpa.version>1.4.3.RELEASE</dependency.spring-data-jpa.version>
+		<dependency.spring.version>4.0.2.RELEASE</dependency.spring.version>
+		<dependency.spring-data-jpa.version>1.5.0.RELEASE</dependency.spring-data-jpa.version>
 		<dependency.tomcat.version>8.0.3</dependency.tomcat.version>
 	</properties>
 </project>
