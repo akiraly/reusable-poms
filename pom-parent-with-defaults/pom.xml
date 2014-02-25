@@ -23,7 +23,7 @@
 		<dependency.hibernate.version>4.3.1.Final</dependency.hibernate.version>
 		<dependency.hibernate-jpa-2.1-api.version>1.0.0.Final</dependency.hibernate-jpa-2.1-api.version>
 		<dependency.jackson.version>2.3.1</dependency.jackson.version>
-		<dependency.jetty.version>9.1.1.v20140108</dependency.jetty.version>
+		<dependency.jetty.version>9.1.2.v20140210</dependency.jetty.version>
 		<dependency.joda-time.version>2.3</dependency.joda-time.version>
 		<dependency.jsonpath.version>0.9.1</dependency.jsonpath.version>
 		<dependency.jsr305.version>2.0.3</dependency.jsr305.version>
