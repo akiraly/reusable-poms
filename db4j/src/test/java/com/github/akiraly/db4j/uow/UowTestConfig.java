@@ -9,11 +9,11 @@ import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.vendor.Database;
 
 import com.github.akiraly.db4j.CommonDbConfig;
+import com.github.akiraly.db4j.pool.EmbeddedDbcpDatabaseBuilder;
 import com.google.common.collect.ImmutableSet;
 
 @Configuration
@@ -22,15 +22,10 @@ import com.google.common.collect.ImmutableSet;
 class UowTestConfig {
 	@Bean
 	public DataSource dataSource() {
-		org.apache.tomcat.jdbc.pool.DataSource dataSource = new org.apache.tomcat.jdbc.pool.DataSource();
-		dataSource.setDefaultAutoCommit(false);
-		dataSource.setValidationQuery("SELECT 1");
-		dataSource.setDataSource(new EmbeddedDatabaseBuilder()
+		return new EmbeddedDbcpDatabaseBuilder()
 				.setType(EmbeddedDatabaseType.H2)
-				.setName(UowTest.class.getName() + "db")
-				.addScript("db_init.sql").build());
-
-		return dataSource;
+				.setName(UowTest.class.getName() + "db;TRACE_LEVEL_FILE=4")
+				.build();
 	}
 
 	@Bean
