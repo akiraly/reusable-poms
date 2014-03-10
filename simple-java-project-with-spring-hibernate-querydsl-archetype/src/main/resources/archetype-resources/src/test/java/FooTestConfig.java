@@ -6,7 +6,6 @@ import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.vendor.Database;
 
@@ -20,9 +19,9 @@ public class FooTestConfig {
 	@Bean
 	public DataSource dataSource() {
 		return new EmbeddedDbcpDatabaseBuilder()
-		.setType(EmbeddedDatabaseType.H2)
-.setName(FooTest.class.getName() + "db;TRACE_LEVEL_FILE=4")
-		.build();
+				.setType(EmbeddedDatabaseType.H2)
+				.setName(FooTest.class.getName() + "db;TRACE_LEVEL_FILE=4")
+				.build();
 	}
 
 	@Bean
