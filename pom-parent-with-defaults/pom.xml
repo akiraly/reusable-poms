@@ -36,6 +36,5 @@
 		<dependency.slf4j.version>1.7.6</dependency.slf4j.version>
 		<dependency.spring.version>4.0.2.RELEASE</dependency.spring.version>
 		<dependency.spring-data-jpa.version>1.5.0.RELEASE</dependency.spring-data-jpa.version>
-		<dependency.tomcat.version>8.0.3</dependency.tomcat.version>
 	</properties>
 </project>
