@@ -23,6 +23,12 @@
 			<version>5-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.github.akiraly.reusable-poms</groupId>
+			<artifactId>simple-war-project-archetype</artifactId>
+			<version>5-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -61,6 +67,38 @@
 							<resources>
 								<resource>
 									<directory>../simple-java-project-with-spring-web-archetype/src/main/resources/archetype-resources/src</directory>
+									<filtering>false</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-war-resources-src</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target/classes/archetype-resources/__rootArtifactId__/src</outputDirectory>
+							<resources>
+								<resource>
+									<directory>../simple-war-project-archetype/src/main/resources/archetype-resources/src</directory>
+									<filtering>false</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-war-resources-cfg</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target/classes/archetype-resources/__rootArtifactId__/cfg</outputDirectory>
+							<resources>
+								<resource>
+									<directory>../simple-war-project-archetype/src/main/resources/archetype-resources/cfg</directory>
 									<filtering>false</filtering>
 								</resource>
 							</resources>

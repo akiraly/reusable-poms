@@ -13,5 +13,6 @@
 	<modules>
 		<module>\${artifactId}-core</module>
 		<module>\${artifactId}-web</module>
+		<module>\${artifactId}</module>
 	</modules>
 </project>

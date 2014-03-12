@@ -26,5 +26,15 @@
 				</fileSet>
 			</fileSets>
 		</module>
+		<module name="${rootArtifactId}" id="${rootArtifactId}" dir="__rootArtifactId__">
+			<fileSets>
+				<fileSet filtered="true" packaged="false" encoding="UTF-8">
+					<directory>src/main/webapp</directory>
+				</fileSet>
+				<fileSet filtered="true" packaged="false" encoding="UTF-8">
+					<directory>cfg</directory>
+				</fileSet>
+			</fileSets>
+		</module>
 	</modules>
 </archetype-descriptor>
