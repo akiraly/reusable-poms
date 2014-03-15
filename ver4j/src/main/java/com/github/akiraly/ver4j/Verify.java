@@ -1,6 +1,7 @@
 package com.github.akiraly.ver4j;
 
 import java.util.Collection;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 
@@ -52,6 +53,19 @@ public abstract class Verify {
 	public static <E, C extends Collection<E>> C resultNotEmpty(C collection,
 			Object name) {
 		return INSTANCE.resultNotEmpty(collection, name);
+	}
+
+	public static <K, V, M extends Map<K, V>> M argNotEmpty(M map, Object name) {
+		return INSTANCE.argNotEmpty(map, name);
+	}
+
+	public static <K, V, M extends Map<K, V>> M stateNotEmpty(M map, Object name) {
+		return INSTANCE.stateNotEmpty(map, name);
+	}
+
+	public static <K, V, M extends Map<K, V>> M resultNotEmpty(M map,
+			Object name) {
+		return INSTANCE.resultNotEmpty(map, name);
 	}
 
 	public static <T> T[] argNotEmpty(T[] array, Object name) {

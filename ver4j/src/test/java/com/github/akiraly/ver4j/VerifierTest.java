@@ -1,12 +1,16 @@
 package com.github.akiraly.ver4j;
 
+import static org.junit.Assert.assertSame;
+
 import java.util.Collection;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 
 import org.junit.Test;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 
 @Nonnull
 public class VerifierTest {
@@ -17,7 +21,9 @@ public class VerifierTest {
 
 	@Test(timeout = 200)
 	public void testArgNotNullPass() {
-		Verify.argNotNull(new Object(), "foo");
+		Object in = new Object();
+		Object out = Verify.argNotNull(in, "foo");
+		assertSame(in, out);
 	}
 
 	@Test(expected = IllegalStateException.class, timeout = 200)
@@ -27,7 +33,9 @@ public class VerifierTest {
 
 	@Test(timeout = 200)
 	public void testStateNotNullPass() {
-		Verify.stateNotNull(new Object(), "foo");
+		Object in = new Object();
+		Object out = Verify.stateNotNull(in, "foo");
+		assertSame(in, out);
 	}
 
 	@Test(expected = IllegalResultException.class, timeout = 200)
@@ -37,7 +45,9 @@ public class VerifierTest {
 
 	@Test(timeout = 200)
 	public void testResultNotNullPass() {
-		Verify.resultNotNull(new Object(), "foo");
+		Object in = new Object();
+		Object out = Verify.resultNotNull(in, "foo");
+		assertSame(in, out);
 	}
 
 	@Test(expected = IllegalArgumentException.class, timeout = 200)
@@ -52,7 +62,9 @@ public class VerifierTest {
 
 	@Test(timeout = 200)
 	public void testArgCollNotNullPass() {
-		Verify.argNotEmpty(ImmutableList.of(""), "foo");
+		ImmutableList<String> in = ImmutableList.of("");
+		ImmutableList<String> out = Verify.argNotEmpty(in, "foo");
+		assertSame(in, out);
 	}
 
 	@Test(expected = IllegalStateException.class, timeout = 200)
@@ -67,7 +79,9 @@ public class VerifierTest {
 
 	@Test(timeout = 200)
 	public void testStateCollNotNullPass() {
-		Verify.stateNotEmpty(ImmutableList.of(""), "foo");
+		ImmutableList<String> in = ImmutableList.of("");
+		ImmutableList<String> out = Verify.stateNotEmpty(in, "foo");
+		assertSame(in, out);
 	}
 
 	@Test(expected = IllegalResultException.class, timeout = 200)
@@ -82,7 +96,9 @@ public class VerifierTest {
 
 	@Test(timeout = 200)
 	public void testResultCollNotNullPass() {
-		Verify.resultNotEmpty(ImmutableList.of(""), "foo");
+		ImmutableList<String> in = ImmutableList.of("");
+		ImmutableList<String> out = Verify.resultNotEmpty(in, "foo");
+		assertSame(in, out);
 	}
 
 	@Test(expected = IllegalArgumentException.class, timeout = 200)
@@ -97,7 +113,9 @@ public class VerifierTest {
 
 	@Test(timeout = 200)
 	public void testArgIterableNotNullPass() {
-		Verify.argNotEmpty((Iterable<?>) ImmutableList.of(""), "foo");
+		Iterable<String> in = ImmutableList.of("");
+		Iterable<String> out = Verify.argNotEmpty(in, "foo");
+		assertSame(in, out);
 	}
 
 	@Test(expected = IllegalStateException.class, timeout = 200)
@@ -112,7 +130,9 @@ public class VerifierTest {
 
 	@Test(timeout = 200)
 	public void testStateIterableNotNullPass() {
-		Verify.stateNotEmpty((Iterable<?>) ImmutableList.of(""), "foo");
+		Iterable<String> in = ImmutableList.of("");
+		Iterable<String> out = Verify.stateNotEmpty(in, "foo");
+		assertSame(in, out);
 	}
 
 	@Test(expected = IllegalResultException.class, timeout = 200)
@@ -127,7 +147,9 @@ public class VerifierTest {
 
 	@Test(timeout = 200)
 	public void testResultIterableNotNullPass() {
-		Verify.resultNotEmpty((Iterable<?>) ImmutableList.of(""), "foo");
+		Iterable<String> in = ImmutableList.of("");
+		Iterable<String> out = Verify.resultNotEmpty(in, "foo");
+		assertSame(in, out);
 	}
 
 	@Test(expected = IllegalArgumentException.class, timeout = 200)
@@ -142,7 +164,9 @@ public class VerifierTest {
 
 	@Test(timeout = 200)
 	public void testArgArrayNotNullPass() {
-		Verify.argNotEmpty(new Object[] { "" }, "foo");
+		String[] in = new String[] { "" };
+		String[] out = Verify.argNotEmpty(in, "foo");
+		assertSame(in, out);
 	}
 
 	@Test(expected = IllegalStateException.class, timeout = 200)
@@ -157,7 +181,9 @@ public class VerifierTest {
 
 	@Test(timeout = 200)
 	public void testStateArrayNotNullPass() {
-		Verify.stateNotEmpty(new Object[] { "" }, "foo");
+		String[] in = new String[] { "" };
+		String[] out = Verify.stateNotEmpty(in, "foo");
+		assertSame(in, out);
 	}
 
 	@Test(expected = IllegalResultException.class, timeout = 200)
@@ -172,7 +198,60 @@ public class VerifierTest {
 
 	@Test(timeout = 200)
 	public void testResultArrayNotNullPass() {
-		Verify.resultNotEmpty(new Object[] { "" }, "foo");
+		String[] in = new String[] { "" };
+		String[] out = Verify.resultNotEmpty(in, "foo");
+		assertSame(in, out);
+	}
+
+	@Test(expected = IllegalArgumentException.class, timeout = 200)
+	public void testArgMapNotNullFail() {
+		Verify.argNotEmpty((Map<?, ?>) null, "foo");
+	}
+
+	@Test(expected = IllegalArgumentException.class, timeout = 200)
+	public void testArgMapNotNullFail2() {
+		Verify.argNotEmpty(ImmutableMap.of(), "foo");
+	}
+
+	@Test(timeout = 200)
+	public void testArgMapNotNullPass() {
+		ImmutableMap<String, Integer> in = ImmutableMap.of("", 0);
+		ImmutableMap<String, Integer> out = Verify.argNotEmpty(in, "foo");
+		assertSame(in, out);
+	}
+
+	@Test(expected = IllegalStateException.class, timeout = 200)
+	public void testStateMapNotNullFail() {
+		Verify.stateNotEmpty((Map<?, ?>) null, "foo");
+	}
+
+	@Test(expected = IllegalStateException.class, timeout = 200)
+	public void testStateMapNotNullFail2() {
+		Verify.stateNotEmpty(ImmutableMap.of(), "foo");
+	}
+
+	@Test(timeout = 200)
+	public void testStateMapNotNullPass() {
+		ImmutableMap<String, Integer> in = ImmutableMap.of("", 0);
+		ImmutableMap<String, Integer> out = Verify.stateNotEmpty(in, "foo");
+		assertSame(in, out);
+	}
+
+	@Test(expected = IllegalResultException.class, timeout = 200)
+	public void testResultMapNotNullFail() {
+		Verify.resultNotEmpty((Map<?, ?>) null, "foo");
+	}
+
+	@Test(expected = IllegalResultException.class, timeout = 200)
+	public void testResultMapNotNullFail2() {
+		Verify.resultNotEmpty(ImmutableMap.of(), "foo");
+	}
+
+	@Test(timeout = 200)
+	public void testResultMapNotNullPass() {
+		ImmutableMap<String, Integer> in = ImmutableMap.of("", 0);
+		ImmutableMap<String, Integer> out = Verify.resultNotEmpty(in, "foo");
+		assertSame(in, out);
 	}
 
 	@Test(expected = IllegalArgumentException.class, timeout = 200)

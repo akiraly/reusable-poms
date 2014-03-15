@@ -3,6 +3,7 @@ package com.github.akiraly.ver4j;
 import static com.google.common.collect.Iterables.isEmpty;
 
 import java.util.Collection;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 
@@ -30,6 +31,12 @@ public class Verifier {
 		if (notNull(collection, name).isEmpty())
 			throw exceptionFactory.notEmptyCollectionException(name);
 		return collection;
+	}
+
+	public <K, V, M extends Map<K, V>> M notEmpty(M map, Object name) {
+		if (notNull(map, name).isEmpty())
+			throw exceptionFactory.notEmptyMapException(name);
+		return map;
 	}
 
 	public <T> T[] notEmpty(T[] array, Object name) {

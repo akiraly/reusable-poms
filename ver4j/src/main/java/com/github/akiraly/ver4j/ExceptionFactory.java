@@ -12,6 +12,8 @@ public interface ExceptionFactory {
 
 	RuntimeException notEmptyCollectionException(Object name);
 
+	RuntimeException notEmptyMapException(Object name);
+
 	RuntimeException notEmptyIterableException(Object name);
 
 	RuntimeException notEmptyArrayException(Object name);

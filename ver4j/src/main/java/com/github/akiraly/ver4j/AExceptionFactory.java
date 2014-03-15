@@ -20,6 +20,11 @@ public abstract class AExceptionFactory implements ExceptionFactory {
 	}
 
 	@Override
+	public RuntimeException notEmptyMapException(Object name) {
+		return notEmptyException("Map", name);
+	}
+
+	@Override
 	public final RuntimeException notEmptyIterableException(Object name) {
 		return notEmptyException("Iterable", name);
 	}
