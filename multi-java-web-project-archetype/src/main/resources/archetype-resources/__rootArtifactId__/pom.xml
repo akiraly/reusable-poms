@@ -5,6 +5,7 @@
 		<groupId>com.github.akiraly.reusable-poms</groupId>
 		<artifactId>pom-parent-with-war</artifactId>
 		<version>${project.version}</version>
+		<relativePath />
 	</parent>
 	<groupId>\${groupId}</groupId>
 	<artifactId>\${artifactId}</artifactId>
