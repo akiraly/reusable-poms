@@ -23,8 +23,8 @@ public class AuditedFooDao extends AbstractDao<Long, AuditedFoo> {
 	}
 
 	@Override
-	public Optional<AuditedFoo> find(Long key) {
-		return super.find(key);
+	public Optional<AuditedFoo> tryFind(Long key) {
+		return super.tryFind(key);
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package com.github.akiraly.db4j;
 
 import static com.github.akiraly.ver4j.Verify.argNotNull;
 import static com.google.common.base.Optional.fromNullable;
+import static com.google.common.base.Preconditions.checkState;
 
 import java.io.Serializable;
 
@@ -48,9 +49,15 @@ public abstract class AbstractDao<PK extends Serializable, E extends AbstractPer
 		entityManager().persist(argNotNull(entity, "entity"));
 	}
 
-	protected Optional<E> find(PK key) {
+	protected Optional<E> tryFind(PK key) {
 		return fromNullable(entityManager().find(entityClass(),
 				argNotNull(key, "key")));
+	}
+
+	protected E find(PK key) {
+		E entity = entityManager().find(entityClass(), argNotNull(key, "key"));
+		checkState(entity != null, "Couldn't find entity with id: %s", key);
+		return entity;
 	}
 
 	protected long count() {

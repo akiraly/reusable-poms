@@ -28,7 +28,8 @@ public class UowTest extends AbstractUowTest {
 			@Override
 			protected void doInTransactionWithoutResult(TransactionStatus status) {
 				TestCaseHandler handler = testCaseHandlerFactory().get();
-				Optional<Uow> uow1Loaded = handler.uowDao().find(uow1.getId());
+				Optional<Uow> uow1Loaded = handler.uowDao().tryFind(
+						uow1.getId());
 				assertPresent(uow1Loaded);
 				Assert.assertEquals(uow1User, uow1Loaded.get().getUser());
 				Assert.assertEquals(uow1, uow1Loaded.get());

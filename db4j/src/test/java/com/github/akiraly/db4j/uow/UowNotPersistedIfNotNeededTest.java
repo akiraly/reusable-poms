@@ -34,7 +34,7 @@ public class UowNotPersistedIfNotNeededTest extends AbstractUowTest {
 			protected void doInTransactionWithoutResult(TransactionStatus status) {
 				TestCaseHandler handler = testCaseHandlerFactory().get();
 				Assert.assertEquals(1, handler.fooDao().count());
-				Optional<Foo> fooLoaded = handler.fooDao().find(foo.getId());
+				Optional<Foo> fooLoaded = handler.fooDao().tryFind(foo.getId());
 				assertPresent(fooLoaded);
 			}
 		});

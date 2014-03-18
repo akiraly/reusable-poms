@@ -34,14 +34,15 @@ public class UowCascadePersistenceTest extends AbstractUowTest {
 			protected void doInTransactionWithoutResult(TransactionStatus status) {
 				TestCaseHandler handler = testCaseHandlerFactory().get();
 				Assert.assertEquals(1, handler.auditedFooDao().count());
-				Optional<AuditedFoo> fooLoaded = handler.auditedFooDao().find(
-						auditedFoo.getId());
+				Optional<AuditedFoo> fooLoaded = handler.auditedFooDao()
+						.tryFind(auditedFoo.getId());
 				assertPresent(fooLoaded);
 				Assert.assertNotNull(fooLoaded.get().getCreateUow());
 				Assert.assertSame(fooLoaded.get().getCreateUow(), fooLoaded
 						.get().getUpdateUow());
 
-				Optional<Uow> uow1Loaded = handler.uowDao().find(uow1.getId());
+				Optional<Uow> uow1Loaded = handler.uowDao().tryFind(
+						uow1.getId());
 				assertPresent(uow1Loaded);
 				Assert.assertEquals(uow1User, uow1Loaded.get().getUser());
 				Assert.assertSame(fooLoaded.get().getCreateUow(),
@@ -56,8 +57,8 @@ public class UowCascadePersistenceTest extends AbstractUowTest {
 			@Override
 			protected void doInTransactionWithoutResult(TransactionStatus status) {
 				TestCaseHandler handler = testCaseHandlerFactory().get();
-				Optional<AuditedFoo> fooLoaded = handler.auditedFooDao().find(
-						auditedFoo.getId());
+				Optional<AuditedFoo> fooLoaded = handler.auditedFooDao()
+						.tryFind(auditedFoo.getId());
 				fooLoaded.get().setBar("bar");
 				fooLoaded.get().setUpdateUow(uow2);
 			}
@@ -67,8 +68,8 @@ public class UowCascadePersistenceTest extends AbstractUowTest {
 			@Override
 			protected void doInTransactionWithoutResult(TransactionStatus status) {
 				TestCaseHandler handler = testCaseHandlerFactory().get();
-				Optional<AuditedFoo> fooLoaded = handler.auditedFooDao().find(
-						auditedFoo.getId());
+				Optional<AuditedFoo> fooLoaded = handler.auditedFooDao()
+						.tryFind(auditedFoo.getId());
 				assertPresent(fooLoaded);
 				Assert.assertNotNull(fooLoaded.get().getCreateUow());
 				Assert.assertNotSame(fooLoaded.get().getCreateUow(), fooLoaded
