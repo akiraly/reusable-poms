@@ -26,7 +26,7 @@ public class ConvertTest {
 		new DateTime(DateTimeZone.UTC);
 	}
 
-	@Test(timeout = 500)
+	@Test(timeout = 600)
 	public void testDate2UtcDateTime() {
 		Date date = new Date();
 		DateTime dateTime = Convert.date2UtcDateTime(date);
@@ -35,7 +35,7 @@ public class ConvertTest {
 		assertEquals(date, dateTime.toDate());
 	}
 
-	@Test(timeout = 500)
+	@Test(timeout = 600)
 	public void testDate2OptUtcDateTime() {
 		assertFalse(Convert.date2OptUtcDateTime(null).isPresent());
 
@@ -47,7 +47,7 @@ public class ConvertTest {
 		assertEquals(date, dateTime.get().toDate());
 	}
 
-	@Test(timeout = 500)
+	@Test(timeout = 600)
 	public void testDateTime2Date() {
 		DateTime dateTime = new DateTime(DateTimeZone.UTC);
 		Date date = Convert.dateTime2Date(dateTime);

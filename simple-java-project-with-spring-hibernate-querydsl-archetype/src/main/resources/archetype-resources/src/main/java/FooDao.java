@@ -23,8 +23,8 @@ public class FooDao extends AbstractDao<Long, Foo> {
 	}
 
 	@Override
-	public Optional<Foo> find(Long key) {
-		return super.find(key);
+	public Optional<Foo> tryFind(Long key) {
+		return super.tryFind(key);
 	}
 
 	@Override

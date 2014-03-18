@@ -67,7 +67,7 @@ public class FooTest {
 				Assert.assertEquals(5, fooDao.count());
 
 				for (Foo saved : savedEntities) {
-					Optional<Foo> loaded = fooDao.find(saved.getId());
+					Optional<Foo> loaded = fooDao.tryFind(saved.getId());
 					Assert.assertTrue(loaded != null && loaded.isPresent());
 					Assert.assertEquals(saved, loaded.get());
 					Assert.assertEquals(saved.getBar(), loaded.get().getBar());
