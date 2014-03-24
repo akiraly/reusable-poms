@@ -145,7 +145,7 @@ This project contains reusable maven parent poms and maven project archetypes wi
 						<notimestamp>true</notimestamp>
 						<quiet>true</quiet>
 						<links>
-							<link>http://docs.oracle.com/javase/7/docs/api</link>
+							<link>http://docs.oracle.com/javase/8/docs/api</link>
 						</links>
 					</configuration>
 					<executions>
@@ -206,7 +206,7 @@ This project contains reusable maven parent poms and maven project archetypes wi
 									<notimestamp>true</notimestamp>
 									<quiet>true</quiet>
 									<links>
-										<link>http://docs.oracle.com/javase/7/docs/api</link>
+										<link>http://docs.oracle.com/javase/8/docs/api</link>
 									</links>
 								</configuration>
 								<reports>

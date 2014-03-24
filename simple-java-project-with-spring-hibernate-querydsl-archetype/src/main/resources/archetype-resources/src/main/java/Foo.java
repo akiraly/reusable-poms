@@ -1,6 +1,11 @@
 package ${package};
 
-import java.util.Date;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.TimeZone;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -10,11 +15,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.joda.time.DateTime;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import com.github.akiraly.db4j.converter.Convert;
-import com.google.common.base.Optional;
 
 @Nonnull
 @Entity
@@ -29,7 +32,8 @@ public class Foo extends AbstractPersistable<Long> {
 	private String name;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date dt = new Date();
+	private Calendar dt = Calendar.getInstance(
+			TimeZone.getTimeZone(ZoneOffset.UTC), Locale.US);
 
 	public Bar getBar() {
 		return bar;
@@ -47,12 +51,12 @@ public class Foo extends AbstractPersistable<Long> {
 		this.name = name;
 	}
 
-	public Optional<DateTime> getDt() {
-		return Convert.date2OptUtcDateTime(dt);
+	public Optional<OffsetDateTime> getDt() {
+		return Convert.calendar2OptDateTime(dt);
 	}
 
-	public void setDt(Optional<DateTime> dt) {
-		this.dt = Convert.dateTime2Date(dt);
+	public void setDt(Optional<OffsetDateTime> dt) {
+		this.dt = Convert.dateTime2Calendar(dt);
 	}
 
 	@Override

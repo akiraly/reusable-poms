@@ -1,5 +1,7 @@
 package ${package};
 
+import java.util.Optional;
+
 import javax.annotation.Nonnull;
 import javax.persistence.EntityManager;
 
@@ -7,7 +9,6 @@ import org.springframework.data.jpa.repository.support.QueryDslJpaRepository;
 
 import com.github.akiraly.db4j.AbstractDao;
 import com.github.akiraly.db4j.EntityInformation;
-import com.google.common.base.Optional;
 
 @Nonnull
 public class FooDao extends AbstractDao<Long, Foo> {
@@ -32,4 +33,3 @@ public class FooDao extends AbstractDao<Long, Foo> {
 		return super.count();
 	}
 }
-
