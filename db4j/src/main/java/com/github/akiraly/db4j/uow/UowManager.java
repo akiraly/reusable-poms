@@ -4,7 +4,9 @@ import static com.github.akiraly.ver4j.Verify.argNotNull;
 import static com.github.akiraly.ver4j.Verify.resultNotNull;
 import static com.github.akiraly.ver4j.Verify.stateIsTrue;
 import static com.github.akiraly.ver4j.Verify.stateNotNull;
-import static com.google.common.base.Suppliers.ofInstance;
+
+import java.util.Optional;
+import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 
@@ -12,8 +14,6 @@ import org.springframework.transaction.support.TransactionSynchronizationAdapter
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Optional;
-import com.google.common.base.Supplier;
 
 /**
  * Not part of the public API
@@ -34,7 +34,7 @@ public class UowManager {
 	}
 
 	public void bind(Uow uow) {
-		bind(ofInstance(uow));
+		bind(() -> uow);
 	}
 
 	public void bind(Supplier<Uow> uow) {
@@ -93,7 +93,7 @@ public class UowManager {
 
 	@Nonnull
 	private class UowSynchronizer extends TransactionSynchronizationAdapter {
-		private Optional<Supplier<Uow>> suspendedResource = Optional.absent();
+		private Optional<Supplier<Uow>> suspendedResource = Optional.empty();
 
 		@Override
 		public void suspend() {

@@ -2,6 +2,8 @@ package com.github.akiraly.db4j.pool;
 
 import static com.github.akiraly.ver4j.Verify.argNotNull;
 
+import java.util.Optional;
+
 import javax.annotation.Nonnull;
 
 import org.springframework.core.io.DefaultResourceLoader;
@@ -12,8 +14,6 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactory;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
-
-import com.google.common.base.Optional;
 
 /**
  * Modeled after {@link EmbeddedDatabaseBuilder}. Enables setting a custom
@@ -32,7 +32,7 @@ public class ConfigurableEmbeddedDatabaseBuilder {
 	}
 
 	public ConfigurableEmbeddedDatabaseBuilder(ResourceLoader resourceLoader) {
-		this(resourceLoader, Optional.<DataSourceFactory> absent());
+		this(resourceLoader, Optional.<DataSourceFactory> empty());
 	}
 
 	public ConfigurableEmbeddedDatabaseBuilder(

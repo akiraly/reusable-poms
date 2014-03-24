@@ -2,9 +2,9 @@ package com.github.akiraly.db4j.uow;
 
 import static com.github.akiraly.ver4j.Verify.argNotNull;
 
-import javax.annotation.Nonnull;
+import java.util.function.Supplier;
 
-import com.google.common.base.Supplier;
+import javax.annotation.Nonnull;
 
 @Nonnull
 class TestCaseHandlerFactory implements Supplier<TestCaseHandler> {

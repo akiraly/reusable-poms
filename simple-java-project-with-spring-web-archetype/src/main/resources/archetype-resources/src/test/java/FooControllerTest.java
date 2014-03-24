@@ -14,7 +14,7 @@ public class FooControllerTest extends AbstractFooControllerTest {
 		mockMvc = MockMvcBuilders.standaloneSetup(new FooController()).build();
 	}
 
-	@Test(timeout = 2000)
+	@Test(timeout = 4000)
 	@Override
 	public void testGetFoos() throws Exception {
 		super.testGetFoos();

@@ -1,11 +1,12 @@
 package com.github.akiraly.db4j.uow;
 
+import java.util.function.Supplier;
+
 import javax.annotation.Nonnull;
 import javax.persistence.EntityManagerFactory;
 
 import com.github.akiraly.db4j.AbstractDaoFactory;
 import com.github.akiraly.db4j.EntityInformation;
-import com.google.common.base.Supplier;
 
 @Nonnull
 public class AuditedFooDaoFactory extends
