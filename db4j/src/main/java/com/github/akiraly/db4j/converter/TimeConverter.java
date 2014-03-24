@@ -19,13 +19,13 @@ public class TimeConverter {
 	}
 
 	public Optional<OffsetDateTime> date2OptUtcDateTime(@Nullable Date date) {
-		return ofNullable(date).map(dt -> date2UtcDateTime(dt));
+		return ofNullable(date).map(this::date2UtcDateTime);
 	}
 
 	@Nullable
 	public Date dateTime2Date(Optional<OffsetDateTime> offsetDateTime) {
 		return argNotNull(offsetDateTime, "offsetDateTime").map(
-				odt -> dateTime2Date(odt)).orElse(null);
+				this::dateTime2Date).orElse(null);
 	}
 
 	public Date dateTime2Date(OffsetDateTime offsetDateTime) {
