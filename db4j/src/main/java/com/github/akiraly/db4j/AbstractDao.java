@@ -1,18 +1,17 @@
 package com.github.akiraly.db4j;
 
 import static com.github.akiraly.ver4j.Verify.argNotNull;
-import static com.google.common.base.Optional.fromNullable;
 import static com.google.common.base.Preconditions.checkState;
+import static java.util.Optional.ofNullable;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 import javax.annotation.Nonnull;
 import javax.persistence.EntityManager;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.data.jpa.repository.support.QueryDslJpaRepository;
-
-import com.google.common.base.Optional;
 
 @Nonnull
 public abstract class AbstractDao<PK extends Serializable, E extends AbstractPersistable<PK>> {
@@ -50,7 +49,7 @@ public abstract class AbstractDao<PK extends Serializable, E extends AbstractPer
 	}
 
 	protected Optional<E> tryFind(PK key) {
-		return fromNullable(entityManager().find(entityClass(),
+		return ofNullable(entityManager().find(entityClass(),
 				argNotNull(key, "key")));
 	}
 

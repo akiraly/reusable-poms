@@ -1,5 +1,7 @@
 package com.github.akiraly.db4j.uow;
 
+import java.util.Optional;
+
 import javax.annotation.Nonnull;
 
 import org.junit.Assert;
@@ -8,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.support.TransactionTemplate;
-
-import com.google.common.base.Optional;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { UowTestConfig.class })

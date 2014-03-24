@@ -20,7 +20,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import com.google.common.base.Function;
 import com.google.common.collect.ImmutableSet;
 
 @Configuration
@@ -67,12 +66,7 @@ public class CommonDbConfig {
 
 	private String[] toStringArray(Iterable<Set<Package>> packagesToScan) {
 		return ImmutableSet.copyOf(
-				transform(concat(packagesToScan),
-						new Function<Package, String>() {
-							@Override
-							public String apply(Package p) {
-								return p.getName();
-							}
-						})).toArray(new String[0]);
+				transform(concat(packagesToScan), p -> p.getName())).toArray(
+				new String[0]);
 	}
 }

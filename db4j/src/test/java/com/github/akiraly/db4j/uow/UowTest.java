@@ -1,13 +1,13 @@
 package com.github.akiraly.db4j.uow;
 
+import java.util.Optional;
+
 import javax.annotation.Nonnull;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
-
-import com.google.common.base.Optional;
 
 @Nonnull
 public class UowTest extends AbstractUowTest {
