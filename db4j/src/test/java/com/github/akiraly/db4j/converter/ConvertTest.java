@@ -6,33 +6,25 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.Date;
+import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.junit.BeforeClass;
 import org.junit.Test;
-
-import com.google.common.base.Optional;
 
 @Nonnull
 public class ConvertTest {
 
-	@BeforeClass
-	public static void beforeClass() {
-		// trigger the initialization of joda lib
-		new DateTime(DateTimeZone.UTC);
-	}
-
 	@Test(timeout = 600)
 	public void testDate2UtcDateTime() {
 		Date date = new Date();
-		DateTime dateTime = Convert.date2UtcDateTime(date);
-		assertNotNull(dateTime);
-		assertEquals(DateTimeZone.UTC, dateTime.getZone());
-		assertEquals(date, dateTime.toDate());
+		OffsetDateTime offsetDateTime = Convert.date2UtcDateTime(date);
+		assertNotNull(offsetDateTime);
+		assertEquals(ZoneOffset.UTC, offsetDateTime.getOffset());
+		assertEquals(date.toInstant(), offsetDateTime.toInstant());
 	}
 
 	@Test(timeout = 600)
@@ -40,24 +32,25 @@ public class ConvertTest {
 		assertFalse(Convert.date2OptUtcDateTime(null).isPresent());
 
 		Date date = new Date();
-		Optional<DateTime> dateTime = Convert.date2OptUtcDateTime(date);
-		assertNotNull(dateTime);
-		assertTrue(dateTime.isPresent());
-		assertEquals(DateTimeZone.UTC, dateTime.get().getZone());
-		assertEquals(date, dateTime.get().toDate());
+		Optional<OffsetDateTime> offsetDateTime = Convert
+				.date2OptUtcDateTime(date);
+		assertNotNull(offsetDateTime);
+		assertTrue(offsetDateTime.isPresent());
+		assertEquals(ZoneOffset.UTC, offsetDateTime.get().getOffset());
+		assertEquals(date.toInstant(), offsetDateTime.get().toInstant());
 	}
 
 	@Test(timeout = 600)
 	public void testDateTime2Date() {
-		DateTime dateTime = new DateTime(DateTimeZone.UTC);
-		Date date = Convert.dateTime2Date(dateTime);
+		OffsetDateTime offsetDateTime = OffsetDateTime.now(ZoneOffset.UTC);
+		Date date = Convert.dateTime2Date(offsetDateTime);
 		assertNotNull(date);
-		assertEquals(dateTime.toDate(), date);
+		assertEquals(offsetDateTime.toInstant(), date.toInstant());
 
-		assertNull(Convert.dateTime2Date(Optional.<DateTime> absent()));
+		assertNull(Convert.dateTime2Date(Optional.<OffsetDateTime> empty()));
 
-		Date date2 = Convert.dateTime2Date(Optional.of(dateTime));
+		Date date2 = Convert.dateTime2Date(Optional.of(offsetDateTime));
 		assertNotNull(date2);
-		assertEquals(dateTime.toDate(), date2);
+		assertEquals(offsetDateTime.toInstant(), date2.toInstant());
 	}
 }
