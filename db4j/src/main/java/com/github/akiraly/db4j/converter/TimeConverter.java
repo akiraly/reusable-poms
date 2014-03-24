@@ -5,8 +5,11 @@ import static java.util.Optional.ofNullable;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.TimeZone;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -32,4 +35,29 @@ public class TimeConverter {
 		return Date.from(argNotNull(offsetDateTime, "offsetDateTime")
 				.toInstant());
 	}
+
+	public OffsetDateTime calendar2DateTime(Calendar calendar) {
+		return OffsetDateTime
+				.ofInstant(argNotNull(calendar, "calendar").toInstant(), calendar.getTimeZone().toZoneId());
+	}
+
+	public Optional<OffsetDateTime> calendar2OptDateTime(@Nullable Calendar calendar) {
+		return ofNullable(calendar).map(this::calendar2DateTime);
+	}
+
+	@Nullable
+	public Calendar dateTime2Calendar(Optional<OffsetDateTime> offsetDateTime) {
+		return argNotNull(offsetDateTime, "offsetDateTime").map(
+				this::dateTime2Calendar).orElse(null);
+	}
+
+	public Calendar dateTime2Calendar(OffsetDateTime offsetDateTime) {
+		argNotNull(offsetDateTime, "offsetDateTime");
+
+		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone(offsetDateTime.getOffset()), Locale.US);
+		calendar.setTimeInMillis(offsetDateTime.toInstant().toEpochMilli());
+
+		return calendar;
+	}
+
 }
