@@ -14,8 +14,10 @@ import org.springframework.data.jpa.repository.support.JpaPersistableEntityInfor
 import org.springframework.data.jpa.repository.support.QueryDslJpaRepository;
 import org.springframework.orm.jpa.EntityManagerFactoryUtils;
 
+import com.mysema.query.types.path.EntityPathBase;
+
 @Nonnull
-public abstract class AbstractDaoFactory<PK extends Serializable, E extends AbstractPersistable<PK>, D extends AbstractDao<PK, E>> {
+public abstract class AbstractDaoFactory<PK extends Serializable, E extends AbstractPersistable<PK>, Q extends EntityPathBase<E>, D extends AbstractDao<PK, E, Q>> {
 	private final Class<D> daoClass;
 	private final EntityInformation<PK, E> entityInformation;
 	private final EntityManagerFactory entityManagerFactory;

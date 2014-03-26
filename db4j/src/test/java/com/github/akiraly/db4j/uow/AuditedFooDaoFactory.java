@@ -10,8 +10,8 @@ import com.github.akiraly.db4j.EntityInformation;
 
 @Nonnull
 public class AuditedFooDaoFactory extends
-		AbstractDaoFactory<Long, AuditedFoo, AuditedFooDao> implements
-		Supplier<AuditedFooDao> {
+		AbstractDaoFactory<Long, AuditedFoo, QAuditedFoo, AuditedFooDao>
+		implements Supplier<AuditedFooDao> {
 
 	public AuditedFooDaoFactory(EntityManagerFactory entityManagerFactory) {
 		super(AuditedFooDao.class, new EntityInformation<>(Long.class,

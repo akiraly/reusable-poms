@@ -14,19 +14,23 @@ import javax.persistence.EntityManager;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.data.jpa.repository.support.QueryDslJpaRepository;
 
+import com.mysema.query.types.path.EntityPathBase;
+
 @Nonnull
-public abstract class AbstractDao<PK extends Serializable, E extends AbstractPersistable<PK>> {
+public abstract class AbstractDao<PK extends Serializable, E extends AbstractPersistable<PK>, Q extends EntityPathBase<E>> {
 	private final EntityManager entityManager;
 	private final EntityInformation<PK, E> entityInformation;
 	private final QueryDslJpaRepository<E, PK> repository;
+	private final Q path;
 
 	protected AbstractDao(EntityManager entityManager,
 			EntityInformation<PK, E> entityInformation,
-			QueryDslJpaRepository<E, PK> repository) {
+			QueryDslJpaRepository<E, PK> repository, Q path) {
 		this.entityManager = argNotNull(entityManager, "entityManager");
 		this.entityInformation = argNotNull(entityInformation,
 				"entityInformation");
 		this.repository = argNotNull(repository, "repository");
+		this.path = argNotNull(path, "path");
 	}
 
 	protected EntityManager entityManager() {
@@ -43,6 +47,10 @@ public abstract class AbstractDao<PK extends Serializable, E extends AbstractPer
 
 	protected final QueryDslJpaRepository<E, PK> repository() {
 		return repository;
+	}
+
+	protected final Q path() {
+		return path;
 	}
 
 	protected void persist(E entity) {

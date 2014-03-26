@@ -11,11 +11,11 @@ import com.github.akiraly.db4j.AbstractDao;
 import com.github.akiraly.db4j.EntityInformation;
 
 @Nonnull
-public class UowDao extends AbstractDao<Long, Uow> {
+public class UowDao extends AbstractDao<Long, Uow, QUow> {
 	public UowDao(EntityManager entityManager,
 			EntityInformation<Long, Uow> entityInformation,
 			QueryDslJpaRepository<Uow, Long> repository) {
-		super(entityManager, entityInformation, repository);
+		super(entityManager, entityInformation, repository, QUow.uow);
 	}
 
 	@Override

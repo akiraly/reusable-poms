@@ -1,5 +1,6 @@
 package com.github.akiraly.db4j.uow;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.Nonnull;
@@ -11,11 +12,11 @@ import com.github.akiraly.db4j.AbstractDao;
 import com.github.akiraly.db4j.EntityInformation;
 
 @Nonnull
-public class FooDao extends AbstractDao<Long, Foo> {
+public class FooDao extends AbstractDao<Long, Foo, QFoo> {
 	public FooDao(EntityManager entityManager,
 			EntityInformation<Long, Foo> entityInformation,
 			QueryDslJpaRepository<Foo, Long> repository) {
-		super(entityManager, entityInformation, repository);
+		super(entityManager, entityInformation, repository, QFoo.foo);
 	}
 
 	@Override
@@ -31,5 +32,9 @@ public class FooDao extends AbstractDao<Long, Foo> {
 	@Override
 	public long count() {
 		return super.count();
+	}
+
+	public List<Foo> listAll() {
+		return repository().findAll(null, path().id.desc());
 	}
 }

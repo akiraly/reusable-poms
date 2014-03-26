@@ -9,7 +9,7 @@ import com.github.akiraly.db4j.AbstractDaoFactory;
 import com.github.akiraly.db4j.EntityInformation;
 
 @Nonnull
-public class UowDaoFactory extends AbstractDaoFactory<Long, Uow, UowDao>
+public class UowDaoFactory extends AbstractDaoFactory<Long, Uow, QUow, UowDao>
 		implements Supplier<UowDao> {
 
 	public UowDaoFactory(EntityManagerFactory entityManagerFactory) {
