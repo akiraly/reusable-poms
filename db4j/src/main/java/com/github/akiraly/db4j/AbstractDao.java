@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.Optional;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.persistence.EntityManager;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
@@ -49,14 +50,18 @@ public abstract class AbstractDao<PK extends Serializable, E extends AbstractPer
 	}
 
 	protected Optional<E> tryFind(PK key) {
-		return ofNullable(entityManager().find(entityClass(),
-				argNotNull(key, "key")));
+		return ofNullable(doFind(key));
 	}
 
 	protected E find(PK key) {
-		E entity = entityManager().find(entityClass(), argNotNull(key, "key"));
+		E entity = doFind(key);
 		checkState(entity != null, "Couldn't find entity with id: %s", key);
 		return entity;
+	}
+
+	@Nullable
+	private E doFind(PK key) {
+		return entityManager().find(entityClass(), argNotNull(key, "key"));
 	}
 
 	protected long count() {
