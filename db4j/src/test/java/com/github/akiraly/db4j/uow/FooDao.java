@@ -2,6 +2,7 @@ package com.github.akiraly.db4j.uow;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 import javax.persistence.EntityManager;
@@ -13,9 +14,9 @@ import com.github.akiraly.db4j.EntityInformation;
 
 @Nonnull
 public class FooDao extends AbstractDao<Long, Foo, QFoo> {
-	public FooDao(EntityManager entityManager,
+	public FooDao(Supplier<EntityManager> entityManager,
 			EntityInformation<Long, Foo> entityInformation,
-			QueryDslJpaRepository<Foo, Long> repository) {
+			Supplier<QueryDslJpaRepository<Foo, Long>> repository) {
 		super(entityManager, entityInformation, repository, QFoo.foo);
 	}
 

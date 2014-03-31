@@ -4,6 +4,7 @@ import static com.github.akiraly.ver4j.Verify.argNotNull;
 import static com.github.akiraly.ver4j.Verify.resultNotNull;
 
 import java.io.Serializable;
+import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 import javax.persistence.EntityManager;
@@ -32,18 +33,22 @@ public abstract class AbstractDaoFactory<PK extends Serializable, E extends Abst
 				"entityManagerFactory");
 	}
 
-	protected final EntityManager entityManagerOrFail() {
-		return resultNotNull(
+	protected final Supplier<EntityManager> entityManagerOrFail() {
+		return () -> resultNotNull(
 				EntityManagerFactoryUtils
 						.getTransactionalEntityManager(entityManagerFactory),
 				"thread bound entity manager");
 	}
 
-	protected final QueryDslJpaRepository<E, PK> newRepository() {
-		EntityManager entityManager = entityManagerOrFail();
-		JpaPersistableEntityInformation<E, PK> jpaEntityInformation = new JpaPersistableEntityInformation<E, PK>(
-				entityInformation.entityClass(), entityManager.getMetamodel());
-		return new QueryDslJpaRepository<>(jpaEntityInformation, entityManager);
+	protected final Supplier<QueryDslJpaRepository<E, PK>> newRepository() {
+		return () -> {
+			EntityManager entityManager = entityManagerOrFail().get();
+			JpaPersistableEntityInformation<E, PK> jpaEntityInformation = new JpaPersistableEntityInformation<E, PK>(
+					entityInformation.entityClass(),
+					entityManager.getMetamodel());
+			return new QueryDslJpaRepository<>(jpaEntityInformation,
+					entityManager);
+		};
 	}
 
 	protected final Class<D> daoClass() {

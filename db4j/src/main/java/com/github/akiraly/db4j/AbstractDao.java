@@ -2,10 +2,12 @@ package com.github.akiraly.db4j;
 
 import static com.github.akiraly.ver4j.Verify.argNotNull;
 import static com.google.common.base.Preconditions.checkState;
+import static com.google.common.base.Suppliers.memoize;
 import static java.util.Optional.ofNullable;
 
 import java.io.Serializable;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -18,23 +20,25 @@ import com.mysema.query.types.path.EntityPathBase;
 
 @Nonnull
 public abstract class AbstractDao<PK extends Serializable, E extends AbstractPersistable<PK>, Q extends EntityPathBase<E>> {
-	private final EntityManager entityManager;
+	private final Supplier<EntityManager> entityManager;
 	private final EntityInformation<PK, E> entityInformation;
-	private final QueryDslJpaRepository<E, PK> repository;
+	private final Supplier<QueryDslJpaRepository<E, PK>> repository;
 	private final Q path;
 
-	protected AbstractDao(EntityManager entityManager,
+	protected AbstractDao(Supplier<EntityManager> entityManager,
 			EntityInformation<PK, E> entityInformation,
-			QueryDslJpaRepository<E, PK> repository, Q path) {
-		this.entityManager = argNotNull(entityManager, "entityManager");
+			Supplier<QueryDslJpaRepository<E, PK>> repository, Q path) {
+		this.entityManager = () -> memoize(
+				() -> argNotNull(entityManager, "entityManager").get()).get();
 		this.entityInformation = argNotNull(entityInformation,
 				"entityInformation");
-		this.repository = argNotNull(repository, "repository");
+		this.repository = () -> memoize(
+				() -> argNotNull(repository, "repository").get()).get();
 		this.path = argNotNull(path, "path");
 	}
 
 	protected EntityManager entityManager() {
-		return entityManager;
+		return entityManager.get();
 	}
 
 	protected final Class<E> entityClass() {
@@ -46,7 +50,7 @@ public abstract class AbstractDao<PK extends Serializable, E extends AbstractPer
 	}
 
 	protected final QueryDslJpaRepository<E, PK> repository() {
-		return repository;
+		return repository.get();
 	}
 
 	protected final Q path() {
