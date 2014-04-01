@@ -2,12 +2,10 @@ package com.github.akiraly.db4j;
 
 import static com.github.akiraly.ver4j.Verify.argNotNull;
 import static com.google.common.base.Preconditions.checkState;
-import static com.google.common.base.Suppliers.memoize;
 import static java.util.Optional.ofNullable;
 
 import java.io.Serializable;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -20,37 +18,30 @@ import com.mysema.query.types.path.EntityPathBase;
 
 @Nonnull
 public abstract class AbstractDao<PK extends Serializable, E extends AbstractPersistable<PK>, Q extends EntityPathBase<E>> {
-	private final Supplier<EntityManager> entityManager;
-	private final EntityInformation<PK, E> entityInformation;
-	private final Supplier<QueryDslJpaRepository<E, PK>> repository;
+	private final DaoEntityManagerHolder<PK, E> daoEntityManagerHolder;
 	private final Q path;
 
-	protected AbstractDao(Supplier<EntityManager> entityManager,
-			EntityInformation<PK, E> entityInformation,
-			Supplier<QueryDslJpaRepository<E, PK>> repository, Q path) {
-		this.entityManager = () -> memoize(
-				() -> argNotNull(entityManager, "entityManager").get()).get();
-		this.entityInformation = argNotNull(entityInformation,
-				"entityInformation");
-		this.repository = () -> memoize(
-				() -> argNotNull(repository, "repository").get()).get();
+	protected AbstractDao(DaoEntityManagerHolder<PK, E> daoEntityManagerHolder,
+			Q path) {
+		this.daoEntityManagerHolder = argNotNull(daoEntityManagerHolder,
+				"daoEntityManagerHolder");
 		this.path = argNotNull(path, "path");
 	}
 
 	protected EntityManager entityManager() {
-		return entityManager.get();
+		return daoEntityManagerHolder.entityManager();
 	}
 
 	protected final Class<E> entityClass() {
-		return entityInformation.entityClass();
+		return daoEntityManagerHolder.entityInformation().entityClass();
 	}
 
 	protected final Class<PK> idClass() {
-		return entityInformation.idClass();
+		return daoEntityManagerHolder.entityInformation().idClass();
 	}
 
 	protected final QueryDslJpaRepository<E, PK> repository() {
-		return repository.get();
+		return daoEntityManagerHolder.repository();
 	}
 
 	protected final Q path() {

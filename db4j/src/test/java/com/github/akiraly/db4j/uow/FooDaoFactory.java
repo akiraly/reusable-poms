@@ -19,7 +19,6 @@ public class FooDaoFactory extends AbstractDaoFactory<Long, Foo, QFoo, FooDao>
 
 	@Override
 	public FooDao get() {
-		return new FooDao(entityManagerOrFail(), entityInformation(),
-				newRepository());
+		return new FooDao(newEntityManagerHolder());
 	}
 }

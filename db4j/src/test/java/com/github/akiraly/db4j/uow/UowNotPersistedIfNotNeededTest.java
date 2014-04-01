@@ -18,9 +18,10 @@ public class UowNotPersistedIfNotNeededTest extends AbstractUowTest {
 		final Foo foo = new Foo();
 
 		transactionTemplate().execute(new TransactionCallbackWithoutResult() {
+			final TestCaseHandler handler = testCaseHandlerFactory().get();
+
 			@Override
 			protected void doInTransactionWithoutResult(TransactionStatus status) {
-				TestCaseHandler handler = testCaseHandlerFactory().get();
 				Assert.assertEquals(0, handler.fooDao().count());
 				handler.fooDao().persist(foo);
 				Assert.assertNotNull(foo.getId());

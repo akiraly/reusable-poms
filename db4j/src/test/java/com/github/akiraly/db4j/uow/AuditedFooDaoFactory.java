@@ -20,7 +20,6 @@ public class AuditedFooDaoFactory extends
 
 	@Override
 	public AuditedFooDao get() {
-		return new AuditedFooDao(entityManagerOrFail(), entityInformation(),
-				newRepository());
+		return new AuditedFooDao(newEntityManagerHolder());
 	}
 }
