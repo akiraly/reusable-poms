@@ -1,6 +1,7 @@
 package com.github.akiraly.db4j;
 
 import static com.github.akiraly.ver4j.Verify.argNotNull;
+import static com.github.akiraly.ver4j.Verify.resultNotNull;
 import static com.google.common.base.Preconditions.checkState;
 import static java.util.Optional.ofNullable;
 
@@ -14,6 +15,7 @@ import javax.persistence.EntityManager;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.data.jpa.repository.support.QueryDslJpaRepository;
 
+import com.mysema.query.jpa.impl.JPADeleteClause;
 import com.mysema.query.types.path.EntityPathBase;
 
 @Nonnull
@@ -48,8 +50,9 @@ public abstract class AbstractDao<PK extends Serializable, E extends AbstractPer
 		return path;
 	}
 
-	protected void persist(E entity) {
+	protected PK persist(E entity) {
 		entityManager().persist(argNotNull(entity, "entity"));
+		return resultNotNull(entity.getId(), "entity PK");
 	}
 
 	protected Optional<E> tryFind(PK key) {
@@ -69,5 +72,9 @@ public abstract class AbstractDao<PK extends Serializable, E extends AbstractPer
 
 	protected long count() {
 		return repository().count();
+	}
+
+	protected long deleteAll() {
+		return new JPADeleteClause(entityManager(), path()).execute();
 	}
 }

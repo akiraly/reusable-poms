@@ -15,8 +15,8 @@ public class FooDao extends AbstractDao<Long, Foo, QFoo> {
 	}
 
 	@Override
-	public void persist(Foo entity) {
-		super.persist(entity);
+	public Long persist(Foo entity) {
+		return super.persist(entity);
 	}
 
 	@Override
@@ -31,5 +31,10 @@ public class FooDao extends AbstractDao<Long, Foo, QFoo> {
 
 	public List<Foo> listAll() {
 		return repository().findAll(null, path().id.desc());
+	}
+
+	@Override
+	public long deleteAll() {
+		return super.deleteAll();
 	}
 }

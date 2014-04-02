@@ -15,8 +15,8 @@ public class AuditedFooDao extends AbstractDao<Long, AuditedFoo, QAuditedFoo> {
 	}
 
 	@Override
-	public void persist(AuditedFoo entity) {
-		super.persist(entity);
+	public Long persist(AuditedFoo entity) {
+		return super.persist(entity);
 	}
 
 	@Override

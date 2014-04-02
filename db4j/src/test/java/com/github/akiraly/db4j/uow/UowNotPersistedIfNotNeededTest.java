@@ -1,10 +1,13 @@
 package com.github.akiraly.db4j.uow;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
@@ -22,11 +25,11 @@ public class UowNotPersistedIfNotNeededTest extends AbstractUowTest {
 
 			@Override
 			protected void doInTransactionWithoutResult(TransactionStatus status) {
-				Assert.assertEquals(0, handler.fooDao().count());
+				assertEquals(0, handler.fooDao().count());
 				handler.fooDao().persist(foo);
-				Assert.assertNotNull(foo.getId());
-				Assert.assertNull(uow1.getId());
-				Assert.assertEquals(1, handler.fooDao().count());
+				assertNotNull(foo.getId());
+				assertNull(uow1.getId());
+				assertEquals(1, handler.fooDao().count());
 			}
 		});
 
@@ -34,11 +37,29 @@ public class UowNotPersistedIfNotNeededTest extends AbstractUowTest {
 			@Override
 			protected void doInTransactionWithoutResult(TransactionStatus status) {
 				TestCaseHandler handler = testCaseHandlerFactory().get();
-				Assert.assertEquals(1, handler.fooDao().count());
-				Assert.assertEquals(1, handler.fooDao().listAll().size());
+				assertEquals(1, handler.fooDao().count());
+				assertEquals(1, handler.fooDao().listAll().size());
 				Optional<Foo> fooLoaded = handler.fooDao().tryFind(foo.getId());
 				assertPresent(fooLoaded);
+				assertEquals(1, handler.fooDao().deleteAll());
 			}
 		});
+	}
+
+	@Test(timeout = 8000)
+	public void testFooService() {
+		FooService fooService = new FooService(transactionTemplate(),
+				testCaseHandlerFactory().get().fooDao());
+
+		Foo foo = fooService.addFoo("bar");
+
+		assertNotNull(foo.getId());
+		assertNotNull(foo.getBar());
+
+		assertEquals(
+				1,
+				transactionTemplate().execute(
+						s -> testCaseHandlerFactory().get().fooDao()
+								.deleteAll()).longValue());
 	}
 }

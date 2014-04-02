@@ -14,8 +14,8 @@ public class UowDao extends AbstractDao<Long, Uow, QUow> {
 	}
 
 	@Override
-	public void persist(Uow entity) {
-		super.persist(entity);
+	public Long persist(Uow entity) {
+		return super.persist(entity);
 	}
 
 	@Override
