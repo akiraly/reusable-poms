@@ -9,4 +9,23 @@
 	<artifactId>db4j</artifactId>
 
 	<description>Common classes for dealing hibernate, spring data and auditing</description>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>com.mysema.maven</groupId>
+					<artifactId>apt-maven-plugin</artifactId>
+					<executions>
+						<execution>
+							<id>generetae-querydsl-classes</id>
+							<goals>
+								<goal>test-process</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 </project>
