@@ -1,12 +1,15 @@
 package com.github.akiraly.db4j.uow;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.Set;
 
 import javax.annotation.Nonnull;
+import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +20,6 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import com.github.akiraly.db4j.CommonDbConfig;
@@ -26,48 +27,42 @@ import com.github.akiraly.db4j.pool.EmbeddedDbcpDatabaseBuilder;
 import com.google.common.collect.ImmutableSet;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { UowTestConfig.class })
+@ContextConfiguration(classes = { FooServiceTestConfig.class })
 @Nonnull
-public class UowTest {
+public class FooServiceTest {
 	@Autowired
 	private TransactionTemplate transactionTemplate;
 
 	@Autowired
-	private UowDaoFactory uowDaoFactory;
+	private FooDaoFactory fooDaoFactory;
 
 	@Test(timeout = 16000)
-	public void testPersistStandaloneUow() {
-		final String uow1User = "u100";
-		final Uow uow1 = new Uow(uow1User);
-		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-			@Override
-			protected void doInTransactionWithoutResult(TransactionStatus status) {
-				uowDaoFactory.get().persist(uow1);
-				Assert.assertNotNull(uow1.getId());
-			}
-		});
+	public void testFooService() {
+		FooService fooService = new FooService(transactionTemplate,
+				fooDaoFactory.get());
 
-		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-			@Override
-			protected void doInTransactionWithoutResult(TransactionStatus status) {
-				Uow uow1Loaded = uowDaoFactory.get().find(uow1.getId());
-				Assert.assertEquals(uow1User, uow1Loaded.getUser());
-				Assert.assertEquals(uow1, uow1Loaded);
-			}
-		});
+		Foo foo = fooService.addFoo("bar");
+
+		assertNotNull(foo.getId());
+		assertNotNull(foo.getBar());
+
+		assertEquals(
+				1L,
+				transactionTemplate.execute(
+						s -> fooDaoFactory.get().deleteAll()).longValue());
 	}
 }
 
 @Configuration
 @Import({ UowConfig.class, CommonDbConfig.class })
 @Nonnull
-class UowTestConfig {
+class FooServiceTestConfig {
 	@Bean
 	public DataSource dataSource() {
 		return new EmbeddedDbcpDatabaseBuilder()
 				.setType(EmbeddedDatabaseType.H2)
 				.setName(
-						UowTest.class.getName()
+						FooServiceTest.class.getName()
 								+ RandomStringUtils.randomAlphabetic(5)
 								+ "db;TRACE_LEVEL_FILE=4").build();
 	}
@@ -79,6 +74,11 @@ class UowTestConfig {
 
 	@Bean
 	public Set<Package> packagesToScan() {
-		return ImmutableSet.of(Uow.class.getPackage());
+		return ImmutableSet.of(AuditedFoo.class.getPackage());
+	}
+
+	@Bean
+	public FooDaoFactory fooDaoFactory(EntityManagerFactory entityManagerFactory) {
+		return new FooDaoFactory(entityManagerFactory);
 	}
 }

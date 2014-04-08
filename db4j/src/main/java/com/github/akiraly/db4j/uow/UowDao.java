@@ -22,4 +22,9 @@ public class UowDao extends AbstractDao<Long, Uow, QUow> {
 	public Optional<Uow> tryFind(Long key) {
 		return super.tryFind(key);
 	}
+
+	@Override
+	public Uow find(Long key) {
+		return super.find(key);
+	}
 }

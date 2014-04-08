@@ -25,6 +25,11 @@ public class AuditedFooDao extends AbstractDao<Long, AuditedFoo, QAuditedFoo> {
 	}
 
 	@Override
+	public AuditedFoo find(Long key) {
+		return super.find(key);
+	}
+
+	@Override
 	public long count() {
 		return super.count();
 	}

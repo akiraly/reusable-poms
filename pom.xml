@@ -266,6 +266,7 @@ This project contains reusable maven parent poms and maven project archetypes wi
 						<parallel>all</parallel>
 						<parallelTestsTimeoutForcedInSeconds>60</parallelTestsTimeoutForcedInSeconds>
 						<threadCount>1</threadCount>
+						<reuseForks>false</reuseForks>
 						<argLine>-Dfile.encoding=UTF-8</argLine>
 						<systemPropertyVariables>
 							<user.timezone>UTC</user.timezone>

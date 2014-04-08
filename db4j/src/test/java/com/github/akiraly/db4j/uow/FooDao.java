@@ -25,6 +25,11 @@ public class FooDao extends AbstractDao<Long, Foo, QFoo> {
 	}
 
 	@Override
+	public Foo find(Long key) {
+		return super.find(key);
+	}
+
+	@Override
 	public long count() {
 		return super.count();
 	}
