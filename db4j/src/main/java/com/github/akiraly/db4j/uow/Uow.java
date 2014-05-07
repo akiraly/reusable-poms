@@ -7,13 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Immutable;
-import org.springframework.data.jpa.domain.AbstractPersistable;
+
+import com.github.akiraly.db4j.JacksonAbstractPersistable;
 
 @Nonnull
 @Entity
 @Table(name = "uow")
 @Immutable
-public class Uow extends AbstractPersistable<Long> {
+public class Uow extends JacksonAbstractPersistable<Long> {
 	private static final long serialVersionUID = -6140188419595214529L;
 
 	private String user;

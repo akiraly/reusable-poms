@@ -24,7 +24,7 @@
 		<dependency.hibernate.version>4.3.5.Final</dependency.hibernate.version>
 		<dependency.hibernate-jpa-2.1-api.version>1.0.0.Final</dependency.hibernate-jpa-2.1-api.version>
 		<dependency.jackson.version>2.3.3</dependency.jackson.version>
-		<dependency.jetty.version>9.1.4.v20140401</dependency.jetty.version>
+		<dependency.jetty.version>9.1.5.v20140505</dependency.jetty.version>
 		<dependency.jsonpath.version>0.9.1</dependency.jsonpath.version>
 		<dependency.jsr305.version>2.0.3</dependency.jsr305.version>
 		<dependency.junit.version>4.11</dependency.junit.version>
