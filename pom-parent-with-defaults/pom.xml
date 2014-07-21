@@ -20,11 +20,11 @@
 		<dependency.commons-math.version>3.3</dependency.commons-math.version>
 		<dependency.guava.version>17.0</dependency.guava.version>
 		<dependency.hamcrest.version>1.3</dependency.hamcrest.version>
-		<dependency.h2.version>1.4.179</dependency.h2.version>
-		<dependency.hibernate.version>4.3.5.Final</dependency.hibernate.version>
+		<dependency.h2.version>1.4.180</dependency.h2.version>
+		<dependency.hibernate.version>4.3.6.Final</dependency.hibernate.version>
 		<dependency.hibernate-jpa-2.1-api.version>1.0.0.Final</dependency.hibernate-jpa-2.1-api.version>
 		<dependency.jackson-annotations.version>2.4.1</dependency.jackson-annotations.version>
-		<dependency.jackson-databind.version>2.4.1.1</dependency.jackson-databind.version>
+		<dependency.jackson-databind.version>2.4.1.3</dependency.jackson-databind.version>
 		<dependency.jetty.version>9.2.1.v20140609</dependency.jetty.version>
 		<dependency.jsonpath.version>0.9.1</dependency.jsonpath.version>
 		<dependency.jsr305.version>3.0.0</dependency.jsr305.version>
