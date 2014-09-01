@@ -2,30 +2,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.github.akiraly.reusable-poms</groupId>
-		<artifactId>pom-parent-with-spring-hibernate-querydsl-core</artifactId>
+		<artifactId>pom-parent-with-spring-dbcp-h2-core</artifactId>
 		<version>5-SNAPSHOT</version>
-		<relativePath>../pom-parent-with-spring-hibernate-querydsl-core</relativePath>
+		<relativePath>../pom-parent-with-spring-dbcp-h2-core</relativePath>
 	</parent>
 	<artifactId>db4j</artifactId>
 
-	<description>Common classes for dealing hibernate, spring data and auditing</description>
-
-	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>com.mysema.maven</groupId>
-					<artifactId>apt-maven-plugin</artifactId>
-					<executions>
-						<execution>
-							<id>generetae-querydsl-classes</id>
-							<goals>
-								<goal>test-process</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
+	<description>Common classes for dealing with spring-jdbc, commons-dbcp and auditing</description>
 </project>

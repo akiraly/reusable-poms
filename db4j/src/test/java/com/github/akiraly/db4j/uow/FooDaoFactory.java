@@ -5,11 +5,11 @@ import java.util.function.Supplier;
 import javax.annotation.Nonnull;
 import javax.persistence.EntityManagerFactory;
 
-import com.github.akiraly.db4j.AbstractDaoFactory;
+import com.github.akiraly.db4j.DaoFactory;
 import com.github.akiraly.db4j.EntityInformation;
 
 @Nonnull
-public class FooDaoFactory extends AbstractDaoFactory<Long, Foo, QFoo, FooDao>
+public class FooDaoFactory extends DaoFactory<Long, Foo, QFoo, FooDao>
 		implements Supplier<FooDao> {
 
 	public FooDaoFactory(EntityManagerFactory entityManagerFactory) {

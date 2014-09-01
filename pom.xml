@@ -64,7 +64,7 @@ This project contains reusable maven parent poms and maven project archetypes wi
 	</properties>
 
 	<prerequisites>
-		<maven>3.2.2</maven>
+		<maven>3.2.3</maven>
 	</prerequisites>
 
 	<build>
@@ -360,8 +360,8 @@ This project contains reusable maven parent poms and maven project archetypes wi
 		<module>pom-parent-with-java-log-libs</module>
 		<module>pom-parent-with-java-util-libs</module>
 		<module>pom-parent-with-spring-context</module>
-		<module>pom-parent-with-spring-hibernate-querydsl-core</module>
-		<module>pom-parent-with-spring-hibernate-querydsl</module>
+		<module>pom-parent-with-spring-dbcp-h2-core</module>
+		<module>pom-parent-with-spring-dbcp-h2</module>
 		<module>pom-parent-with-spring-web</module>
 		<module>pom-parent-with-war</module>
 		<module>simple-java-project-with-util-libs-archetype</module>
