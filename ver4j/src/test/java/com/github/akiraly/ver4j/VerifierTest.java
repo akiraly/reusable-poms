@@ -1,9 +1,11 @@
 package com.github.akiraly.ver4j;
 
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 
@@ -17,6 +19,20 @@ public class VerifierTest {
 	@Test(expected = IllegalArgumentException.class, timeout = 300)
 	public void testArgNotNullFail() {
 		Verify.argNotNull(null, "foo");
+	}
+
+	@Test(timeout = 300)
+	public void testArgNotNullFailWithSupplier() {
+		try {
+			Verify.argNotNull(null, new Supplier<Supplier<String>>() {
+				@Override
+				public Supplier<String> get() {
+					return () -> "foo";
+				}
+			});
+		} catch (IllegalArgumentException e) {
+			assertTrue(e.getMessage().contains("foo"));
+		}
 	}
 
 	@Test(timeout = 300)
