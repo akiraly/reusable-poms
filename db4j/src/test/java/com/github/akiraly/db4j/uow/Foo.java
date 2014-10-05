@@ -1,18 +1,16 @@
 package com.github.akiraly.db4j.uow;
 
+import static com.github.akiraly.ver4j.Verify.argNotNull;
+
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.persistence.Entity;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
-
-@Entity
 @Nonnull
-public class Foo extends AbstractPersistable<Long> {
-	private static final long serialVersionUID = -7742225339101876655L;
-
-	@Nullable
+public class Foo {
 	private String bar;
+
+	public Foo(String bar) {
+		this.bar = argNotNull(bar, "bar");
+	}
 
 	public String getBar() {
 		return bar;

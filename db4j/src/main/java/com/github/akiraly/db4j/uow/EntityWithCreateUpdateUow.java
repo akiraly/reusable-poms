@@ -7,18 +7,17 @@ import javax.annotation.Nonnull;
 import com.github.akiraly.db4j.EntityWithLongId;
 
 @Nonnull
-public abstract class AbstractCreateUpdateUowAwarePersistable extends
-		ACreateUowAware {
+public class EntityWithCreateUpdateUow<T> extends EntityWithCreateUow<T> {
 	private final EntityWithLongId<Uow> updateUow;
 
-	protected AbstractCreateUpdateUowAwarePersistable(
+	public EntityWithCreateUpdateUow(EntityWithLongId<T> entity,
 			EntityWithLongId<Uow> createUow) {
-		this(createUow, createUow);
+		this(entity, createUow, createUow);
 	}
 
-	protected AbstractCreateUpdateUowAwarePersistable(
+	public EntityWithCreateUpdateUow(EntityWithLongId<T> entity,
 			EntityWithLongId<Uow> createUow, EntityWithLongId<Uow> updateUow) {
-		super(createUow);
+		super(createUow, entity);
 		this.updateUow = argNotNull(updateUow, "updateUow");
 	}
 

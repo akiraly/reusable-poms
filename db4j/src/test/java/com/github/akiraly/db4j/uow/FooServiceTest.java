@@ -1,30 +1,28 @@
 package com.github.akiraly.db4j.uow;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import java.util.Set;
 
 import javax.annotation.Nonnull;
-import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import com.github.akiraly.db4j.CommonDbConfig;
 import com.github.akiraly.db4j.pool.EmbeddedDbcpDatabaseBuilder;
-import com.google.common.collect.ImmutableSet;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { FooServiceTestConfig.class })
@@ -36,25 +34,37 @@ public class FooServiceTest {
 	@Autowired
 	private FooDaoFactory fooDaoFactory;
 
-	@Test(timeout = 16000)
+	@Before
+	public void setUp() {
+		transactionTemplate.execute((TransactionStatus status) -> {
+			fooDaoFactory.newSchema().create();
+			return null;
+		});
+	}
+
+	@After
+	public void tearDown() {
+		transactionTemplate.execute((TransactionStatus status) -> {
+			fooDaoFactory.newSchema().drop();
+			return null;
+		});
+	}
+
+	@Test(timeout = 500)
 	public void testFooService() {
 		FooService fooService = new FooService(transactionTemplate,
-				fooDaoFactory.get());
+				fooDaoFactory.newDao());
 
-		Foo foo = fooService.addFoo("bar");
+		fooService.addFoo("bar", 1);
+		fooService.assertBar(1, "bar");
 
-		assertNotNull(foo.getId());
-		assertNotNull(foo.getBar());
-
-		assertEquals(
-				1L,
-				transactionTemplate.execute(
-						s -> fooDaoFactory.get().deleteAll()).longValue());
+		assertEquals(1, transactionTemplate.execute(s -> fooDaoFactory.newDao()
+				.deleteAll()));
 	}
 }
 
 @Configuration
-@Import({ UowConfig.class, CommonDbConfig.class })
+@Import(CommonDbConfig.class)
 @Nonnull
 class FooServiceTestConfig {
 	@Bean
@@ -68,17 +78,7 @@ class FooServiceTestConfig {
 	}
 
 	@Bean
-	public Database dbType() {
-		return Database.H2;
-	}
-
-	@Bean
-	public Set<Package> packagesToScan() {
-		return ImmutableSet.of(AuditedFoo.class.getPackage());
-	}
-
-	@Bean
-	public FooDaoFactory fooDaoFactory(EntityManagerFactory entityManagerFactory) {
-		return new FooDaoFactory(entityManagerFactory);
+	public FooDaoFactory fooDaoFactory(JdbcTemplate jdbcTemplate) {
+		return new FooDaoFactory(jdbcTemplate);
 	}
 }

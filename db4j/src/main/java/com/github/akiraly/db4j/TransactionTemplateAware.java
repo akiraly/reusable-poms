@@ -6,6 +6,7 @@ import javax.annotation.Nonnull;
 
 import org.springframework.transaction.TransactionException;
 import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 
 @Nonnull
@@ -20,6 +21,11 @@ public abstract class TransactionTemplateAware {
 	protected final <T> T tx(TransactionCallback<T> action)
 			throws TransactionException {
 		return transactionTemplate.execute(action);
+	}
+
+	protected final void tx(TransactionCallbackWithoutResult action)
+			throws TransactionException {
+		transactionTemplate.execute(action);
 	}
 
 	protected final TransactionTemplate transactionTemplate() {

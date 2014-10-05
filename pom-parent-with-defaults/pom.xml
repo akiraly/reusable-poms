@@ -23,7 +23,7 @@
 		<dependency.h2.version>1.4.181</dependency.h2.version>
 		<dependency.jackson-annotations.version>2.4.2</dependency.jackson-annotations.version>
 		<dependency.jackson-databind.version>2.4.2</dependency.jackson-databind.version>
-		<dependency.jetty.version>9.2.2.v20140723</dependency.jetty.version>
+		<dependency.jetty.version>9.2.3.v20140905</dependency.jetty.version>
 		<dependency.jsonpath.version>0.9.1</dependency.jsonpath.version>
 		<dependency.jsr305.version>3.0.0</dependency.jsr305.version>
 		<dependency.junit.version>4.11</dependency.junit.version>
@@ -31,6 +31,6 @@
 		<dependency.logback.version>1.1.2</dependency.logback.version>
 		<dependency.servlet-api.version>3.1.0</dependency.servlet-api.version>
 		<dependency.slf4j.version>1.7.7</dependency.slf4j.version>
-		<dependency.spring.version>4.0.6.RELEASE</dependency.spring.version>
+		<dependency.spring.version>4.1.1.RELEASE</dependency.spring.version>
 	</properties>
 </project>

@@ -1,33 +1,30 @@
 package com.github.akiraly.db4j.uow;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.persistence.Entity;
 
-@Entity
+import com.github.akiraly.db4j.EntityWithLongId;
+
 @Nonnull
-public class AuditedFoo extends AbstractCreateUpdateUowAwarePersistable<Long> {
+public class AuditedFoo extends AbstractCreateUpdateUowAwarePersistable {
 
-	private static final long serialVersionUID = -2556368053851608755L;
+	private final String bar;
 
-	@Nullable
-	private String bar;
-
-	protected AuditedFoo(Uow createUow) {
+	public AuditedFoo(String bar, EntityWithLongId<Uow> createUow) {
 		super(createUow);
+		this.bar = bar;
 	}
 
-	/**
-	 * For Hibernate
-	 */
-	protected AuditedFoo() {
+	public AuditedFoo(String bar, EntityWithLongId<Uow> createUow,
+			EntityWithLongId<Uow> updateUow) {
+		super(createUow, updateUow);
+		this.bar = bar;
+	}
+
+	public AuditedFoo updateBar(String newBar, EntityWithLongId<Uow> updateUow) {
+		return new AuditedFoo(newBar, getCreateUow(), updateUow);
 	}
 
 	public String getBar() {
 		return bar;
-	}
-
-	public void setBar(String bar) {
-		this.bar = bar;
 	}
 }

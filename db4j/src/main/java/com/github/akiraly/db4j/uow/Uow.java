@@ -1,18 +1,15 @@
 package com.github.akiraly.db4j.uow;
 
-import javax.annotation.Nonnull;
+import static com.github.akiraly.ver4j.Verify.argNotNull;
 
-import com.github.akiraly.db4j.LongId;
+import javax.annotation.Nonnull;
 
 @Nonnull
 public class Uow {
-	private final Id id;
-
 	private final String user;
 
-	public Uow(Id id, String user) {
-		this.id = id;
-		this.user = user;
+	public Uow(String user) {
+		this.user = argNotNull(user, "user");
 	}
 
 	public String getUser() {
@@ -21,15 +18,6 @@ public class Uow {
 
 	@Override
 	public String toString() {
-		return "Uow [getUser()=" + getUser() + ", getId()=" + getId() + "]";
-	}
-
-	@Nonnull
-	public static class Id extends LongId<Uow> {
-		private static final long serialVersionUID = -851262705731916738L;
-
-		public Id(long id) {
-			super(id, Uow.class);
-		}
+		return "Uow [user=" + user + "]";
 	}
 }
