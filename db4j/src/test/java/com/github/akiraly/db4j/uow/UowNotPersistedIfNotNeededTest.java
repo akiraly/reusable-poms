@@ -65,7 +65,7 @@ public class UowNotPersistedIfNotNeededTest {
 		});
 	}
 
-	@Test(timeout = 500)
+	@Test(timeout = 5000)
 	public void testUowNotPersistedIfNotNeeded() {
 		final String uow1User = "u300";
 		Uow uow1 = new Uow(uow1User);

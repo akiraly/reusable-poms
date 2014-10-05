@@ -60,7 +60,7 @@ public class UowCascadePersistenceTest {
 		});
 	}
 
-	@Test(timeout = 500)
+	@Test(timeout = 5000)
 	public void testCascadePersistenceOnUow() {
 		final String uow1User = "u200";
 		final Uow uow1 = new Uow(uow1User);

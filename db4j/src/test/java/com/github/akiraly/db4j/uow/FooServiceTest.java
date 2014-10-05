@@ -50,7 +50,7 @@ public class FooServiceTest {
 		});
 	}
 
-	@Test(timeout = 500)
+	@Test(timeout = 5000)
 	public void testFooService() {
 		FooService fooService = new FooService(transactionTemplate,
 				fooDaoFactory.newDao());
@@ -58,8 +58,10 @@ public class FooServiceTest {
 		fooService.addFoo("bar", 1);
 		fooService.assertBar(1, "bar");
 
-		assertEquals(1, transactionTemplate.execute(s -> fooDaoFactory.newDao()
-				.deleteAll()));
+		assertEquals(
+				1,
+				transactionTemplate.execute(
+						s -> fooDaoFactory.newDao().deleteAll()).longValue());
 	}
 }
 

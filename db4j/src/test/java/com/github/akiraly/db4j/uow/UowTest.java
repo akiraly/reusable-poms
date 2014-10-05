@@ -54,7 +54,7 @@ public class UowTest {
 		});
 	}
 
-	@Test(timeout = 500)
+	@Test(timeout = 5000)
 	public void testPersistStandaloneUow() {
 		final String uow1User = "u100";
 		final Uow uow1 = new Uow(uow1User);
