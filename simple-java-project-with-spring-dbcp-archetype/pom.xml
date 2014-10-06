@@ -6,8 +6,8 @@
 		<version>5-SNAPSHOT</version>
 		<relativePath>../pom-parent-with-defaults</relativePath>
 	</parent>
-	<artifactId>simple-java-project-with-spring-hibernate-querydsl-archetype</artifactId>
-	<name>Simple java application with spring, hibernate and querydsl support and dependencies</name>
+	<artifactId>simple-java-project-with-spring-dbcp-archetype</artifactId>
+	<name>Simple java application with spring and dbcp support and dependencies</name>
 
 	<build>
 		<resources>
