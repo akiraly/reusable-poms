@@ -6,8 +6,6 @@ import javax.annotation.Nonnull;
 import javax.sql.DataSource;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +21,7 @@ import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import com.github.akiraly.db4j.CommonDbConfig;
+import com.github.akiraly.db4j.DatabaseLiquibaseInitializer;
 import com.github.akiraly.db4j.EntityWithLongId;
 import com.github.akiraly.db4j.pool.EmbeddedDbcpDatabaseBuilder;
 import com.github.akiraly.db4j.uow.AuditedFooDaoFactory.AuditedFooDao;
@@ -44,26 +43,6 @@ public class UowNotPersistedIfNotNeededTest {
 
 	@Autowired
 	private UowDaoFactory uowDaoFactory;
-
-	@Before
-	public void setUp() {
-		transactionTemplate.execute((TransactionStatus status) -> {
-			uowDaoFactory.newSchema().create();
-			fooDaoFactory.newSchema().create();
-			auditedFooDaoFactory.newSchema().create();
-			return null;
-		});
-	}
-
-	@After
-	public void tearDown() {
-		transactionTemplate.execute((TransactionStatus status) -> {
-			auditedFooDaoFactory.newSchema().drop();
-			fooDaoFactory.newSchema().drop();
-			uowDaoFactory.newSchema().drop();
-			return null;
-		});
-	}
 
 	@Test(timeout = 5000)
 	public void testUowNotPersistedIfNotNeeded() {
@@ -135,5 +114,12 @@ class UowNotPersistedIfNotNeededTestConfig {
 	@Bean
 	public AuditedFooDaoFactory auditedFooDaoFactory(JdbcTemplate jdbcTemplate) {
 		return new AuditedFooDaoFactory(jdbcTemplate);
+	}
+
+	@Bean
+	public DatabaseLiquibaseInitializer databaseLiquibaseInitializer(
+			JdbcTemplate jdbcTemplate) {
+		return new DatabaseLiquibaseInitializer(jdbcTemplate,
+				"com/github/akiraly/db4j/uow/uow_test.xml");
 	}
 }

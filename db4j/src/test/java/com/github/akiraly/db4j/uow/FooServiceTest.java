@@ -6,8 +6,6 @@ import javax.annotation.Nonnull;
 import javax.sql.DataSource;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +16,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import com.github.akiraly.db4j.CommonDbConfig;
+import com.github.akiraly.db4j.DatabaseLiquibaseInitializer;
 import com.github.akiraly.db4j.pool.EmbeddedDbcpDatabaseBuilder;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -33,22 +31,6 @@ public class FooServiceTest {
 
 	@Autowired
 	private FooDaoFactory fooDaoFactory;
-
-	@Before
-	public void setUp() {
-		transactionTemplate.execute((TransactionStatus status) -> {
-			fooDaoFactory.newSchema().create();
-			return null;
-		});
-	}
-
-	@After
-	public void tearDown() {
-		transactionTemplate.execute((TransactionStatus status) -> {
-			fooDaoFactory.newSchema().drop();
-			return null;
-		});
-	}
 
 	@Test(timeout = 5000)
 	public void testFooService() {
@@ -82,5 +64,12 @@ class FooServiceTestConfig {
 	@Bean
 	public FooDaoFactory fooDaoFactory(JdbcTemplate jdbcTemplate) {
 		return new FooDaoFactory(jdbcTemplate);
+	}
+
+	@Bean
+	public DatabaseLiquibaseInitializer databaseLiquibaseInitializer(
+			JdbcTemplate jdbcTemplate) {
+		return new DatabaseLiquibaseInitializer(jdbcTemplate,
+				"com/github/akiraly/db4j/uow/uow_test.xml");
 	}
 }

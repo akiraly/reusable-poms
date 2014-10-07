@@ -55,10 +55,6 @@ public class UowDaoFactory extends JdbcTemplateAware {
 		return new UowDao();
 	}
 
-	public UowSchema newSchema() {
-		return new UowSchema();
-	}
-
 	@Nonnull
 	public class UowDao extends EntityWithLongIdDao<Uow> {
 		@Override
@@ -88,19 +84,6 @@ public class UowDaoFactory extends JdbcTemplateAware {
 		public long count() {
 			return jdbcTemplate().queryForObject("select count(*) from uow",
 					Long.class);
-		}
-	}
-
-	@Nonnull
-	public class UowSchema {
-		public void create() {
-			jdbcTemplate()
-					.execute(
-							"create table uow (uow_id bigint auto_increment primary key, user varchar(50) not null)");
-		}
-
-		public void drop() {
-			jdbcTemplate().execute("drop table uow;");
 		}
 	}
 }

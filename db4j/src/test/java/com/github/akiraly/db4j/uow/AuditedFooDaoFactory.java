@@ -83,10 +83,6 @@ public class AuditedFooDaoFactory extends JdbcTemplateAware {
 		return new AuditedFooDao(uowDao);
 	}
 
-	public AuditedFooSchema newSchema() {
-		return new AuditedFooSchema();
-	}
-
 	@Nonnull
 	public class AuditedFooDao extends EntityWithLongIdDao<AuditedFoo> {
 		private final ImmutableClassToInstanceMap<Object> context;
@@ -143,22 +139,4 @@ public class AuditedFooDaoFactory extends JdbcTemplateAware {
 					"select count(*) from audited_foo", Long.class);
 		}
 	}
-
-	@Nonnull
-	public class AuditedFooSchema {
-		public void create() {
-			jdbcTemplate()
-					.execute(
-							"create table audited_foo (audited_foo_id bigint auto_increment primary key, bar varchar(50) not null, "
-									+ "create_uow_id bigint not null, "
-									+ "update_uow_id bigint not null, "
-									+ "foreign key (create_uow_id) references uow(uow_id), "
-									+ "foreign key (update_uow_id) references uow(uow_id))");
-		}
-
-		public void drop() {
-			jdbcTemplate().execute("drop table audited_foo;");
-		}
-	}
-
 }

@@ -63,10 +63,6 @@ public class FooDaoFactory extends JdbcTemplateAware {
 		return new FooDao();
 	}
 
-	public FooSchema newSchema() {
-		return new FooSchema();
-	}
-
 	@Nonnull
 	public class FooDao extends EntityWithLongIdDao<Foo> {
 		@Override
@@ -101,19 +97,6 @@ public class FooDaoFactory extends JdbcTemplateAware {
 		public long count() {
 			return jdbcTemplate().queryForObject("select count(*) from foo",
 					Long.class);
-		}
-	}
-
-	@Nonnull
-	public class FooSchema {
-		public void create() {
-			jdbcTemplate()
-					.execute(
-							"create table foo (foo_id bigint auto_increment primary key, bar varchar(50) not null)");
-		}
-
-		public void drop() {
-			jdbcTemplate().execute("drop table foo;");
 		}
 	}
 }

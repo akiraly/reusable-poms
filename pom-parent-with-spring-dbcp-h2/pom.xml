@@ -8,8 +8,8 @@
 	</parent>
 	<artifactId>pom-parent-with-spring-dbcp-h2</artifactId>
 	<packaging>pom</packaging>
-	<name>Maven parent pom for db projects with spring jdbc, commons-dbcp and h2 (and stuff from parent: with-spring-context) and db4j</name>
-	<description>Libs for spring jdbc, commons-dbcp, h2, db4j and testing support</description>
+	<name>Maven parent pom for db projects with spring jdbc, commons-dbcp, liquibase and h2 (and stuff from parent: with-spring-context) and db4j</name>
+	<description>Libs for spring jdbc, commons-dbcp, liquibase, h2, db4j and testing support</description>
 
 	<dependencyManagement>
 		<dependencies>

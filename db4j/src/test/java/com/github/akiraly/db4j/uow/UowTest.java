@@ -4,9 +4,7 @@ import javax.annotation.Nonnull;
 import javax.sql.DataSource;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +20,7 @@ import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import com.github.akiraly.db4j.CommonDbConfig;
+import com.github.akiraly.db4j.DatabaseLiquibaseInitializer;
 import com.github.akiraly.db4j.EntityWithLongId;
 import com.github.akiraly.db4j.pool.EmbeddedDbcpDatabaseBuilder;
 
@@ -37,22 +36,6 @@ public class UowTest {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-
-	@Before
-	public void setUp() {
-		transactionTemplate.execute((TransactionStatus status) -> {
-			uowDaoFactory.newSchema().create();
-			return null;
-		});
-	}
-
-	@After
-	public void tearDown() {
-		transactionTemplate.execute((TransactionStatus status) -> {
-			uowDaoFactory.newSchema().drop();
-			return null;
-		});
-	}
 
 	@Test(timeout = 5000)
 	public void testPersistStandaloneUow() {
@@ -135,5 +118,12 @@ class UowTestConfig {
 						UowTest.class.getName()
 								+ RandomStringUtils.randomAlphabetic(5)
 								+ "db;TRACE_LEVEL_FILE=4").build();
+	}
+
+	@Bean
+	public DatabaseLiquibaseInitializer databaseLiquibaseInitializer(
+			JdbcTemplate jdbcTemplate) {
+		return new DatabaseLiquibaseInitializer(jdbcTemplate,
+				"com/github/akiraly/db4j/uow/uow_test.xml");
 	}
 }

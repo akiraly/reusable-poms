@@ -27,10 +27,12 @@
 		<dependency.jsonpath.version>0.9.1</dependency.jsonpath.version>
 		<dependency.jsr305.version>3.0.0</dependency.jsr305.version>
 		<dependency.junit.version>4.11</dependency.junit.version>
+		<dependency.liquibase.version>3.2.2</dependency.liquibase.version>
 		<dependency.log4j.version>1.2.17</dependency.log4j.version>
 		<dependency.logback.version>1.1.2</dependency.logback.version>
 		<dependency.servlet-api.version>3.1.0</dependency.servlet-api.version>
 		<dependency.slf4j.version>1.7.7</dependency.slf4j.version>
+		<dependency.snakeyaml.version>1.14</dependency.snakeyaml.version>
 		<dependency.spring.version>4.1.1.RELEASE</dependency.spring.version>
 	</properties>
 </project>
