@@ -2,8 +2,6 @@
 
 --changeset akiraly:1
 
---include file:com/github/akiraly/db4j/uow/uow.sql
-
 create table foo (
 	foo_id bigint auto_increment primary key,
 	bar varchar(50) not null

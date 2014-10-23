@@ -2,12 +2,16 @@ package com.github.akiraly.db4j;
 
 import static com.github.akiraly.ver4j.Verify.argNotNull;
 
+import java.sql.Connection;
+
 import javax.annotation.Nonnull;
 
 import liquibase.Contexts;
 import liquibase.Liquibase;
+import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
+import liquibase.exception.DatabaseException;
 import liquibase.exception.LiquibaseException;
 import liquibase.resource.ClassLoaderResourceAccessor;
 
@@ -28,21 +32,30 @@ public class DatabaseLiquibaseInitializer extends JdbcTemplateAware implements
 
 	@Override
 	public void afterPropertiesSet() {
-		jdbcTemplate().execute(
-				(ConnectionCallback<Void>) con -> {
-					try {
-						new Liquibase(dbChangelogPath,
-								new ClassLoaderResourceAccessor(),
-								DatabaseFactory.getInstance()
-										.findCorrectDatabaseImplementation(
-												new JdbcConnection(con)))
-								.update((Contexts) null);
-					} catch (LiquibaseException e) {
-						throw new RuntimeException(
-								"Couldn't update db using liquibase changest: "
-										+ dbChangelogPath, e);
-					}
-					return null;
-				});
+		jdbcTemplate().execute((ConnectionCallback<Void>) con -> {
+			doDbUpdate(con);
+			return null;
+		});
+	}
+
+	private void doDbUpdate(Connection con) {
+		try {
+			newLiquibase(con).update((Contexts) null);
+		} catch (LiquibaseException e) {
+			throw new RuntimeException(
+					"Couldn't update db using liquibase changset: "
+							+ dbChangelogPath, e);
+		}
+	}
+
+	private Liquibase newLiquibase(Connection con) throws LiquibaseException,
+			DatabaseException {
+		return new Liquibase(dbChangelogPath,
+				new ClassLoaderResourceAccessor(), newLiquibaseDb(con));
+	}
+
+	private Database newLiquibaseDb(Connection con) throws DatabaseException {
+		return DatabaseFactory.getInstance().findCorrectDatabaseImplementation(
+				new JdbcConnection(con));
 	}
 }

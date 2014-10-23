@@ -8,11 +8,11 @@ import java.util.function.Supplier;
 import javax.annotation.Nonnull;
 
 @Nonnull
-public abstract class EntityWithLongId<T> {
+public abstract class EntityWithLongId<E> {
 
 	public abstract long getId();
 
-	public abstract T getEntity();
+	public abstract E getEntity();
 
 	@Override
 	public int hashCode() {
@@ -36,16 +36,16 @@ public abstract class EntityWithLongId<T> {
 		return true;
 	}
 
-	public static <T> EntityWithLongId<T> of(final T entity, final long id) {
+	public static <E> EntityWithLongId<E> of(final E entity, final long id) {
 		argNotNull(entity, "entity");
-		return new EntityWithLongId<T>() {
+		return new EntityWithLongId<E>() {
 			@Override
 			public long getId() {
 				return id;
 			}
 
 			@Override
-			public T getEntity() {
+			public E getEntity() {
 				return entity;
 			}
 
@@ -57,11 +57,11 @@ public abstract class EntityWithLongId<T> {
 		};
 	}
 
-	public static <T> EntityWithLongId<T> of(final Supplier<T> entitySupp,
+	public static <E> EntityWithLongId<E> of(final Supplier<E> entitySupp,
 			final long id) {
 		argNotNull(entitySupp, "entitySupp");
-		return new EntityWithLongId<T>() {
-			private final Supplier<T> entity = memoizej8(entitySupp);
+		return new EntityWithLongId<E>() {
+			private final Supplier<E> entity = memoizej8(entitySupp);
 
 			@Override
 			public long getId() {
@@ -69,7 +69,7 @@ public abstract class EntityWithLongId<T> {
 			}
 
 			@Override
-			public T getEntity() {
+			public E getEntity() {
 				return entity.get();
 			}
 
@@ -81,11 +81,11 @@ public abstract class EntityWithLongId<T> {
 		};
 	}
 
-	public static <T> EntityWithLongId<T> of(final T entity,
+	public static <E> EntityWithLongId<E> of(final E entity,
 			final Supplier<Long> idSupp) {
 		argNotNull(entity, "entity");
 		argNotNull(idSupp, "idSupp");
-		return new EntityWithLongId<T>() {
+		return new EntityWithLongId<E>() {
 			private final Supplier<Long> id = memoizej8(idSupp);
 
 			@Override
@@ -94,7 +94,7 @@ public abstract class EntityWithLongId<T> {
 			}
 
 			@Override
-			public T getEntity() {
+			public E getEntity() {
 				return entity;
 			}
 
