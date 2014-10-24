@@ -19,6 +19,7 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -187,6 +188,91 @@ public class VerifierTest {
 	public void testResultCollNotNullPass() {
 		ImmutableList<String> in = ImmutableList.of("");
 		ImmutableList<String> out = Verify.resultNotEmpty(in, "foo");
+		assertSame(in, out);
+	}
+
+	@Test(expected = IllegalArgumentException.class, timeout = 300)
+	public void testArgIteratorNotNullFail() {
+		Verify.argNotEmpty((Iterator<?>) null, "foo");
+	}
+
+	@Test(expected = IllegalArgumentException.class, timeout = 300)
+	public void testArgIteratorNotNullFail2() {
+		Verify.argNotEmpty(ImmutableList.of().iterator(), "foo");
+	}
+
+	@Test(timeout = 300)
+	public void testArgIteratorNotNullPass() {
+		Iterator<String> in = ImmutableList.of("").iterator();
+		Iterator<String> out = Verify.argNotEmpty(in, "foo");
+		assertSame(in, out);
+	}
+
+	@Test(expected = IllegalVarException.class, timeout = 300)
+	public void testVarIteratorNotNullFail() {
+		Verify.varNotEmpty((Iterator<?>) null, "foo");
+	}
+
+	@Test(expected = IllegalVarException.class, timeout = 300)
+	public void testVarIteratorNotNullFail2() {
+		Verify.varNotEmpty(ImmutableList.of().iterator(), "foo");
+	}
+
+	@Test(timeout = 300)
+	public void testVarIteratorNotNullPass() {
+		Iterator<String> in = ImmutableList.of("").iterator();
+		Iterator<String> out = Verify.varNotEmpty(in, "foo");
+		assertSame(in, out);
+	}
+
+	@Test(expected = IllegalFieldException.class, timeout = 300)
+	public void testFieldIteratorNotNullFail() {
+		Verify.fieldNotEmpty((Iterator<?>) null, "foo");
+	}
+
+	@Test(expected = IllegalFieldException.class, timeout = 300)
+	public void testFieldIteratorNotNullFail2() {
+		Verify.fieldNotEmpty(ImmutableList.of().iterator(), "foo");
+	}
+
+	@Test(timeout = 300)
+	public void testFieldIteratorNotNullPass() {
+		Iterator<String> in = ImmutableList.of("").iterator();
+		Iterator<String> out = Verify.fieldNotEmpty(in, "foo");
+		assertSame(in, out);
+	}
+
+	@Test(expected = IllegalStateException.class, timeout = 300)
+	public void testStateIteratorNotNullFail() {
+		Verify.stateNotEmpty((Iterator<?>) null, "foo");
+	}
+
+	@Test(expected = IllegalStateException.class, timeout = 300)
+	public void testStateIteratorNotNullFail2() {
+		Verify.stateNotEmpty(ImmutableList.of().iterator(), "foo");
+	}
+
+	@Test(timeout = 300)
+	public void testStateIteratorNotNullPass() {
+		Iterator<String> in = ImmutableList.of("").iterator();
+		Iterator<String> out = Verify.stateNotEmpty(in, "foo");
+		assertSame(in, out);
+	}
+
+	@Test(expected = IllegalResultException.class, timeout = 300)
+	public void testResultIteratorNotNullFail() {
+		Verify.resultNotEmpty((Iterator<?>) null, "foo");
+	}
+
+	@Test(expected = IllegalResultException.class, timeout = 300)
+	public void testResultIteratorNotNullFail2() {
+		Verify.resultNotEmpty(ImmutableList.of().iterator(), "foo");
+	}
+
+	@Test(timeout = 300)
+	public void testResultIteratorNotNullPass() {
+		Iterator<String> in = ImmutableList.of("").iterator();
+		Iterator<String> out = Verify.resultNotEmpty(in, "foo");
 		assertSame(in, out);
 	}
 

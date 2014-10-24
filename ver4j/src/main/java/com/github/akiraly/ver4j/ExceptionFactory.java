@@ -29,6 +29,8 @@ public interface ExceptionFactory {
 
 	RuntimeException notEmptyMapException(Object name);
 
+	RuntimeException notEmptyIteratorException(Object name);
+
 	RuntimeException notEmptyIterableException(Object name);
 
 	RuntimeException notEmptyArrayException(Object name);

@@ -18,6 +18,7 @@ package com.github.akiraly.ver4j;
 import static com.google.common.collect.Iterables.isEmpty;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -34,6 +35,12 @@ public class Verifier {
 		if (object == null)
 			throw exceptionFactory.notNullException(name);
 		return object;
+	}
+
+	public <E, I extends Iterator<E>> I notEmpty(I iterator, Object name) {
+		if (!notNull(iterator, name).hasNext())
+			throw exceptionFactory.notEmptyIterableException(name);
+		return iterator;
 	}
 
 	public <E, I extends Iterable<E>> I notEmpty(I iterable, Object name) {

@@ -48,6 +48,11 @@ public abstract class AExceptionFactory implements ExceptionFactory {
 	}
 
 	@Override
+	public final RuntimeException notEmptyIteratorException(Object name) {
+		return notEmptyException("Iterator", name);
+	}
+
+	@Override
 	public final RuntimeException notEmptyIterableException(Object name) {
 		return notEmptyException("Iterable", name);
 	}

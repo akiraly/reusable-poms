@@ -16,6 +16,7 @@
 package com.github.akiraly.ver4j;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -46,6 +47,31 @@ public abstract class Verify {
 
 	public static <T> T resultNotNull(T object, Object name) {
 		return INSTANCE.resultNotNull(object, name);
+	}
+
+	public static <E, I extends Iterator<E>> I argNotEmpty(I iterator,
+			Object name) {
+		return INSTANCE.argNotEmpty(iterator, name);
+	}
+
+	public static <E, I extends Iterator<E>> I varNotEmpty(I iterator,
+			Object name) {
+		return INSTANCE.varNotEmpty(iterator, name);
+	}
+
+	public static <E, I extends Iterator<E>> I fieldNotEmpty(I iterator,
+			Object name) {
+		return INSTANCE.fieldNotEmpty(iterator, name);
+	}
+
+	public static <E, I extends Iterator<E>> I stateNotEmpty(I iterator,
+			Object name) {
+		return INSTANCE.stateNotEmpty(iterator, name);
+	}
+
+	public static <E, I extends Iterator<E>> I resultNotEmpty(I iterator,
+			Object name) {
+		return INSTANCE.resultNotEmpty(iterator, name);
 	}
 
 	public static <E, I extends Iterable<E>> I argNotEmpty(I iterable,

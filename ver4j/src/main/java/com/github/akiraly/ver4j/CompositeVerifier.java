@@ -16,6 +16,7 @@
 package com.github.akiraly.ver4j;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -110,6 +111,26 @@ public class CompositeVerifier {
 
 	public <K, V, M extends Map<K, V>> M resultNotEmpty(M map, Object name) {
 		return resultV.notEmpty(map, name);
+	}
+
+	public <E, I extends Iterator<E>> I argNotEmpty(I iterator, Object name) {
+		return argV.notEmpty(iterator, name);
+	}
+
+	public <E, I extends Iterator<E>> I varNotEmpty(I iterator, Object name) {
+		return varV.notEmpty(iterator, name);
+	}
+
+	public <E, I extends Iterator<E>> I fieldNotEmpty(I iterator, Object name) {
+		return fieldV.notEmpty(iterator, name);
+	}
+
+	public <E, I extends Iterator<E>> I stateNotEmpty(I iterator, Object name) {
+		return stateV.notEmpty(iterator, name);
+	}
+
+	public <E, I extends Iterator<E>> I resultNotEmpty(I iterator, Object name) {
+		return resultV.notEmpty(iterator, name);
 	}
 
 	public <E, I extends Iterable<E>> I argNotEmpty(I iterable, Object name) {
