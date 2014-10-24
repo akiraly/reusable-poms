@@ -23,25 +23,25 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @Nonnull
-public abstract class EntityWithLongIdDao<E> {
-	protected EntityWithLongId<E> lazyPersist(E entity) {
-		return EntityWithLongId.of(entity, () -> persist(entity));
+public abstract class EntityWithIdDao<E, I> {
+	protected EntityWithId<E, I> lazyPersist(E entity) {
+		return EntityWithIds.of(entity, () -> persist(entity));
 	}
 
-	protected EntityWithLongId<E> lazyFind(long id) {
-		return EntityWithLongId.of(() -> find(id), id);
+	protected EntityWithId<E, I> lazyFind(I id) {
+		return EntityWithIds.of(() -> find(id), id);
 	}
 
-	protected final E find(long id) {
+	protected final E find(I id) {
 		return checkNotNull(doFind(id), "entity with id %s doesn't exists", id);
 	}
 
-	protected final Optional<E> tryFind(long id) {
+	protected final Optional<E> tryFind(I id) {
 		return Optional.ofNullable(doFind(id));
 	}
 
-	protected abstract long persist(E entity);
+	protected abstract I persist(E entity);
 
 	@Nullable
-	protected abstract E doFind(long id);
+	protected abstract E doFind(I id);
 }

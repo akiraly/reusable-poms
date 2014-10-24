@@ -13,19 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.akiraly.ver4j;
+package com.github.akiraly.db4j;
+
+import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
 @Nonnull
-public class IllegalResultException extends RuntimeException {
-	private static final long serialVersionUID = 2273098191220061931L;
-
-	public IllegalResultException(String message, Throwable cause) {
-		super(message, cause);
+public abstract class EntityWithUuidDao<E> extends EntityWithIdDao<E, UUID> {
+	@Override
+	protected EntityWithUuid<E> lazyPersist(E entity) {
+		return EntityWithUuids.of(entity, () -> persist(entity));
 	}
 
-	public IllegalResultException(String message) {
-		super(message);
+	@Override
+	protected EntityWithUuid<E> lazyFind(UUID id) {
+		return EntityWithUuids.of(() -> find(id), id);
 	}
 }

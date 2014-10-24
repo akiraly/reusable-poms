@@ -1,3 +1,18 @@
+/**
+ * Copyright 2014 Attila Kiraly
+ *  
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.github.akiraly.ver4j;
 
 import static org.junit.Assert.assertSame;
@@ -42,6 +57,30 @@ public class VerifierTest {
 		assertSame(in, out);
 	}
 
+	@Test(expected = IllegalVarException.class, timeout = 300)
+	public void testVarNotNullFail() {
+		Verify.varNotNull(null, "foo");
+	}
+
+	@Test(timeout = 300)
+	public void testVarNotNullPass() {
+		Object in = new Object();
+		Object out = Verify.varNotNull(in, "foo");
+		assertSame(in, out);
+	}
+
+	@Test(expected = IllegalFieldException.class, timeout = 300)
+	public void testFieldNotNullFail() {
+		Verify.fieldNotNull(null, "foo");
+	}
+
+	@Test(timeout = 300)
+	public void testFieldNotNullPass() {
+		Object in = new Object();
+		Object out = Verify.fieldNotNull(in, "foo");
+		assertSame(in, out);
+	}
+
 	@Test(expected = IllegalStateException.class, timeout = 300)
 	public void testStateNotNullFail() {
 		Verify.stateNotNull(null, "foo");
@@ -80,6 +119,40 @@ public class VerifierTest {
 	public void testArgCollNotNullPass() {
 		ImmutableList<String> in = ImmutableList.of("");
 		ImmutableList<String> out = Verify.argNotEmpty(in, "foo");
+		assertSame(in, out);
+	}
+
+	@Test(expected = IllegalVarException.class, timeout = 300)
+	public void testVarCollNotNullFail() {
+		Verify.varNotEmpty((Collection<?>) null, "foo");
+	}
+
+	@Test(expected = IllegalVarException.class, timeout = 300)
+	public void testVarCollNotNullFail2() {
+		Verify.varNotEmpty(ImmutableList.of(), "foo");
+	}
+
+	@Test(timeout = 300)
+	public void testVarCollNotNullPass() {
+		ImmutableList<String> in = ImmutableList.of("");
+		ImmutableList<String> out = Verify.varNotEmpty(in, "foo");
+		assertSame(in, out);
+	}
+
+	@Test(expected = IllegalFieldException.class, timeout = 300)
+	public void testFieldCollNotNullFail() {
+		Verify.fieldNotEmpty((Collection<?>) null, "foo");
+	}
+
+	@Test(expected = IllegalFieldException.class, timeout = 300)
+	public void testFieldCollNotNullFail2() {
+		Verify.fieldNotEmpty(ImmutableList.of(), "foo");
+	}
+
+	@Test(timeout = 300)
+	public void testFieldCollNotNullPass() {
+		ImmutableList<String> in = ImmutableList.of("");
+		ImmutableList<String> out = Verify.fieldNotEmpty(in, "foo");
 		assertSame(in, out);
 	}
 
@@ -134,6 +207,40 @@ public class VerifierTest {
 		assertSame(in, out);
 	}
 
+	@Test(expected = IllegalVarException.class, timeout = 300)
+	public void testVarIterableNotNullFail() {
+		Verify.varNotEmpty((Iterable<?>) null, "foo");
+	}
+
+	@Test(expected = IllegalVarException.class, timeout = 300)
+	public void testVarIterableNotNullFail2() {
+		Verify.varNotEmpty((Iterable<?>) ImmutableList.of(), "foo");
+	}
+
+	@Test(timeout = 300)
+	public void testVarIterableNotNullPass() {
+		Iterable<String> in = ImmutableList.of("");
+		Iterable<String> out = Verify.varNotEmpty(in, "foo");
+		assertSame(in, out);
+	}
+
+	@Test(expected = IllegalFieldException.class, timeout = 300)
+	public void testFieldIterableNotNullFail() {
+		Verify.fieldNotEmpty((Iterable<?>) null, "foo");
+	}
+
+	@Test(expected = IllegalFieldException.class, timeout = 300)
+	public void testFieldIterableNotNullFail2() {
+		Verify.fieldNotEmpty((Iterable<?>) ImmutableList.of(), "foo");
+	}
+
+	@Test(timeout = 300)
+	public void testFieldIterableNotNullPass() {
+		Iterable<String> in = ImmutableList.of("");
+		Iterable<String> out = Verify.fieldNotEmpty(in, "foo");
+		assertSame(in, out);
+	}
+
 	@Test(expected = IllegalStateException.class, timeout = 300)
 	public void testStateIterableNotNullFail() {
 		Verify.stateNotEmpty((Iterable<?>) null, "foo");
@@ -182,6 +289,40 @@ public class VerifierTest {
 	public void testArgArrayNotNullPass() {
 		String[] in = new String[] { "" };
 		String[] out = Verify.argNotEmpty(in, "foo");
+		assertSame(in, out);
+	}
+
+	@Test(expected = IllegalVarException.class, timeout = 300)
+	public void testVarArrayNotNullFail() {
+		Verify.varNotEmpty((Object[]) null, "foo");
+	}
+
+	@Test(expected = IllegalVarException.class, timeout = 300)
+	public void testVarArrayNotNullFail2() {
+		Verify.varNotEmpty(new Object[0], "foo");
+	}
+
+	@Test(timeout = 300)
+	public void testVarArrayNotNullPass() {
+		String[] in = new String[] { "" };
+		String[] out = Verify.varNotEmpty(in, "foo");
+		assertSame(in, out);
+	}
+
+	@Test(expected = IllegalFieldException.class, timeout = 300)
+	public void testFieldArrayNotNullFail() {
+		Verify.fieldNotEmpty((Object[]) null, "foo");
+	}
+
+	@Test(expected = IllegalFieldException.class, timeout = 300)
+	public void testFieldArrayNotNullFail2() {
+		Verify.fieldNotEmpty(new Object[0], "foo");
+	}
+
+	@Test(timeout = 300)
+	public void testFieldArrayNotNullPass() {
+		String[] in = new String[] { "" };
+		String[] out = Verify.fieldNotEmpty(in, "foo");
 		assertSame(in, out);
 	}
 
@@ -236,6 +377,40 @@ public class VerifierTest {
 		assertSame(in, out);
 	}
 
+	@Test(expected = IllegalVarException.class, timeout = 300)
+	public void testVarMapNotNullFail() {
+		Verify.varNotEmpty((Map<?, ?>) null, "foo");
+	}
+
+	@Test(expected = IllegalVarException.class, timeout = 300)
+	public void testVarMapNotNullFail2() {
+		Verify.varNotEmpty(ImmutableMap.of(), "foo");
+	}
+
+	@Test(timeout = 300)
+	public void testVarMapNotNullPass() {
+		ImmutableMap<String, Integer> in = ImmutableMap.of("", 0);
+		ImmutableMap<String, Integer> out = Verify.varNotEmpty(in, "foo");
+		assertSame(in, out);
+	}
+
+	@Test(expected = IllegalFieldException.class, timeout = 300)
+	public void testFieldMapNotNullFail() {
+		Verify.fieldNotEmpty((Map<?, ?>) null, "foo");
+	}
+
+	@Test(expected = IllegalFieldException.class, timeout = 300)
+	public void testFieldMapNotNullFail2() {
+		Verify.fieldNotEmpty(ImmutableMap.of(), "foo");
+	}
+
+	@Test(timeout = 300)
+	public void testFieldMapNotNullPass() {
+		ImmutableMap<String, Integer> in = ImmutableMap.of("", 0);
+		ImmutableMap<String, Integer> out = Verify.fieldNotEmpty(in, "foo");
+		assertSame(in, out);
+	}
+
 	@Test(expected = IllegalStateException.class, timeout = 300)
 	public void testStateMapNotNullFail() {
 		Verify.stateNotEmpty((Map<?, ?>) null, "foo");
@@ -280,6 +455,26 @@ public class VerifierTest {
 		Verify.argIsTrue(true, "foo");
 	}
 
+	@Test(expected = IllegalVarException.class, timeout = 300)
+	public void testVarIsTrueFail() {
+		Verify.varIsTrue(false, "foo");
+	}
+
+	@Test(timeout = 300)
+	public void testVarIsTruePass() {
+		Verify.varIsTrue(true, "foo");
+	}
+
+	@Test(expected = IllegalFieldException.class, timeout = 300)
+	public void testFieldIsTrueFail() {
+		Verify.fieldIsTrue(false, "foo");
+	}
+
+	@Test(timeout = 300)
+	public void testFieldIsTruePass() {
+		Verify.fieldIsTrue(true, "foo");
+	}
+
 	@Test(expected = IllegalStateException.class, timeout = 300)
 	public void testStateIsTrueFail() {
 		Verify.stateIsTrue(false, "foo");
@@ -308,6 +503,26 @@ public class VerifierTest {
 	@Test(timeout = 300)
 	public void testArgIsFalsePass() {
 		Verify.argIsFalse(false, "foo");
+	}
+
+	@Test(expected = IllegalVarException.class, timeout = 300)
+	public void testVarIsFalseFail() {
+		Verify.varIsFalse(true, "foo");
+	}
+
+	@Test(timeout = 300)
+	public void testVarIsFalsePass() {
+		Verify.varIsFalse(false, "foo");
+	}
+
+	@Test(expected = IllegalFieldException.class, timeout = 300)
+	public void testFieldIsFalseFail() {
+		Verify.fieldIsFalse(true, "foo");
+	}
+
+	@Test(timeout = 300)
+	public void testFieldIsFalsePass() {
+		Verify.fieldIsFalse(false, "foo");
 	}
 
 	@Test(expected = IllegalStateException.class, timeout = 300)

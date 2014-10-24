@@ -13,19 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.akiraly.ver4j;
+package com.github.akiraly.db4j;
+
+import static com.github.akiraly.ver4j.Verify.argNotNull;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
 @Nonnull
-public class IllegalResultException extends RuntimeException {
-	private static final long serialVersionUID = 2273098191220061931L;
-
-	public IllegalResultException(String message, Throwable cause) {
-		super(message, cause);
+public abstract class ResultSets {
+	private ResultSets() {
 	}
 
-	public IllegalResultException(String message) {
-		super(message);
+	public static UUID readBase64Uuid(ResultSet rs, String colName)
+			throws SQLException {
+		String encodedUuid = argNotNull(rs, "rs").getString(
+				argNotNull(colName, "colName"));
+		return UuidBase64.decode(encodedUuid);
 	}
 }

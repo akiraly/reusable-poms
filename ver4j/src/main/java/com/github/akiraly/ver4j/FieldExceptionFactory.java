@@ -18,14 +18,19 @@ package com.github.akiraly.ver4j;
 import javax.annotation.Nonnull;
 
 @Nonnull
-public class IllegalResultException extends RuntimeException {
-	private static final long serialVersionUID = 2273098191220061931L;
-
-	public IllegalResultException(String message, Throwable cause) {
-		super(message, cause);
+public class FieldExceptionFactory extends AExceptionFactory {
+	@Override
+	public RuntimeException notNullException(Object name) {
+		return newException("Field \"%s\" is null.", name);
 	}
 
-	public IllegalResultException(String message) {
-		super(message);
+	@Override
+	protected RuntimeException notEmptyException(String type, Object name) {
+		return newException("%s field \"%s\" is empty.", type, name);
+	}
+
+	@Override
+	protected RuntimeException createException(String message) {
+		return new IllegalFieldException(message);
 	}
 }
