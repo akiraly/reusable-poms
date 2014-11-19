@@ -18,6 +18,7 @@ package com.github.akiraly.db4j.uow;
 import static org.junit.Assert.assertEquals;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Nonnull;
 import javax.sql.DataSource;
@@ -41,22 +42,22 @@ import com.github.akiraly.db4j.DatabaseSchemaOperation;
 import com.github.akiraly.db4j.pool.EmbeddedDbcpDatabaseBuilder;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { FooServiceTestConfig.class })
+@ContextConfiguration(classes = { FooUuidServiceTestConfig.class })
 @Nonnull
-public class FooServiceTest {
+public class FooUuidServiceTest {
 	@Autowired
 	private TransactionTemplate transactionTemplate;
 
 	@Autowired
-	private FooDaoFactory fooDaoFactory;
+	private FooUuidDaoFactory fooDaoFactory;
 
 	@Test(timeout = 5000)
 	public void testFooService() {
-		FooService fooService = new FooService(transactionTemplate,
+		FooUuidService fooService = new FooUuidService(transactionTemplate,
 				fooDaoFactory.newDao());
 
-		fooService.addFoo("bar", 1);
-		fooService.assertBar(1, "bar");
+		UUID fooId = fooService.addFoo("bar");
+		fooService.assertBar(fooId, "bar");
 
 		assertEquals(
 				1,
@@ -68,21 +69,21 @@ public class FooServiceTest {
 @Configuration
 @Import(CommonDbConfig.class)
 @Nonnull
-class FooServiceTestConfig {
+class FooUuidServiceTestConfig {
 	@Bean
 	public DataSource dataSource() {
 		return new EmbeddedDbcpDatabaseBuilder()
 				.setType(EmbeddedDatabaseType.H2)
 				.setName(
-						FooServiceTest.class.getName()
+						FooUuidServiceTest.class.getName()
 								+ RandomStringUtils.randomAlphabetic(5)
 								+ "db;TRACE_LEVEL_FILE=4").build();
 	}
 
 	@Bean
-	public FooDaoFactory fooDaoFactory(JdbcTemplate jdbcTemplate,
+	public FooUuidDaoFactory fooDaoFactory(JdbcTemplate jdbcTemplate,
 			List<DatabaseSchemaOperation> schemaOps) {
-		return new FooDaoFactory(jdbcTemplate);
+		return new FooUuidDaoFactory(jdbcTemplate);
 	}
 
 	@Bean

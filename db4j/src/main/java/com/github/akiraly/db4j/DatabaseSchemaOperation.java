@@ -15,21 +15,15 @@
  */
 package com.github.akiraly.db4j;
 
-import static com.github.akiraly.ver4j.Verify.argNotNull;
-
 import javax.annotation.Nonnull;
 
-import org.springframework.jdbc.core.JdbcTemplate;
-
+/**
+ * Marker interface to mark all classes which are involved in db schema
+ * modifications.
+ * 
+ * @author akiraly
+ */
 @Nonnull
-public abstract class JdbcTemplateAware {
-	private final JdbcTemplate jdbcTemplate;
+public interface DatabaseSchemaOperation {
 
-	protected JdbcTemplateAware(JdbcTemplate jdbcTemplate) {
-		this.jdbcTemplate = argNotNull(jdbcTemplate, "jdbcTemplate");
-	}
-
-	protected final JdbcTemplate jdbcTemplate() {
-		return jdbcTemplate;
-	}
 }

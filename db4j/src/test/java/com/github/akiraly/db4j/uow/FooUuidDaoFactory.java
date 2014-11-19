@@ -16,6 +16,7 @@
 package com.github.akiraly.db4j.uow;
 
 import java.sql.Types;
+import java.util.UUID;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -26,64 +27,68 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.object.SqlQuery;
 import org.springframework.jdbc.object.SqlUpdate;
 
-import com.github.akiraly.db4j.EntityWithLongId;
-import com.github.akiraly.db4j.EntityWithLongIdDao;
+import com.github.akiraly.db4j.EntityWithUuid;
+import com.github.akiraly.db4j.EntityWithUuidDao;
 import com.github.akiraly.db4j.JdbcTemplateAware;
 import com.github.akiraly.db4j.SimpleJdbcInsertBuilder;
 import com.github.akiraly.db4j.SqlQueryBuilder;
 import com.github.akiraly.db4j.SqlUpdateBuilder;
+import com.github.akiraly.db4j.UuidBase64;
 import com.google.common.collect.ImmutableMap;
 
 @Nonnull
-public class FooDaoFactory extends JdbcTemplateAware {
+public class FooUuidDaoFactory extends JdbcTemplateAware {
 	private final SimpleJdbcInsert insert = //
 	new SimpleJdbcInsertBuilder(jdbcTemplate()) //
-			.tableName("foo") //
-			.generatedKeyColumns("foo_id") //
+			.tableName("foo_uuid") //
 			.get();
 
 	private final SqlUpdate deleteAll = //
 	new SqlUpdateBuilder(jdbcTemplate()) //
-			.sql("delete from foo") //
+			.sql("delete from foo_uuid") //
 			.get();
 
 	private final SqlQuery<Foo> queryById = //
 	new SqlQueryBuilder<Foo>(jdbcTemplate()) //
-			.sql("select * from foo where foo_id = ?") //
-			.parameters(new SqlParameter("foo_id", Types.BIGINT)) //
+			.sql("select * from foo_uuid where foo_id = ?") //
+			.parameters(new SqlParameter("foo_id", Types.CHAR)) //
 			.rowMapper((rs, rn) -> new Foo(rs.getString("bar"))) //
 			.get();
 
-	public FooDaoFactory(JdbcTemplate jdbcTemplate) {
+	public FooUuidDaoFactory(JdbcTemplate jdbcTemplate) {
 		super(jdbcTemplate);
 	}
 
-	public FooDao newDao() {
-		return new FooDao();
+	public FooUuidDao newDao() {
+		return new FooUuidDao();
 	}
 
 	@Nonnull
-	public class FooDao extends EntityWithLongIdDao<Foo> {
+	public class FooUuidDao extends EntityWithUuidDao<Foo> {
 		@Override
-		public EntityWithLongId<Foo> lazyPersist(Foo entity) {
+		public EntityWithUuid<Foo> lazyPersist(Foo entity) {
 			return super.lazyPersist(entity);
 		}
 
 		@Override
-		public EntityWithLongId<Foo> lazyFind(long id) {
+		public EntityWithUuid<Foo> lazyFind(UUID id) {
 			return super.lazyFind(id);
 		}
 
 		@Override
-		protected long persist(Foo entity) {
-			return insert.executeAndReturnKey(
-					ImmutableMap.of("bar", entity.getBar())).longValue();
+		protected UUID persist(Foo entity) {
+			final UUID id = UUID.randomUUID();
+			insert.execute(ImmutableMap.of( //
+					"foo_id", UuidBase64.encode(id), //
+					"bar", entity.getBar() //
+					));
+			return id;
 		}
 
 		@Override
 		@Nullable
-		protected Foo doFind(long id) {
-			return queryById.findObject(id);
+		protected Foo doFind(UUID id) {
+			return queryById.findObject(UuidBase64.encode(id));
 		}
 
 		public int deleteAll() {
@@ -91,8 +96,8 @@ public class FooDaoFactory extends JdbcTemplateAware {
 		}
 
 		public long count() {
-			return jdbcTemplate().queryForObject("select count(*) from foo",
-					Long.class);
+			return jdbcTemplate().queryForObject(
+					"select count(*) from foo_uuid", Long.class);
 		}
 	}
 }

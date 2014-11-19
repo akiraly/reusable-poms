@@ -15,3 +15,8 @@ create table audited_foo (
 	foreign key (create_uow_id) references uow(uow_id),
 	foreign key (update_uow_id) references uow(uow_id)
 );
+
+create table foo_uuid (
+	foo_id char(22) primary key,
+	bar varchar(50) not null
+);
