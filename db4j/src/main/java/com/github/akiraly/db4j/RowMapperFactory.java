@@ -15,13 +15,14 @@
  */
 package com.github.akiraly.db4j;
 
-import java.util.Map;
-
 import javax.annotation.Nonnull;
 
 import org.springframework.jdbc.core.RowMapper;
 
+import com.google.common.collect.ImmutableClassToInstanceMap;
+
 @Nonnull
 public interface RowMapperFactory<T> {
-	RowMapper<T> newRowMapper(Object[] parameters, Map<?, ?> context);
+	RowMapper<T> newRowMapper(Object[] parameters,
+			ImmutableClassToInstanceMap<Object> context);
 }

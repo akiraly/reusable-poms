@@ -17,6 +17,8 @@ package com.github.akiraly.db4j.uow;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.List;
+
 import javax.annotation.Nonnull;
 import javax.sql.DataSource;
 
@@ -38,6 +40,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import com.github.akiraly.db4j.CommonDbConfig;
 import com.github.akiraly.db4j.DatabaseLiquibaseInitializer;
+import com.github.akiraly.db4j.DatabaseSchemaOperation;
 import com.github.akiraly.db4j.EntityWithLongId;
 import com.github.akiraly.db4j.pool.EmbeddedDbcpDatabaseBuilder;
 import com.github.akiraly.db4j.uow.AuditedFooDaoFactory.AuditedFooDao;
@@ -161,7 +164,8 @@ class UowCascadePersistenceTestConfig {
 	}
 
 	@Bean
-	public AuditedFooDaoFactory auditedFooDaoFactory(JdbcTemplate jdbcTemplate) {
+	public AuditedFooDaoFactory auditedFooDaoFactory(JdbcTemplate jdbcTemplate,
+			List<DatabaseSchemaOperation> schemaOps) {
 		return new AuditedFooDaoFactory(jdbcTemplate);
 	}
 

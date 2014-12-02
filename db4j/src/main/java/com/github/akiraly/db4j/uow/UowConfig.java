@@ -15,17 +15,22 @@
  */
 package com.github.akiraly.db4j.uow;
 
+import java.util.List;
+
 import javax.annotation.Nonnull;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.github.akiraly.db4j.DatabaseSchemaOperation;
+
 @Configuration
 @Nonnull
 public class UowConfig {
 	@Bean
-	public UowDaoFactory uowDaoFactory(JdbcTemplate jdbcTemplate) {
+	public UowDaoFactory uowDaoFactory(JdbcTemplate jdbcTemplate,
+			List<DatabaseSchemaOperation> schemaOps) {
 		return new UowDaoFactory(jdbcTemplate);
 	}
 }

@@ -15,18 +15,14 @@
  */
 package com.github.akiraly.db4j.uow;
 
-import static com.github.akiraly.db4j.MoreSuppliers.memoizej8;
 import static com.github.akiraly.ver4j.Verify.argNotNull;
 
 import java.sql.Types;
-import java.util.Map;
-import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.object.SqlQuery;
@@ -35,60 +31,45 @@ import org.springframework.jdbc.object.SqlUpdate;
 import com.github.akiraly.db4j.EntityWithLongId;
 import com.github.akiraly.db4j.EntityWithLongIdDao;
 import com.github.akiraly.db4j.JdbcTemplateAware;
+import com.github.akiraly.db4j.SimpleJdbcInsertBuilder;
+import com.github.akiraly.db4j.SqlQueryBuilder;
+import com.github.akiraly.db4j.SqlUpdateBuilder;
 import com.github.akiraly.db4j.uow.UowDaoFactory.UowDao;
 import com.google.common.collect.ImmutableClassToInstanceMap;
 import com.google.common.collect.ImmutableMap;
 
 @Nonnull
 public class AuditedFooDaoFactory extends JdbcTemplateAware {
-	private final Supplier<SimpleJdbcInsert> insert = memoizej8(() -> {
-		SimpleJdbcInsert insert = new SimpleJdbcInsert(jdbcTemplate())
-				.withTableName("audited_foo").usingGeneratedKeyColumns(
-						"audited_foo_id");
-		insert.compile();
-		return insert;
-	});
+	private final SimpleJdbcInsert insert = //
+	new SimpleJdbcInsertBuilder(jdbcTemplate()) //
+			.tableName("audited_foo") //
+			.generatedKeyColumns("audited_foo_id").get();
 
-	private final Supplier<SqlUpdate> update = memoizej8(() -> {
-		SqlUpdate update = new SqlUpdate();
-		update.setJdbcTemplate(jdbcTemplate());
-		update.setSql("update audited_foo set bar = ?, update_uow_id = ? where audited_foo_id = ?");
-		update.declareParameter(new SqlParameter("bar", Types.VARCHAR));
-		update.declareParameter(new SqlParameter("update_uow_id", Types.BIGINT));
-		update.declareParameter(new SqlParameter("audited_foo_id", Types.BIGINT));
-		update.afterPropertiesSet();
-		return update;
-	});
+	private final SqlUpdate update = //
+	new SqlUpdateBuilder(jdbcTemplate()) //
+			.sql("update audited_foo set bar = ?, update_uow_id = ? where audited_foo_id = ?") //
+			.parameters( //
+					new SqlParameter("bar", Types.VARCHAR), //
+					new SqlParameter("update_uow_id", Types.BIGINT), //
+					new SqlParameter("audited_foo_id", Types.BIGINT) //
+			).get();
 
-	private final Supplier<SqlUpdate> deleteAll = memoizej8(() -> {
-		SqlUpdate deleteAll = new SqlUpdate();
-		deleteAll.setJdbcTemplate(jdbcTemplate());
-		deleteAll.setSql("delete from audited_foo");
-		deleteAll.afterPropertiesSet();
-		return deleteAll;
-	});
+	private final SqlUpdate deleteAll = //
+	new SqlUpdateBuilder(jdbcTemplate()) //
+			.sql("delete from audited_foo") //
+			.get();
 
-	private final Supplier<SqlQuery<AuditedFoo>> queryById = memoizej8(() -> {
-		SqlQuery<AuditedFoo> queryById = new SqlQuery<AuditedFoo>() {
-			@Override
-			protected RowMapper<AuditedFoo> newRowMapper(Object[] parameters,
-					Map<?, ?> context) {
-				@SuppressWarnings("unchecked")
-				ImmutableClassToInstanceMap<Object> typedContext = (ImmutableClassToInstanceMap<Object>) context;
-				UowDao uowDao = typedContext.getInstance(UowDao.class);
+	private final SqlQuery<AuditedFoo> queryById = //
+	new SqlQueryBuilder<AuditedFoo>(jdbcTemplate()) //
+			.sql("select * from audited_foo where audited_foo_id = ?") //
+			.parameters(new SqlParameter("audited_foo_id", Types.BIGINT)) //
+			.rowMapperFactory((parameters, context) -> {
+				UowDao uowDao = context.getInstance(UowDao.class);
 				return (rs, rowNum) -> new AuditedFoo( //
 						rs.getString("bar"), //
 						uowDao.lazyFind(rs.getLong("create_uow_id")), //
 						uowDao.lazyFind(rs.getLong("update_uow_id")));
-			}
-		};
-		queryById.setSql("select * from audited_foo where audited_foo_id = ?");
-		queryById.declareParameter(new SqlParameter("audited_foo_id",
-				Types.BIGINT));
-		queryById.setJdbcTemplate(jdbcTemplate());
-		queryById.afterPropertiesSet();
-		return queryById;
-	});
+			}).get();
 
 	public AuditedFooDaoFactory(JdbcTemplate jdbcTemplate) {
 		super(jdbcTemplate);
@@ -119,7 +100,7 @@ public class AuditedFooDaoFactory extends JdbcTemplateAware {
 
 		@Override
 		protected long persist(AuditedFoo entity) {
-			return insert.get().executeAndReturnKey(ImmutableMap.of( //
+			return insert.executeAndReturnKey(ImmutableMap.of( //
 					"bar", entity.getBar(), //
 					"create_uow_id", entity.getCreateUow().getId(), //
 					"update_uow_id", entity.getUpdateUow().getId() //
@@ -129,7 +110,7 @@ public class AuditedFooDaoFactory extends JdbcTemplateAware {
 		@Override
 		@Nullable
 		protected AuditedFoo doFind(long id) {
-			return queryById.get().findObject(id, context);
+			return queryById.findObject(id, context);
 		}
 
 		public EntityWithLongId<AuditedFoo> update(long id, AuditedFoo entity) {
@@ -141,12 +122,12 @@ public class AuditedFooDaoFactory extends JdbcTemplateAware {
 
 		public int update(EntityWithLongId<AuditedFoo> entityWithId) {
 			AuditedFoo entity = entityWithId.getEntity();
-			return update.get().update(entity.getBar(),
+			return update.update(entity.getBar(),
 					entity.getUpdateUow().getId(), entityWithId.getId());
 		}
 
 		public int deleteAll() {
-			return deleteAll.get().update();
+			return deleteAll.update();
 		}
 
 		public long count() {

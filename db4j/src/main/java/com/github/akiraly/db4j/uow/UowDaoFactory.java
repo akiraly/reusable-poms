@@ -15,17 +15,12 @@
  */
 package com.github.akiraly.db4j.uow;
 
-import static com.github.akiraly.db4j.MoreSuppliers.memoizej8;
-
 import java.sql.Types;
-import java.util.Map;
-import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.object.SqlQuery;
@@ -33,33 +28,24 @@ import org.springframework.jdbc.object.SqlQuery;
 import com.github.akiraly.db4j.EntityWithLongId;
 import com.github.akiraly.db4j.EntityWithLongIdDao;
 import com.github.akiraly.db4j.JdbcTemplateAware;
+import com.github.akiraly.db4j.SimpleJdbcInsertBuilder;
+import com.github.akiraly.db4j.SqlQueryBuilder;
 import com.google.common.collect.ImmutableMap;
 
 @Nonnull
 public class UowDaoFactory extends JdbcTemplateAware {
-	private final Supplier<SimpleJdbcInsert> insert = memoizej8(() -> {
-		SimpleJdbcInsert insert = new SimpleJdbcInsert(jdbcTemplate())
-				.withTableName("uow").usingGeneratedKeyColumns("uow_id");
-		insert.compile();
-		return insert;
-	});
+	private final SimpleJdbcInsert insert = new SimpleJdbcInsertBuilder(
+			jdbcTemplate()).tableName("uow").generatedKeyColumns("uow_id")
+			.get();
 
-	private final Supplier<SqlQuery<Uow>> queryById = memoizej8(() -> {
-		SqlQuery<Uow> queryById = new SqlQuery<Uow>() {
-			@Override
-			protected RowMapper<Uow> newRowMapper(Object[] parameters,
-					Map<?, ?> context) {
-				return (rs, rowNum) -> new Uow( //
-						rs.getString("user") //
-				);
-			}
-		};
-		queryById.setSql("select * from uow where uow_id = ?");
-		queryById.declareParameter(new SqlParameter("uow_id", Types.BIGINT));
-		queryById.setJdbcTemplate(jdbcTemplate());
-		queryById.afterPropertiesSet();
-		return queryById;
-	});
+	private final SqlQuery<Uow> queryById = new SqlQueryBuilder<Uow>(
+			jdbcTemplate()) //
+			.sql("select * from uow where uow_id = ?") //
+			.parameters(new SqlParameter("uow_id", Types.BIGINT)) //
+			.rowMapper((rs, rowNum) -> new Uow( //
+					rs.getString("user") //
+					)) //
+			.get();
 
 	public UowDaoFactory(JdbcTemplate jdbcTemplate) {
 		super(jdbcTemplate);
@@ -84,16 +70,14 @@ public class UowDaoFactory extends JdbcTemplateAware {
 
 		@Override
 		protected long persist(Uow uow) {
-			return insert
-					.get()
-					.executeAndReturnKey(ImmutableMap.of("user", uow.getUser()))
-					.longValue();
+			return insert.executeAndReturnKey(
+					ImmutableMap.of("user", uow.getUser())).longValue();
 		}
 
 		@Override
 		@Nullable
 		protected Uow doFind(long id) {
-			return queryById.get().findObject(id);
+			return queryById.findObject(id);
 		}
 
 		public long count() {

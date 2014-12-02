@@ -17,11 +17,11 @@ package com.github.akiraly.db4j;
 
 import static com.github.akiraly.ver4j.Verify.argNotNull;
 
-import java.util.Map;
-
 import javax.annotation.Nonnull;
 
 import org.springframework.jdbc.core.RowMapper;
+
+import com.google.common.collect.ImmutableClassToInstanceMap;
 
 @Nonnull
 public class SingletonRowMapperFactory<T> implements RowMapperFactory<T> {
@@ -32,7 +32,8 @@ public class SingletonRowMapperFactory<T> implements RowMapperFactory<T> {
 	}
 
 	@Override
-	public RowMapper<T> newRowMapper(Object[] parameters, Map<?, ?> context) {
+	public RowMapper<T> newRowMapper(Object[] parameters,
+			ImmutableClassToInstanceMap<Object> context) {
 		return rowMapper;
 	}
 }

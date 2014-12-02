@@ -15,15 +15,19 @@
  */
 package com.github.akiraly.db4j;
 
+import static com.github.akiraly.ver4j.Verify.argInstanceOf;
 import static com.github.akiraly.ver4j.Verify.argNotNull;
 
 import java.util.Map;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.object.SqlQuery;
+
+import com.google.common.collect.ImmutableClassToInstanceMap;
 
 @Nonnull
 public class SqlQueryBuilder<T> extends
@@ -64,8 +68,13 @@ public class SqlQueryBuilder<T> extends
 
 		@Override
 		protected RowMapper<T> newRowMapper(Object[] parameters,
-				Map<?, ?> context) {
-			return rowMapperFactory.newRowMapper(parameters, context);
+				@Nullable Map<?, ?> context) {
+			@SuppressWarnings("unchecked")
+			@Nullable
+			ImmutableClassToInstanceMap<Object> typedContext = context != null ? argInstanceOf(
+					context, ImmutableClassToInstanceMap.class, "context")
+					: null;
+			return rowMapperFactory.newRowMapper(parameters, typedContext);
 		}
 	}
 }

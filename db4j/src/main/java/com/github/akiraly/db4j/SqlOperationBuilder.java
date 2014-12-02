@@ -16,7 +16,7 @@
 package com.github.akiraly.db4j;
 
 import static com.github.akiraly.ver4j.Verify.argNotNull;
-import static com.github.akiraly.ver4j.Verify.stateNotNull;
+import static com.github.akiraly.ver4j.Verify.fieldNotNull;
 
 import java.util.stream.Stream;
 
@@ -53,8 +53,8 @@ public abstract class SqlOperationBuilder<T extends SqlOperation, B extends SqlO
 	@Override
 	public final T get() {
 		T result = newOperation();
-		result.setJdbcTemplate(stateNotNull(jdbcTemplate(), "jdbcTemplate"));
-		result.setSql(stateNotNull(sql, "sql"));
+		result.setJdbcTemplate(fieldNotNull(jdbcTemplate(), "jdbcTemplate"));
+		result.setSql(fieldNotNull(sql, "sql"));
 		Stream.of(parameters).forEach(param -> result.declareParameter(param));
 		result.afterPropertiesSet();
 		return result;
