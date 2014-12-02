@@ -34,4 +34,6 @@ public interface ExceptionFactory {
 	RuntimeException notEmptyIterableException(Object name);
 
 	RuntimeException notEmptyArrayException(Object name);
+
+	RuntimeException instanceOfException(Class<?> clazz, Object name);
 }

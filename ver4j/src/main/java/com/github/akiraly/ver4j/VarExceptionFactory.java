@@ -30,6 +30,12 @@ public class VarExceptionFactory extends AExceptionFactory {
 	}
 
 	@Override
+	public RuntimeException instanceOfException(Class<?> clazz, Object name) {
+		return newException("Variable \"%s\" is not instanceof %s.", name,
+				clazz);
+	}
+
+	@Override
 	protected RuntimeException createException(String message) {
 		return new IllegalVarException(message);
 	}

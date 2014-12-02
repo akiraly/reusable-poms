@@ -15,6 +15,7 @@
  */
 package com.github.akiraly.ver4j;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
@@ -629,5 +630,85 @@ public class VerifierTest {
 	@Test(timeout = 300)
 	public void testResultIsFalsePass() {
 		Verify.resultIsFalse(false, "foo");
+	}
+
+	@Test(expected = IllegalArgumentException.class, timeout = 300)
+	public void testArgInstanceOfFail() {
+		Verify.argInstanceOf("", Integer.class, "foo");
+	}
+
+	@Test(expected = IllegalArgumentException.class, timeout = 300)
+	public void testArgInstanceOfFail2() {
+		Verify.argInstanceOf(null, Object.class, "foo");
+	}
+
+	@Test(timeout = 300)
+	public void testArgInstanceOfPass() {
+		String str = Verify.argInstanceOf("", String.class, "foo");
+		assertEquals("", str);
+	}
+
+	@Test(expected = IllegalVarException.class, timeout = 300)
+	public void testVarInstanceOfFail() {
+		Verify.varInstanceOf("", Integer.class, "foo");
+	}
+
+	@Test(expected = IllegalVarException.class, timeout = 300)
+	public void testVarInstanceOfFail2() {
+		Verify.varInstanceOf(null, Object.class, "foo");
+	}
+
+	@Test(timeout = 300)
+	public void testVarInstanceOfPass() {
+		String str = Verify.varInstanceOf("", String.class, "foo");
+		assertEquals("", str);
+	}
+
+	@Test(expected = IllegalFieldException.class, timeout = 300)
+	public void testFieldInstanceOfFail() {
+		Verify.fieldInstanceOf("", Integer.class, "foo");
+	}
+
+	@Test(expected = IllegalFieldException.class, timeout = 300)
+	public void testFieldInstanceOfFail2() {
+		Verify.fieldInstanceOf(null, Object.class, "foo");
+	}
+
+	@Test(timeout = 300)
+	public void testFieldInstanceOfPass() {
+		String str = Verify.fieldInstanceOf("", String.class, "foo");
+		assertEquals("", str);
+	}
+
+	@Test(expected = IllegalStateException.class, timeout = 300)
+	public void testStateInstanceOfFail() {
+		Verify.stateInstanceOf("", Integer.class, "foo");
+	}
+
+	@Test(expected = IllegalStateException.class, timeout = 300)
+	public void testStateInstanceOfFail2() {
+		Verify.stateInstanceOf(null, Object.class, "foo");
+	}
+
+	@Test(timeout = 300)
+	public void testStateInstanceOfPass() {
+		String str = Verify.stateInstanceOf("", String.class, "foo");
+		assertEquals("", str);
+	}
+
+	@Test(expected = IllegalResultException.class, timeout = 300)
+	public void testResultInstanceOfFail() {
+		Verify.resultInstanceOf("", Integer.class, "foo");
+	}
+
+	@Test(expected = IllegalResultException.class, timeout = 300)
+	public void testResultInstanceOfFail2() {
+		Verify.resultInstanceOf(null, Object.class, "foo");
+	}
+
+	@Test(timeout = 300)
+	public void testResultInstanceOfPass() {
+		String str = Verify.resultInstanceOf("", String.class, "foo");
+		assertEquals("", str);
 	}
 }

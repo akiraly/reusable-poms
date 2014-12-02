@@ -15,6 +15,7 @@
  */
 package com.github.akiraly.ver4j;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.Iterables.isEmpty;
 
 import java.util.Collection;
@@ -39,7 +40,7 @@ public class Verifier {
 
 	public <E, I extends Iterator<E>> I notEmpty(I iterator, Object name) {
 		if (!notNull(iterator, name).hasNext())
-			throw exceptionFactory.notEmptyIterableException(name);
+			throw exceptionFactory.notEmptyIteratorException(name);
 		return iterator;
 	}
 
@@ -65,6 +66,13 @@ public class Verifier {
 		if (notNull(array, name).length < 1)
 			throw exceptionFactory.notEmptyArrayException(name);
 		return array;
+	}
+
+	public <C> C instanceOf(Object instance, Class<C> clazz, Object name) {
+		if (!checkNotNull(clazz, "Expected not null clazz argument.")
+				.isInstance(notNull(instance, name)))
+			throw exceptionFactory.instanceOfException(clazz, name);
+		return clazz.cast(instance);
 	}
 
 	public void isTrue(boolean check, String message, Object... params) {

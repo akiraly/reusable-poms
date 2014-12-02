@@ -30,6 +30,12 @@ public class ArgExceptionFactory extends AExceptionFactory {
 	}
 
 	@Override
+	public RuntimeException instanceOfException(Class<?> clazz, Object name) {
+		return newException("Argument \"%s\" is not instanceof %s.", name,
+				clazz);
+	}
+
+	@Override
 	protected RuntimeException createException(String message) {
 		return new IllegalArgumentException(message);
 	}

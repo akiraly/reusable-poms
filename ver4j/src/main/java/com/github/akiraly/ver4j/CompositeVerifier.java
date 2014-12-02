@@ -213,4 +213,23 @@ public class CompositeVerifier {
 		resultV.isFalse(check, message, params);
 	}
 
+	public <C> C argInstanceOf(Object instance, Class<C> clazz, Object name) {
+		return argV.instanceOf(instance, clazz, name);
+	}
+
+	public <C> C varInstanceOf(Object instance, Class<C> clazz, Object name) {
+		return varV.instanceOf(instance, clazz, name);
+	}
+
+	public <C> C fieldInstanceOf(Object instance, Class<C> clazz, Object name) {
+		return fieldV.instanceOf(instance, clazz, name);
+	}
+
+	public <C> C stateInstanceOf(Object instance, Class<C> clazz, Object name) {
+		return stateV.instanceOf(instance, clazz, name);
+	}
+
+	public <C> C resultInstanceOf(Object instance, Class<C> clazz, Object name) {
+		return resultV.instanceOf(instance, clazz, name);
+	}
 }

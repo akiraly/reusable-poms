@@ -30,6 +30,11 @@ public class FieldExceptionFactory extends AExceptionFactory {
 	}
 
 	@Override
+	public RuntimeException instanceOfException(Class<?> clazz, Object name) {
+		return newException("Field \"%s\" is not instanceof %s.", name, clazz);
+	}
+
+	@Override
 	protected RuntimeException createException(String message) {
 		return new IllegalFieldException(message);
 	}

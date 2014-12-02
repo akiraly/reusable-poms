@@ -30,6 +30,11 @@ public class ResultExceptionFactory extends AExceptionFactory {
 	}
 
 	@Override
+	public RuntimeException instanceOfException(Class<?> clazz, Object name) {
+		return newException("Result \"%s\" is not instanceof %s.", name, clazz);
+	}
+
+	@Override
 	protected RuntimeException createException(String message) {
 		return new IllegalResultException(message);
 	}

@@ -214,4 +214,29 @@ public abstract class Verify {
 			Object... params) {
 		INSTANCE.resultIsFalse(check, message, params);
 	}
+
+	public static <C> C argInstanceOf(Object instance, Class<C> clazz,
+			Object name) {
+		return INSTANCE.argInstanceOf(instance, clazz, name);
+	}
+
+	public static <C> C varInstanceOf(Object instance, Class<C> clazz,
+			Object name) {
+		return INSTANCE.varInstanceOf(instance, clazz, name);
+	}
+
+	public static <C> C fieldInstanceOf(Object instance, Class<C> clazz,
+			Object name) {
+		return INSTANCE.fieldInstanceOf(instance, clazz, name);
+	}
+
+	public static <C> C stateInstanceOf(Object instance, Class<C> clazz,
+			Object name) {
+		return INSTANCE.stateInstanceOf(instance, clazz, name);
+	}
+
+	public static <C> C resultInstanceOf(Object instance, Class<C> clazz,
+			Object name) {
+		return INSTANCE.resultInstanceOf(instance, clazz, name);
+	}
 }

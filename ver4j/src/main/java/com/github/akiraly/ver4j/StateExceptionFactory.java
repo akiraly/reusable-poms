@@ -30,6 +30,11 @@ public class StateExceptionFactory extends AExceptionFactory {
 	}
 
 	@Override
+	public RuntimeException instanceOfException(Class<?> clazz, Object name) {
+		return newException("State \"%s\" is not instanceof %s.", name, clazz);
+	}
+
+	@Override
 	protected RuntimeException createException(String message) {
 		return new IllegalStateException(message);
 	}
