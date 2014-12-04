@@ -21,6 +21,13 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
+/**
+ * Static methods (intended to be used as static imports) to do various runtime
+ * checks: null-s, emptyness, true/false, instanceof for different scopes:
+ * parameters-arguments, variables, object fields, results, states.
+ * 
+ * @author akiraly
+ */
 @Nonnull
 public abstract class Verify {
 	private static final CompositeVerifier INSTANCE = new CompositeVerifier();
@@ -215,28 +222,28 @@ public abstract class Verify {
 		INSTANCE.resultIsFalse(check, message, params);
 	}
 
-	public static <C> C argInstanceOf(Object instance, Class<C> clazz,
-			Object name) {
-		return INSTANCE.argInstanceOf(instance, clazz, name);
+	public static <C> C argInstanceOf(Object instance, Object name,
+			Class<C> clazz) {
+		return INSTANCE.argInstanceOf(instance, name, clazz);
 	}
 
-	public static <C> C varInstanceOf(Object instance, Class<C> clazz,
-			Object name) {
-		return INSTANCE.varInstanceOf(instance, clazz, name);
+	public static <C> C varInstanceOf(Object instance, Object name,
+			Class<C> clazz) {
+		return INSTANCE.varInstanceOf(instance, name, clazz);
 	}
 
-	public static <C> C fieldInstanceOf(Object instance, Class<C> clazz,
-			Object name) {
-		return INSTANCE.fieldInstanceOf(instance, clazz, name);
+	public static <C> C fieldInstanceOf(Object instance, Object name,
+			Class<C> clazz) {
+		return INSTANCE.fieldInstanceOf(instance, name, clazz);
 	}
 
-	public static <C> C stateInstanceOf(Object instance, Class<C> clazz,
-			Object name) {
-		return INSTANCE.stateInstanceOf(instance, clazz, name);
+	public static <C> C stateInstanceOf(Object instance, Object name,
+			Class<C> clazz) {
+		return INSTANCE.stateInstanceOf(instance, name, clazz);
 	}
 
-	public static <C> C resultInstanceOf(Object instance, Class<C> clazz,
-			Object name) {
-		return INSTANCE.resultInstanceOf(instance, clazz, name);
+	public static <C> C resultInstanceOf(Object instance, Object name,
+			Class<C> clazz) {
+		return INSTANCE.resultInstanceOf(instance, name, clazz);
 	}
 }

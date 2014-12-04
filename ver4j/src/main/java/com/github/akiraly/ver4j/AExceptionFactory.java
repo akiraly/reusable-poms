@@ -34,7 +34,7 @@ public abstract class AExceptionFactory implements ExceptionFactory {
 
 	@Override
 	public final RuntimeException newException(Object message) {
-		return createException(String.valueOf(unwrap(message)));
+		return createException(unwrapAsString(message));
 	}
 
 	@Override
@@ -73,6 +73,10 @@ public abstract class AExceptionFactory implements ExceptionFactory {
 		return message;
 	}
 
+	private static String unwrapAsString(Object message) {
+		return String.valueOf(unwrap(message));
+	}
+
 	@Nullable
 	private static class Unwrapper {
 		private final Object raw;
@@ -83,7 +87,7 @@ public abstract class AExceptionFactory implements ExceptionFactory {
 
 		@Override
 		public String toString() {
-			return String.valueOf(unwrap(raw));
+			return unwrapAsString(raw);
 		}
 	}
 }

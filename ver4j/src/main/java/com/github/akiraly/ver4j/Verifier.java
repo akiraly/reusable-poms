@@ -68,7 +68,7 @@ public class Verifier {
 		return array;
 	}
 
-	public <C> C instanceOf(Object instance, Class<C> clazz, Object name) {
+	public <C> C instanceOf(Object instance, Object name, Class<C> clazz) {
 		if (!checkNotNull(clazz, "Expected not null clazz argument.")
 				.isInstance(notNull(instance, name)))
 			throw exceptionFactory.instanceOfException(clazz, name);
