@@ -20,6 +20,10 @@ import java.util.function.Supplier;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+/**
+ * A Base implementation of {@link ExceptionFactory}. Supports unwrapping
+ * {@link Supplier} message parameters.
+ */
 @Nonnull
 public abstract class AExceptionFactory implements ExceptionFactory {
 	@Override

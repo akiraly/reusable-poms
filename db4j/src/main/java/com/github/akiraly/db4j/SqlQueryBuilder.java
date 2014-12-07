@@ -72,7 +72,7 @@ public class SqlQueryBuilder<T> extends
 			@SuppressWarnings("unchecked")
 			@Nullable
 			ImmutableClassToInstanceMap<Object> typedContext = context != null ? argInstanceOf(
-					context, ImmutableClassToInstanceMap.class, "context")
+					context, "context", ImmutableClassToInstanceMap.class)
 					: null;
 			return rowMapperFactory.newRowMapper(parameters, typedContext);
 		}

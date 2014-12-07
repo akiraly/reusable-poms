@@ -18,9 +18,22 @@ package com.github.akiraly.ver4j;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.annotation.Nonnull;
 
+/**
+ * This is a class bundling configured instance of {@link Verifier}-s for
+ * different use cases:<br />
+ * - arguments<br />
+ * - variables<br />
+ * - fields<br />
+ * - state<br />
+ * - results
+ * 
+ * Each method in this class delegates to the corresponding variant in
+ * {@link Verifier}.
+ */
 @Nonnull
 public class CompositeVerifier {
 	private final Verifier argV;
@@ -35,11 +48,11 @@ public class CompositeVerifier {
 
 	public CompositeVerifier(Verifier argV, Verifier varV, Verifier fieldV,
 			Verifier stateV, Verifier resultV) {
-		this.argV = argV;
-		this.varV = varV;
-		this.fieldV = fieldV;
-		this.stateV = stateV;
-		this.resultV = resultV;
+		this.argV = Objects.requireNonNull(argV);
+		this.varV = Objects.requireNonNull(varV);
+		this.fieldV = Objects.requireNonNull(fieldV);
+		this.stateV = Objects.requireNonNull(stateV);
+		this.resultV = Objects.requireNonNull(resultV);
 	}
 
 	public CompositeVerifier() {

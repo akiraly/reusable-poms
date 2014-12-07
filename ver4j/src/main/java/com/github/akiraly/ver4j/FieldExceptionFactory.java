@@ -17,6 +17,9 @@ package com.github.akiraly.ver4j;
 
 import javax.annotation.Nonnull;
 
+/**
+ * An {@link ExceptionFactory} implementation for fields.
+ */
 @Nonnull
 public class FieldExceptionFactory extends AExceptionFactory {
 	@Override

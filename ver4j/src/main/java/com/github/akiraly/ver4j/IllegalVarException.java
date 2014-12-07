@@ -17,6 +17,10 @@ package com.github.akiraly.ver4j;
 
 import javax.annotation.Nonnull;
 
+/**
+ * A {@link RuntimeException} variant for variable (local/global) related
+ * errors.
+ */
 @Nonnull
 public class IllegalVarException extends RuntimeException {
 	private static final long serialVersionUID = 2273098191220061931L;

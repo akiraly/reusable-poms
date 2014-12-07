@@ -26,7 +26,8 @@ import javax.annotation.Nonnull;
  * checks: null-s, emptyness, true/false, instanceof for different scopes:
  * parameters-arguments, variables, object fields, results, states.
  * 
- * @author akiraly
+ * Each method in this class delegates to the corresponding variant in
+ * {@link CompositeVerifier} (which delegates to {@link Verifier}).
  */
 @Nonnull
 public abstract class Verify {
