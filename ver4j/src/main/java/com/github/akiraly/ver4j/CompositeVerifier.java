@@ -24,11 +24,11 @@ import javax.annotation.Nonnull;
 
 /**
  * This is a class bundling configured instance of {@link Verifier}-s for
- * different use cases:<br />
- * - arguments<br />
- * - variables<br />
- * - fields<br />
- * - state<br />
+ * different use cases:<br>
+ * - arguments<br>
+ * - variables<br>
+ * - fields<br>
+ * - state<br>
  * - results
  * 
  * Each method in this class delegates to the corresponding variant in

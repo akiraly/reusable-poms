@@ -29,9 +29,9 @@ import javax.annotation.Nonnull;
  * provided in the constructor).
  * 
  * In every case where an Object name is expected as a parameter in case of
- * errors:<br />
+ * errors:<br>
  * - if the name Object is instanceof {@link Supplier} then
- * {@link Supplier#get()} is called<br />
+ * {@link Supplier#get()} is called<br>
  * - {@link Object#toString()} is called to get a String for the exception
  * message
  */
