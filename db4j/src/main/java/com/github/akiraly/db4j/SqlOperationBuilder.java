@@ -18,7 +18,9 @@ package com.github.akiraly.db4j;
 import static com.github.akiraly.ver4j.Verify.argNotNull;
 import static com.github.akiraly.ver4j.Verify.fieldNotNull;
 
-import java.util.stream.Stream;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 
@@ -31,7 +33,7 @@ public abstract class SqlOperationBuilder<T extends SqlOperation, B extends SqlO
 		extends JdbcTemplateAwareBuilder<T, B> {
 	private String sql;
 
-	private SqlParameter[] parameters = new SqlParameter[0];
+	private List<SqlParameter> parameters = new LinkedList<>();
 
 	protected SqlOperationBuilder() {
 	}
@@ -46,7 +48,16 @@ public abstract class SqlOperationBuilder<T extends SqlOperation, B extends SqlO
 	}
 
 	public B parameters(SqlParameter... parameters) {
-		this.parameters = argNotNull(parameters, "parameters");
+		this.parameters = Arrays.asList(argNotNull(parameters, "parameters"));
+		return self();
+	}
+
+	public B addParam(String name, int sqlType) {
+		return addParam(new SqlParameter(name, sqlType));
+	}
+
+	public B addParam(SqlParameter sqlParam) {
+		parameters.add(argNotNull(sqlParam, "sqlParam"));
 		return self();
 	}
 
@@ -55,7 +66,7 @@ public abstract class SqlOperationBuilder<T extends SqlOperation, B extends SqlO
 		T result = newOperation();
 		result.setJdbcTemplate(fieldNotNull(jdbcTemplate(), "jdbcTemplate"));
 		result.setSql(fieldNotNull(sql, "sql"));
-		Stream.of(parameters).forEach(param -> result.declareParameter(param));
+		parameters.stream().forEach(param -> result.declareParameter(param));
 		result.afterPropertiesSet();
 		return result;
 	}

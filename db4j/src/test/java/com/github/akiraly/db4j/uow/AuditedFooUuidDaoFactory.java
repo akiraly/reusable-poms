@@ -16,8 +16,10 @@
 package com.github.akiraly.db4j.uow;
 
 import static com.github.akiraly.ver4j.Verify.argNotNull;
+import static com.github.akiraly.ver4j.Verify.resultIsTrue;
 
 import java.sql.Types;
+import java.util.UUID;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -28,60 +30,67 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.object.SqlUpdate;
 
-import com.github.akiraly.db4j.EntityWithLongId;
-import com.github.akiraly.db4j.EntityWithLongIdDao;
+import com.github.akiraly.db4j.EntityWithUuid;
+import com.github.akiraly.db4j.EntityWithUuidDao;
+import com.github.akiraly.db4j.EntityWithUuids;
 import com.github.akiraly.db4j.JdbcTemplateAware;
 import com.github.akiraly.db4j.QueryFactory;
 import com.github.akiraly.db4j.SimpleJdbcInsertBuilder;
 import com.github.akiraly.db4j.SqlQueryBuilder;
 import com.github.akiraly.db4j.SqlUpdateBuilder;
+import com.github.akiraly.db4j.UuidBase64;
 import com.github.akiraly.db4j.uow.UowDaoFactory.UowDao;
 import com.google.common.collect.ImmutableMap;
 
 @ParametersAreNonnullByDefault
-public class AuditedFooDaoFactory extends JdbcTemplateAware {
+public class AuditedFooUuidDaoFactory extends JdbcTemplateAware {
 
 	private final SimpleJdbcInsert insert = new SimpleJdbcInsertBuilder(
 			jdbcTemplate()) //
-			.tableName("audited_foo") //
-			.generatedKeyColumns("audited_foo_id").get();
+			.tableName("audited_foo_uuid").get();
 
-	private final long doInsert(AuditedFoo entity) {
+	private final UUID doInsert(AuditedFoo entity) {
 		argNotNull(entity, "entity");
-		return insert.executeAndReturnKey(ImmutableMap.of( //
+		UUID fooId = UUID.randomUUID();
+		int rowsEffected = insert.execute(ImmutableMap.of( //
+				"audited_foo_uuid", UuidBase64.encode(fooId), //
 				"bar", entity.getBar(), //
 				"create_uow_id", entity.getCreateUow().getId(), //
 				"update_uow_id", entity.getUpdateUow().getId() //
-				)).longValue();
+				));
+		resultIsTrue(rowsEffected == 1,
+				"Expected exactly 1 row effected by insert.");
+		return fooId;
 	}
 
 	private final SqlUpdate update = //
 	new SqlUpdateBuilder(jdbcTemplate())
-			.sql("update audited_foo set bar = ?, update_uow_id = ? where audited_foo_id = ?")
+			.sql("update audited_foo_uuid set bar = ?, update_uow_id = ? where audited_foo_uuid = ?")
 			.addParam("bar", Types.VARCHAR)
 			.addParam("update_uow_id", Types.BIGINT)
-			.addParam("audited_foo_id", Types.BIGINT) //
+			.addParam("audited_foo_uuid", Types.VARCHAR) //
 			.get();
 
-	private final int doUpdate(EntityWithLongId<AuditedFoo> entityWithId) {
+	private final int doUpdate(EntityWithUuid<AuditedFoo> entityWithId) {
 		argNotNull(entityWithId, "entityWithId");
 		AuditedFoo entity = entityWithId.getEntity();
 		return update.update(entity.getBar(), //
 				entity.getUpdateUow().getId(), //
-				entityWithId.getId());
+				UuidBase64.encode(entityWithId.getId()));
 	}
 
 	private final SqlUpdate deleteAll = //
 	new SqlUpdateBuilder(jdbcTemplate()) //
-			.sql("delete from audited_foo") //
+			.sql("delete from audited_foo_uuid") //
 			.get();
 
 	private class QueryByIdFactory extends QueryFactory<AuditedFoo> {
 		public QueryByIdFactory() {
-			super(new SqlQueryBuilder<AuditedFoo>(jdbcTemplate()) //
-					.sql("select * from audited_foo where audited_foo_id = ?") //
-					.addParam("audited_foo_id", Types.BIGINT) //
-					.get());
+			super(
+					new SqlQueryBuilder<AuditedFoo>(jdbcTemplate()) //
+							.sql("select * from audited_foo_uuid where audited_foo_uuid = ?") //
+							.addParam("audited_foo_uuid", Types.VARCHAR) //
+							.get());
 		}
 
 		private RowMapper<AuditedFoo> newRowMapper(UowDao uowDao) {
@@ -101,59 +110,59 @@ public class AuditedFooDaoFactory extends JdbcTemplateAware {
 				super(rm);
 			}
 
-			AuditedFoo call(long id) {
-				return query().findObject(id, context());
+			AuditedFoo call(UUID id) {
+				return query().findObject(UuidBase64.encode(id), context());
 			}
 		}
 	}
 
 	private final QueryByIdFactory queryByIdFactory = new QueryByIdFactory();
 
-	public AuditedFooDaoFactory(JdbcTemplate jdbcTemplate) {
+	public AuditedFooUuidDaoFactory(JdbcTemplate jdbcTemplate) {
 		super(jdbcTemplate);
 	}
 
-	public AuditedFooDao newDao(UowDao uowDao) {
-		return new AuditedFooDao(uowDao);
+	public AuditedFooUuidDao newDao(UowDao uowDao) {
+		return new AuditedFooUuidDao(uowDao);
 	}
 
 	@Nonnull
-	public class AuditedFooDao extends EntityWithLongIdDao<AuditedFoo> {
+	public class AuditedFooUuidDao extends EntityWithUuidDao<AuditedFoo> {
 		private final QueryByIdFactory.QueryById queryById;
 
-		public AuditedFooDao(UowDao uowDao) {
+		public AuditedFooUuidDao(UowDao uowDao) {
 			queryById = queryByIdFactory.newQuery(uowDao);
 		}
 
 		@Override
-		public EntityWithLongId<AuditedFoo> lazyPersist(AuditedFoo entity) {
+		public EntityWithUuid<AuditedFoo> lazyPersist(AuditedFoo entity) {
 			return super.lazyPersist(entity);
 		}
 
 		@Override
-		public EntityWithLongId<AuditedFoo> lazyFind(long id) {
+		public EntityWithUuid<AuditedFoo> lazyFind(UUID id) {
 			return super.lazyFind(id);
 		}
 
 		@Override
-		protected long persist(AuditedFoo entity) {
+		protected UUID persist(AuditedFoo entity) {
 			return doInsert(entity);
 		}
 
 		@Override
 		@Nullable
-		protected AuditedFoo doFind(long id) {
+		protected AuditedFoo doFind(UUID id) {
 			return queryById.call(id);
 		}
 
-		public EntityWithLongId<AuditedFoo> update(long id, AuditedFoo entity) {
-			EntityWithLongId<AuditedFoo> entityWithId = EntityWithLongId.of(
+		public EntityWithUuid<AuditedFoo> update(UUID id, AuditedFoo entity) {
+			EntityWithUuid<AuditedFoo> entityWithId = EntityWithUuids.of(
 					entity, id);
 			update(entityWithId);
 			return entityWithId;
 		}
 
-		public int update(EntityWithLongId<AuditedFoo> entityWithId) {
+		public int update(EntityWithUuid<AuditedFoo> entityWithId) {
 			return doUpdate(entityWithId);
 		}
 
@@ -163,7 +172,7 @@ public class AuditedFooDaoFactory extends JdbcTemplateAware {
 
 		public long count() {
 			return jdbcTemplate().queryForObject(
-					"select count(*) from audited_foo", Long.class);
+					"select count(*) from audited_foo_uuid", Long.class);
 		}
 	}
 }

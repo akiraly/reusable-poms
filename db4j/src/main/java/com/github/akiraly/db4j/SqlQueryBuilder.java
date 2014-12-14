@@ -32,7 +32,8 @@ import com.google.common.collect.ImmutableClassToInstanceMap;
 @Nonnull
 public class SqlQueryBuilder<T> extends
 		SqlOperationBuilder<SqlQuery<T>, SqlQueryBuilder<T>> {
-	private RowMapperFactory<T> rowMapperFactory;
+	private RowMapperFactory<T> rowMapperFactory = ContextRowMapperFactory
+			.get();
 
 	public SqlQueryBuilder() {
 	}
@@ -49,6 +50,10 @@ public class SqlQueryBuilder<T> extends
 
 	public SqlQueryBuilder<T> rowMapper(RowMapper<T> rowMapper) {
 		return rowMapperFactory(new SingletonRowMapperFactory<>(rowMapper));
+	}
+
+	public SqlQueryBuilder<T> contextRowMapper() {
+		return rowMapperFactory(ContextRowMapperFactory.get());
 	}
 
 	@Override

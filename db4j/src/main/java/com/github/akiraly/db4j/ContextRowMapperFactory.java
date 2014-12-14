@@ -16,6 +16,7 @@
 package com.github.akiraly.db4j;
 
 import static com.github.akiraly.ver4j.Verify.argNotNull;
+import static com.github.akiraly.ver4j.Verify.resultNotNull;
 
 import javax.annotation.Nonnull;
 
@@ -24,20 +25,33 @@ import org.springframework.jdbc.core.RowMapper;
 import com.google.common.collect.ImmutableClassToInstanceMap;
 
 /**
- * A {@link RowMapperFactory} which always returns the same instance. Ideal if
- * your {@link RowMapper} is also a singleton.
+ * A {@link RowMapperFactory} which reads the {@link RowMapper} from the
+ * supplied context during
+ * {@link #newRowMapper(Object[], ImmutableClassToInstanceMap)} calls.
+ * 
+ * Ideal for cases when you don't have a singleton {@link RowMapper} for your
+ * query.
  */
 @Nonnull
-public class SingletonRowMapperFactory<T> implements RowMapperFactory<T> {
-	private final RowMapper<T> rowMapper;
+public class ContextRowMapperFactory<T> implements RowMapperFactory<T> {
+	private static final ContextRowMapperFactory<Object> INSTANCE = new ContextRowMapperFactory<Object>();
 
-	public SingletonRowMapperFactory(RowMapper<T> rowMapper) {
-		this.rowMapper = argNotNull(rowMapper, "rowMapper");
+	@SuppressWarnings("unchecked")
+	public static <T> ContextRowMapperFactory<T> get() {
+		return (ContextRowMapperFactory<T>) INSTANCE;
 	}
 
+	public static <T> ImmutableClassToInstanceMap<Object> createContext(
+			RowMapper<T> rowMapper) {
+		return ImmutableClassToInstanceMap.builder()
+				.put(RowMapper.class, argNotNull(rowMapper, "rowMapper"))
+				.build();
+	}
+
+	@SuppressWarnings("unchecked")
 	@Override
 	public RowMapper<T> newRowMapper(Object[] parameters,
 			ImmutableClassToInstanceMap<Object> context) {
-		return rowMapper;
+		return resultNotNull(context.getInstance(RowMapper.class), "rowMapper");
 	}
 }

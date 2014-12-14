@@ -38,8 +38,10 @@ import org.springframework.transaction.support.TransactionTemplate;
 import com.github.akiraly.db4j.CommonDbConfig;
 import com.github.akiraly.db4j.DatabaseLiquibaseInitializer;
 import com.github.akiraly.db4j.EntityWithLongId;
+import com.github.akiraly.db4j.EntityWithUuid;
 import com.github.akiraly.db4j.pool.EmbeddedDbcpDatabaseBuilder;
 import com.github.akiraly.db4j.uow.AuditedFooDaoFactory.AuditedFooDao;
+import com.github.akiraly.db4j.uow.AuditedFooUuidDaoFactory.AuditedFooUuidDao;
 import com.github.akiraly.db4j.uow.FooDaoFactory.FooDao;
 import com.github.akiraly.db4j.uow.UowDaoFactory.UowDao;
 
@@ -55,6 +57,9 @@ public class UowNotPersistedIfNotNeededTest {
 
 	@Autowired
 	private AuditedFooDaoFactory auditedFooDaoFactory;
+
+	@Autowired
+	private AuditedFooUuidDaoFactory auditedFooUuidDaoFactory;
 
 	@Autowired
 	private UowDaoFactory uowDaoFactory;
@@ -104,6 +109,22 @@ public class UowNotPersistedIfNotNeededTest {
 				assertEquals(0, uowDao.count());
 			}
 		});
+
+		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+			@Override
+			protected void doInTransactionWithoutResult(TransactionStatus status) {
+				UowDao uowDao = uowDaoFactory.newDao();
+				AuditedFooUuidDao auditedFooUuidDao = auditedFooUuidDaoFactory
+						.newDao(uowDao);
+				assertEquals(0, uowDao.count());
+				EntityWithLongId<Uow> uowWithId1 = uowDao.lazyPersist(uow1);
+				AuditedFoo auditedFoo = new AuditedFoo("bar", uowWithId1);
+				EntityWithUuid<AuditedFoo> fooWithId = auditedFooUuidDao
+						.lazyPersist(auditedFoo);
+				assertEquals("bar", fooWithId.getEntity().getBar());
+				assertEquals(0, uowDao.count());
+			}
+		});
 	}
 }
 
@@ -129,6 +150,12 @@ class UowNotPersistedIfNotNeededTestConfig {
 	@Bean
 	public AuditedFooDaoFactory auditedFooDaoFactory(JdbcTemplate jdbcTemplate) {
 		return new AuditedFooDaoFactory(jdbcTemplate);
+	}
+
+	@Bean
+	public AuditedFooUuidDaoFactory auditedFooUuidDaoFactory(
+			JdbcTemplate jdbcTemplate) {
+		return new AuditedFooUuidDaoFactory(jdbcTemplate);
 	}
 
 	@Bean
