@@ -44,6 +44,8 @@ public class CommonDbConfig {
 
 	@Bean
 	public JdbcTemplate jdbcTemplate(DataSource dataSource) {
-		return new JdbcTemplate(dataSource, false);
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource, false);
+		jdbcTemplate.setSkipUndeclaredResults(true);
+		return jdbcTemplate;
 	}
 }

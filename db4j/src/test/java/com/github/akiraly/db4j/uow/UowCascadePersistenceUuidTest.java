@@ -15,10 +15,7 @@
  */
 package com.github.akiraly.db4j.uow;
 
-import static com.github.akiraly.ver4j.Verify.fieldNotNull;
 import static org.junit.Assert.assertEquals;
-
-import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.sql.DataSource;
@@ -41,42 +38,42 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import com.github.akiraly.db4j.CommonDbConfig;
 import com.github.akiraly.db4j.DatabaseLiquibaseInitializer;
-import com.github.akiraly.db4j.DatabaseSchemaOperation;
 import com.github.akiraly.db4j.entity.EntityWithLongId;
+import com.github.akiraly.db4j.entity.EntityWithUuid;
 import com.github.akiraly.db4j.pool.EmbeddedDbcpDatabaseBuilder;
-import com.github.akiraly.db4j.uow.AuditedFooDaoFactory.AuditedFooDao;
+import com.github.akiraly.db4j.uow.AuditedFooUuidDaoFactory.AuditedFooUuidDao;
 import com.github.akiraly.db4j.uow.UowDaoFactory.UowDao;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { UowCascadePersistenceTestConfig.class })
+@ContextConfiguration(classes = { UowCascadePersistenceUuidTestConfig.class })
 @Nonnull
-public class UowCascadePersistenceTest {
+public class UowCascadePersistenceUuidTest {
 	@Autowired
 	private TransactionTemplate transactionTemplate;
 
 	@Autowired
-	private AuditedFooDaoFactory auditedFooDaoFactory;
+	private AuditedFooUuidDaoFactory auditedFooUuidDaoFactory;
 
 	@Autowired
 	private UowDaoFactory uowDaoFactory;
 
 	@Test(timeout = 5000)
-	public void testCascadePersistenceOnUow() {
+	public void testCascadePersistenceOnUowWithUuid() {
 		final String uow1User = "u200";
 		final Uow uow1 = new Uow(uow1User);
-		EntityWithLongId<Uow> uowWithId1 = fieldNotNull(uowDaoFactory,
-				"uowDaoFactory").newDao().lazyPersist(uow1);
+		EntityWithLongId<Uow> uowWithId1 = uowDaoFactory.newDao().lazyPersist(
+				uow1);
 		AuditedFoo auditedFoo = new AuditedFoo("bar", uowWithId1);
-		EntityWithLongId<AuditedFoo> auditedFooWithId = transactionTemplate
+		EntityWithUuid<AuditedFoo> auditedFooWithId = transactionTemplate
 				.execute(s -> {
-					AuditedFooDao auditedFooDao = auditedFooDaoFactory
+					AuditedFooUuidDao auditedFooUuidDao = auditedFooUuidDaoFactory
 							.newDao(uowDaoFactory.newDao());
-					Assert.assertEquals(0, auditedFooDao.count());
-					EntityWithLongId<AuditedFoo> result = auditedFooDao
+					Assert.assertEquals(0, auditedFooUuidDao.count());
+					EntityWithUuid<AuditedFoo> result = auditedFooUuidDao
 							.lazyPersist(auditedFoo);
-					Assert.assertEquals(1, result.getId());
+					Assert.assertNotNull(result.getId());
 					Assert.assertTrue(uowWithId1.getId() > 0);
-					Assert.assertEquals(1, auditedFooDao.count());
+					Assert.assertEquals(1, auditedFooUuidDao.count());
 					return result;
 				});
 
@@ -84,10 +81,10 @@ public class UowCascadePersistenceTest {
 			@Override
 			protected void doInTransactionWithoutResult(TransactionStatus status) {
 				UowDao uowDao = uowDaoFactory.newDao();
-				AuditedFooDao auditedFooDao = auditedFooDaoFactory
+				AuditedFooUuidDao auditedFooUuidDao = auditedFooUuidDaoFactory
 						.newDao(uowDao);
-				Assert.assertEquals(1, auditedFooDao.count());
-				AuditedFoo fooLoaded = auditedFooDao.lazyFind(
+				Assert.assertEquals(1, auditedFooUuidDao.count());
+				AuditedFoo fooLoaded = auditedFooUuidDao.lazyFind(
 						auditedFooWithId.getId()).getEntity();
 				Assert.assertNotNull(fooLoaded.getCreateUow().getEntity());
 				Assert.assertEquals(fooLoaded.getCreateUow(),
@@ -114,23 +111,23 @@ public class UowCascadePersistenceTest {
 		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
 			@Override
 			protected void doInTransactionWithoutResult(TransactionStatus status) {
-				AuditedFooDao auditedFooDao = auditedFooDaoFactory
+				AuditedFooUuidDao auditedFooUuidDao = auditedFooUuidDaoFactory
 						.newDao(uowDaoFactory.newDao());
-				EntityWithLongId<AuditedFoo> fooLoaded = auditedFooDao
+				EntityWithUuid<AuditedFoo> fooLoaded = auditedFooUuidDao
 						.lazyFind(auditedFooWithId.getId());
 				assertEquals("bar", fooLoaded.getEntity().getBar());
 				AuditedFoo auditedFoo2 = fooLoaded.getEntity().updateBar(
 						"newBar", uowWithId2);
-				auditedFooDao.update(auditedFooWithId.getId(), auditedFoo2);
+				auditedFooUuidDao.update(auditedFooWithId.getId(), auditedFoo2);
 			}
 		});
 
 		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
 			@Override
 			protected void doInTransactionWithoutResult(TransactionStatus status) {
-				AuditedFooDao auditedFooDao = auditedFooDaoFactory
+				AuditedFooUuidDao auditedFooUuidDao = auditedFooUuidDaoFactory
 						.newDao(uowDaoFactory.newDao());
-				EntityWithLongId<AuditedFoo> fooWithIdLoaded = auditedFooDao
+				EntityWithUuid<AuditedFoo> fooWithIdLoaded = auditedFooUuidDao
 						.lazyFind(auditedFooWithId.getId());
 				AuditedFoo fooLoaded = fooWithIdLoaded.getEntity();
 				Assert.assertNotNull(fooLoaded.getCreateUow());
@@ -153,21 +150,21 @@ public class UowCascadePersistenceTest {
 @Configuration
 @Import({ UowConfig.class, CommonDbConfig.class })
 @Nonnull
-class UowCascadePersistenceTestConfig {
+class UowCascadePersistenceUuidTestConfig {
 	@Bean
 	public DataSource dataSource() {
 		return new EmbeddedDbcpDatabaseBuilder()
 				.setType(EmbeddedDatabaseType.H2)
 				.setName(
-						UowCascadePersistenceTest.class.getName()
+						UowCascadePersistenceUuidTest.class.getName()
 								+ RandomStringUtils.randomAlphabetic(5)
 								+ "db;TRACE_LEVEL_FILE=4").build();
 	}
 
 	@Bean
-	public AuditedFooDaoFactory auditedFooDaoFactory(JdbcTemplate jdbcTemplate,
-			List<DatabaseSchemaOperation> schemaOps) {
-		return new AuditedFooDaoFactory(jdbcTemplate);
+	public AuditedFooUuidDaoFactory auditedFooUuidDaoFactory(
+			JdbcTemplate jdbcTemplate) {
+		return new AuditedFooUuidDaoFactory(jdbcTemplate);
 	}
 
 	@Bean

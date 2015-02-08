@@ -17,6 +17,9 @@ package com.github.akiraly.db4j.uow;
 
 import static org.junit.Assert.assertEquals;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
 import javax.annotation.Nonnull;
 import javax.sql.DataSource;
 
@@ -37,8 +40,8 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import com.github.akiraly.db4j.CommonDbConfig;
 import com.github.akiraly.db4j.DatabaseLiquibaseInitializer;
-import com.github.akiraly.db4j.EntityWithLongId;
-import com.github.akiraly.db4j.EntityWithUuid;
+import com.github.akiraly.db4j.entity.EntityWithLongId;
+import com.github.akiraly.db4j.entity.EntityWithUuid;
 import com.github.akiraly.db4j.pool.EmbeddedDbcpDatabaseBuilder;
 import com.github.akiraly.db4j.uow.AuditedFooDaoFactory.AuditedFooDao;
 import com.github.akiraly.db4j.uow.AuditedFooUuidDaoFactory.AuditedFooUuidDao;
@@ -69,7 +72,7 @@ public class UowNotPersistedIfNotNeededTest {
 		final String uow1User = "u300";
 		Uow uow1 = new Uow(uow1User);
 
-		final Foo foo = new Foo("bar");
+		final Foo foo = new Foo("bar", LocalDateTime.now(ZoneOffset.UTC));
 
 		EntityWithLongId<Foo> fooWithId = transactionTemplate.execute(s -> {
 			FooDao fooDao = fooDaoFactory.newDao();

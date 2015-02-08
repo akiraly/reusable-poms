@@ -17,7 +17,7 @@ package com.github.akiraly.db4j.uow;
 
 import javax.annotation.Nonnull;
 
-import com.github.akiraly.db4j.EntityWithLongId;
+import com.github.akiraly.db4j.entity.EntityWithLongId;
 
 @Nonnull
 public class AuditedFoo extends AbstractCreateUpdateUowAwarePersistable {

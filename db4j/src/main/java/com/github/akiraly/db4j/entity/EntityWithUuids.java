@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.akiraly.db4j;
+package com.github.akiraly.db4j.entity;
 
 import java.util.UUID;
 import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 
-import com.github.akiraly.db4j.EntityWithIds.EntityWithSuppliedId;
-import com.github.akiraly.db4j.EntityWithIds.SimpleEntityWithId;
-import com.github.akiraly.db4j.EntityWithIds.SuppliedEntityWithId;
+import com.github.akiraly.db4j.entity.EntityWithIds.EntityWithSuppliedId;
+import com.github.akiraly.db4j.entity.EntityWithIds.SimpleEntityWithId;
+import com.github.akiraly.db4j.entity.EntityWithIds.SuppliedEntityWithId;
 
 @Nonnull
 public abstract class EntityWithUuids {

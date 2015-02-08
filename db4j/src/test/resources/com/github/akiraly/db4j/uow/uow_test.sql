@@ -4,7 +4,9 @@
 
 create table foo (
 	foo_id bigint auto_increment primary key,
-	bar varchar(50) not null
+	bar varchar(50) not null,
+	dt timestamp not null,
+	local_date date not null
 );
 
 create table audited_foo (

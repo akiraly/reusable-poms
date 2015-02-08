@@ -36,7 +36,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import com.github.akiraly.db4j.CommonDbConfig;
 import com.github.akiraly.db4j.DatabaseLiquibaseInitializer;
-import com.github.akiraly.db4j.EntityWithLongId;
+import com.github.akiraly.db4j.entity.EntityWithLongId;
 import com.github.akiraly.db4j.pool.EmbeddedDbcpDatabaseBuilder;
 
 @RunWith(SpringJUnit4ClassRunner.class)

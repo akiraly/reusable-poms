@@ -28,13 +28,13 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.object.SqlUpdate;
 
-import com.github.akiraly.db4j.EntityWithLongId;
-import com.github.akiraly.db4j.EntityWithLongIdDao;
 import com.github.akiraly.db4j.JdbcTemplateAware;
 import com.github.akiraly.db4j.QueryFactory;
 import com.github.akiraly.db4j.SimpleJdbcInsertBuilder;
 import com.github.akiraly.db4j.SqlQueryBuilder;
 import com.github.akiraly.db4j.SqlUpdateBuilder;
+import com.github.akiraly.db4j.entity.EntityWithLongId;
+import com.github.akiraly.db4j.entity.EntityWithLongIdDao;
 import com.github.akiraly.db4j.uow.UowDaoFactory.UowDao;
 import com.google.common.collect.ImmutableMap;
 

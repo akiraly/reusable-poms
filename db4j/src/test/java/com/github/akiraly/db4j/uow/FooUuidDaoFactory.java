@@ -16,6 +16,7 @@
 package com.github.akiraly.db4j.uow;
 
 import java.sql.Types;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import javax.annotation.Nonnull;
@@ -27,13 +28,13 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.object.SqlQuery;
 import org.springframework.jdbc.object.SqlUpdate;
 
-import com.github.akiraly.db4j.EntityWithUuid;
-import com.github.akiraly.db4j.EntityWithUuidDao;
 import com.github.akiraly.db4j.JdbcTemplateAware;
 import com.github.akiraly.db4j.SimpleJdbcInsertBuilder;
 import com.github.akiraly.db4j.SqlQueryBuilder;
 import com.github.akiraly.db4j.SqlUpdateBuilder;
 import com.github.akiraly.db4j.UuidBase64;
+import com.github.akiraly.db4j.entity.EntityWithUuid;
+import com.github.akiraly.db4j.entity.EntityWithUuidDao;
 import com.google.common.collect.ImmutableMap;
 
 @Nonnull
@@ -52,7 +53,10 @@ public class FooUuidDaoFactory extends JdbcTemplateAware {
 	new SqlQueryBuilder<Foo>(jdbcTemplate()) //
 			.sql("select * from foo_uuid where foo_id = ?") //
 			.parameters(new SqlParameter("foo_id", Types.CHAR)) //
-			.rowMapper((rs, rn) -> new Foo(rs.getString("bar"))) //
+			.rowMapper((rs, rn) -> new Foo( //
+					rs.getString("bar"), //
+					rs.getObject("dt", LocalDateTime.class) //
+					)) //
 			.get();
 
 	public FooUuidDaoFactory(JdbcTemplate jdbcTemplate) {
@@ -80,7 +84,8 @@ public class FooUuidDaoFactory extends JdbcTemplateAware {
 			final UUID id = UUID.randomUUID();
 			insert.execute(ImmutableMap.of( //
 					"foo_id", UuidBase64.encode(id), //
-					"bar", entity.getBar() //
+					"bar", entity.getBar(), //
+					"dt", entity.getDt() //
 					));
 			return id;
 		}

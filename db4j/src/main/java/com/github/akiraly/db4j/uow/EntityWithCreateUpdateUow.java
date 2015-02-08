@@ -19,7 +19,7 @@ import static com.github.akiraly.ver4j.Verify.argNotNull;
 
 import javax.annotation.Nonnull;
 
-import com.github.akiraly.db4j.EntityWithLongId;
+import com.github.akiraly.db4j.entity.EntityWithLongId;
 
 @Nonnull
 public class EntityWithCreateUpdateUow<T> extends EntityWithCreateUow<T> {

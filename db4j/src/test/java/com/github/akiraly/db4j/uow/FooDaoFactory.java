@@ -26,12 +26,14 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.object.SqlQuery;
 import org.springframework.jdbc.object.SqlUpdate;
 
-import com.github.akiraly.db4j.EntityWithLongId;
-import com.github.akiraly.db4j.EntityWithLongIdDao;
 import com.github.akiraly.db4j.JdbcTemplateAware;
+import com.github.akiraly.db4j.Jsr310JdbcUtils;
+import com.github.akiraly.db4j.ResultSets;
 import com.github.akiraly.db4j.SimpleJdbcInsertBuilder;
 import com.github.akiraly.db4j.SqlQueryBuilder;
 import com.github.akiraly.db4j.SqlUpdateBuilder;
+import com.github.akiraly.db4j.entity.EntityWithLongId;
+import com.github.akiraly.db4j.entity.EntityWithLongIdDao;
 import com.google.common.collect.ImmutableMap;
 
 @Nonnull
@@ -50,8 +52,13 @@ public class FooDaoFactory extends JdbcTemplateAware {
 	private final SqlQuery<Foo> queryById = //
 	new SqlQueryBuilder<Foo>(jdbcTemplate()) //
 			.sql("select * from foo where foo_id = ?") //
-			.parameters(new SqlParameter("foo_id", Types.BIGINT)) //
-			.rowMapper((rs, rn) -> new Foo(rs.getString("bar"))) //
+			.parameters(new SqlParameter("foo_id", Types.BIGINT))
+			//
+			.rowMapper((rs, rn) -> new Foo( //
+					rs.getString("bar"), //
+					ResultSets.readLocalDateTime(rs, "dt"), //
+					ResultSets.readLocalDate(rs, "local_date") //
+					)) //
 			.get();
 
 	public FooDaoFactory(JdbcTemplate jdbcTemplate) {
@@ -77,7 +84,13 @@ public class FooDaoFactory extends JdbcTemplateAware {
 		@Override
 		protected long persist(Foo entity) {
 			return insert.executeAndReturnKey(
-					ImmutableMap.of("bar", entity.getBar())).longValue();
+					ImmutableMap.of("bar",
+							entity.getBar(), //
+							"dt",
+							Jsr310JdbcUtils.toUtcCalendar(entity.getDt()), //
+							"local_date", Jsr310JdbcUtils.toUtcCalendar(entity
+									.getLocalDate()) //
+							)).longValue();
 		}
 
 		@Override

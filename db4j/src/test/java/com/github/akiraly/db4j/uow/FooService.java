@@ -19,18 +19,22 @@ import static com.github.akiraly.ver4j.Verify.argNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
 import javax.annotation.Nonnull;
 
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import com.github.akiraly.db4j.EntityWithLongId;
 import com.github.akiraly.db4j.TransactionTemplateAware;
+import com.github.akiraly.db4j.entity.EntityWithLongId;
 import com.github.akiraly.db4j.uow.FooDaoFactory.FooDao;
 
 @Nonnull
 public class FooService extends TransactionTemplateAware {
+	private final LocalDateTime now = LocalDateTime.now(ZoneOffset.UTC);
 	private final FooDao fooDao;
 
 	public FooService(TransactionTemplate transactionTemplate, FooDao fooDao) {
@@ -42,7 +46,8 @@ public class FooService extends TransactionTemplateAware {
 		tx(new TransactionCallbackWithoutResult() {
 			@Override
 			protected void doInTransactionWithoutResult(TransactionStatus status) {
-				EntityWithLongId<Foo> entity = fooDao.lazyPersist(new Foo(bar));
+				EntityWithLongId<Foo> entity = fooDao.lazyPersist(new Foo(bar,
+						now));
 				assertEquals(expectedId, entity.getId());
 				assertNotNull(entity.getEntity().getBar());
 			}
@@ -55,6 +60,9 @@ public class FooService extends TransactionTemplateAware {
 			protected void doInTransactionWithoutResult(TransactionStatus status) {
 				EntityWithLongId<Foo> entity = fooDao.lazyFind(id);
 				assertEquals(expectedBar, entity.getEntity().getBar());
+				assertEquals(now, entity.getEntity().getDt());
+				assertEquals(now.toLocalDate(), entity.getEntity()
+						.getLocalDate());
 			}
 		});
 	}

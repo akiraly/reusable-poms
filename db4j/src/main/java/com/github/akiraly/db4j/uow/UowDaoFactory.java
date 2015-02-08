@@ -25,11 +25,11 @@ import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.object.SqlQuery;
 
-import com.github.akiraly.db4j.EntityWithLongId;
-import com.github.akiraly.db4j.EntityWithLongIdDao;
 import com.github.akiraly.db4j.JdbcTemplateAware;
 import com.github.akiraly.db4j.SimpleJdbcInsertBuilder;
 import com.github.akiraly.db4j.SqlQueryBuilder;
+import com.github.akiraly.db4j.entity.EntityWithLongId;
+import com.github.akiraly.db4j.entity.EntityWithLongIdDao;
 import com.google.common.collect.ImmutableMap;
 
 @Nonnull

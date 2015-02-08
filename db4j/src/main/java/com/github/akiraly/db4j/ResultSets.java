@@ -17,8 +17,14 @@ package com.github.akiraly.db4j;
 
 import static com.github.akiraly.ver4j.Verify.argNotNull;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.UUID;
 
 import javax.annotation.Nonnull;
@@ -33,5 +39,20 @@ public abstract class ResultSets {
 		String encodedUuid = argNotNull(rs, "rs").getString(
 				argNotNull(colName, "colName"));
 		return UuidBase64.decode(encodedUuid);
+	}
+
+	public static LocalDateTime readLocalDateTime(ResultSet rs, String colName)
+			throws SQLException {
+		Timestamp timestamp = argNotNull(rs, "rs").getTimestamp(
+				argNotNull(colName, "colName"), Jsr310JdbcUtils.UTC_CAL);
+		return LocalDateTime.ofInstant(timestamp.toInstant(), ZoneOffset.UTC);
+	}
+
+	public static LocalDate readLocalDate(ResultSet rs, String colName)
+			throws SQLException {
+		Date date = argNotNull(rs, "rs").getDate(
+				argNotNull(colName, "colName"), Jsr310JdbcUtils.UTC_CAL);
+		return LocalDateTime.ofInstant(Instant.ofEpochMilli(date.getTime()),
+				ZoneOffset.UTC).toLocalDate();
 	}
 }

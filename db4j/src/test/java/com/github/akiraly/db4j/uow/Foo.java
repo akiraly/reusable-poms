@@ -17,21 +17,38 @@ package com.github.akiraly.db4j.uow;
 
 import static com.github.akiraly.ver4j.Verify.argNotNull;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import javax.annotation.Nonnull;
 
 @Nonnull
 public class Foo {
-	private String bar;
+	private final String bar;
 
-	public Foo(String bar) {
+	private final LocalDateTime dt;
+
+	private final LocalDate localDate;
+
+	public Foo(String bar, LocalDateTime dt) {
+		this(bar, dt, argNotNull(dt, "dt").toLocalDate());
+	}
+
+	public Foo(String bar, LocalDateTime dt, LocalDate localDate) {
 		this.bar = argNotNull(bar, "bar");
+		this.dt = argNotNull(dt, "dt");
+		this.localDate = argNotNull(localDate, "localDate");
 	}
 
 	public String getBar() {
 		return bar;
 	}
 
-	public void setBar(String bar) {
-		this.bar = bar;
+	public LocalDateTime getDt() {
+		return dt;
+	}
+
+	public LocalDate getLocalDate() {
+		return localDate;
 	}
 }

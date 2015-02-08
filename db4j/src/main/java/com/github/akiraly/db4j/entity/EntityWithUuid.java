@@ -13,21 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.akiraly.db4j;
+package com.github.akiraly.db4j.entity;
 
 import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
 @Nonnull
-public abstract class EntityWithUuidDao<E> extends EntityWithIdDao<E, UUID> {
-	@Override
-	protected EntityWithUuid<E> lazyPersist(E entity) {
-		return EntityWithUuids.of(entity, () -> persist(entity));
-	}
-
-	@Override
-	protected EntityWithUuid<E> lazyFind(UUID id) {
-		return EntityWithUuids.of(() -> find(id), id);
-	}
+public interface EntityWithUuid<E> extends EntityWithId<E, UUID> {
 }

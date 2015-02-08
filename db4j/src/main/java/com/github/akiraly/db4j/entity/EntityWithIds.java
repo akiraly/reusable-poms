@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.akiraly.db4j;
+package com.github.akiraly.db4j.entity;
 
 import static com.github.akiraly.db4j.MoreSuppliers.memoizej8;
 import static com.github.akiraly.ver4j.Verify.argNotNull;
