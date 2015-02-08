@@ -29,5 +29,6 @@ create table audited_foo_uuid (
 
 create table foo_uuid (
 	foo_id char(22) primary key,
-	bar varchar(50) not null
+	bar varchar(50) not null,
+	dt timestamp not null
 );

@@ -16,7 +16,6 @@
 package com.github.akiraly.db4j.uow;
 
 import java.sql.Types;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 import javax.annotation.Nonnull;
@@ -29,6 +28,8 @@ import org.springframework.jdbc.object.SqlQuery;
 import org.springframework.jdbc.object.SqlUpdate;
 
 import com.github.akiraly.db4j.JdbcTemplateAware;
+import com.github.akiraly.db4j.Jsr310JdbcUtils;
+import com.github.akiraly.db4j.ResultSets;
 import com.github.akiraly.db4j.SimpleJdbcInsertBuilder;
 import com.github.akiraly.db4j.SqlQueryBuilder;
 import com.github.akiraly.db4j.SqlUpdateBuilder;
@@ -55,7 +56,7 @@ public class FooUuidDaoFactory extends JdbcTemplateAware {
 			.parameters(new SqlParameter("foo_id", Types.CHAR)) //
 			.rowMapper((rs, rn) -> new Foo( //
 					rs.getString("bar"), //
-					rs.getObject("dt", LocalDateTime.class) //
+					ResultSets.readLocalDateTime(rs, "dt") //
 					)) //
 			.get();
 
@@ -85,7 +86,7 @@ public class FooUuidDaoFactory extends JdbcTemplateAware {
 			insert.execute(ImmutableMap.of( //
 					"foo_id", UuidBase64.encode(id), //
 					"bar", entity.getBar(), //
-					"dt", entity.getDt() //
+					"dt", Jsr310JdbcUtils.toUtcCalendar(entity.getDt()) //
 					));
 			return id;
 		}
