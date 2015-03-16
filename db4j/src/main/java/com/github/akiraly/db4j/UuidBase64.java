@@ -29,6 +29,10 @@ import javax.annotation.Nonnull;
 public class UuidBase64 {
 	private static final UuidBase64 INSTANCE = new UuidBase64();
 
+	public static String encodedRandomUUID() {
+		return encode(UUID.randomUUID());
+	}
+
 	public static String encode(UUID uuid) {
 		return INSTANCE.encodeToString(uuid);
 	}

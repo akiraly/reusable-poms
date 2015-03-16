@@ -45,9 +45,9 @@ public abstract class EntityWithUuids {
 	}
 
 	@Nonnull
-	public static class SimpleEntityWithUuid<E> extends
+	private static class SimpleEntityWithUuid<E> extends
 			SimpleEntityWithId<E, UUID> implements EntityWithUuid<E> {
-		public SimpleEntityWithUuid(E entity, UUID id) {
+		private SimpleEntityWithUuid(E entity, UUID id) {
 			super(entity, id);
 		}
 
@@ -59,9 +59,9 @@ public abstract class EntityWithUuids {
 	}
 
 	@Nonnull
-	public static class SuppliedEntityWithUuid<E> extends
+	private static class SuppliedEntityWithUuid<E> extends
 			SuppliedEntityWithId<E, UUID> implements EntityWithUuid<E> {
-		public SuppliedEntityWithUuid(Supplier<E> entitySupp, UUID id) {
+		private SuppliedEntityWithUuid(Supplier<E> entitySupp, UUID id) {
 			super(entitySupp, id);
 		}
 
@@ -73,9 +73,9 @@ public abstract class EntityWithUuids {
 	}
 
 	@Nonnull
-	public static class EntityWithSuppliedUuid<E> extends
+	private static class EntityWithSuppliedUuid<E> extends
 			EntityWithSuppliedId<E, UUID> implements EntityWithUuid<E> {
-		public EntityWithSuppliedUuid(E entity, Supplier<UUID> idSupp) {
+		private EntityWithSuppliedUuid(E entity, Supplier<UUID> idSupp) {
 			super(entity, idSupp);
 		}
 

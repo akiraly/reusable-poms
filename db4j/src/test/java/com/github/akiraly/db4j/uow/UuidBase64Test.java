@@ -48,4 +48,19 @@ public class UuidBase64Test {
 		});
 	}
 
+	@Test(timeout = 2000)
+	public void testEncodedRandom() {
+		Set<String> generatedUuids = new HashSet<>();
+		IntStream.range(0, 100000).forEach(i -> {
+			String id = UuidBase64.encodedRandomUUID();
+			assertEquals(22, id.length());
+			assertTrue(generatedUuids.add(id));
+
+			UUID uuid = UuidBase64.decode(id);
+			assertNotNull(uuid);
+
+			String encoded = UuidBase64.encode(uuid);
+			assertEquals(id, encoded);
+		});
+	}
 }

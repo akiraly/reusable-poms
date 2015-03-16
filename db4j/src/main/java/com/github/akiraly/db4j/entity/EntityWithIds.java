@@ -42,11 +42,11 @@ public abstract class EntityWithIds {
 	}
 
 	@Nonnull
-	public static class SimpleEntityWithId<E, I> extends BaseEntityWithId<E, I> {
+	static class SimpleEntityWithId<E, I> extends BaseEntityWithId<E, I> {
 		private final I id;
 		private final E entity;
 
-		public SimpleEntityWithId(E entity, I id) {
+		SimpleEntityWithId(E entity, I id) {
 			this.entity = argNotNull(entity, "entity");
 			this.id = argNotNull(id, "id");
 		}
@@ -68,12 +68,11 @@ public abstract class EntityWithIds {
 	}
 
 	@Nonnull
-	public static class SuppliedEntityWithId<E, I> extends
-			BaseEntityWithId<E, I> {
+	static class SuppliedEntityWithId<E, I> extends BaseEntityWithId<E, I> {
 		private final I id;
 		private final Supplier<E> entity;
 
-		public SuppliedEntityWithId(Supplier<E> entitySupp, I id) {
+		SuppliedEntityWithId(Supplier<E> entitySupp, I id) {
 			this.entity = memoizej8(argNotNull(entitySupp, "entitySupp"));
 			this.id = argNotNull(id, "id");
 		}
@@ -95,12 +94,11 @@ public abstract class EntityWithIds {
 	}
 
 	@Nonnull
-	public static class EntityWithSuppliedId<E, I> extends
-			BaseEntityWithId<E, I> {
+	static class EntityWithSuppliedId<E, I> extends BaseEntityWithId<E, I> {
 		private final Supplier<I> id;
 		private final E entity;
 
-		public EntityWithSuppliedId(E entity, Supplier<I> idSupp) {
+		EntityWithSuppliedId(E entity, Supplier<I> idSupp) {
 			this.entity = argNotNull(entity, "entity");
 			this.id = memoizej8(argNotNull(idSupp, "idSupp"));
 		}
