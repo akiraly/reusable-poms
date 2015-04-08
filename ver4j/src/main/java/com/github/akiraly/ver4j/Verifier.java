@@ -46,6 +46,8 @@ public class Verifier {
 	/**
 	 * Checks that the provided object is not null
 	 * 
+	 * @param <T>
+	 *            type of object to check
 	 * @param object
 	 *            to be checked
 	 * @param name
@@ -61,6 +63,10 @@ public class Verifier {
 	/**
 	 * Checks that the provided iterator is not null and not empty
 	 * 
+	 * @param <E>
+	 *            type of element in iterator
+	 * @param <I>
+	 *            exact type of the iterator
 	 * @param iterator
 	 *            to be checked
 	 * @param name
@@ -76,6 +82,10 @@ public class Verifier {
 	/**
 	 * Checks that the provided iterable is not null and not empty
 	 * 
+	 * @param <E>
+	 *            type of element in iterable
+	 * @param <I>
+	 *            exact type of the iterable
 	 * @param iterable
 	 *            to be checked
 	 * @param name
@@ -99,6 +109,10 @@ public class Verifier {
 	/**
 	 * Checks that the provided collection is not null and not empty
 	 * 
+	 * @param <E>
+	 *            type of element in collection
+	 * @param <C>
+	 *            exact type of the collection
 	 * @param collection
 	 *            to be checked
 	 * @param name
@@ -114,6 +128,12 @@ public class Verifier {
 	/**
 	 * Checks that the provided map is not null and not empty
 	 * 
+	 * @param <K>
+	 *            type of key in map
+	 * @param <V>
+	 *            type of value in map
+	 * @param <M>
+	 *            exact type of the map
 	 * @param map
 	 *            to be checked
 	 * @param name
@@ -129,6 +149,8 @@ public class Verifier {
 	/**
 	 * Checks that the provided array is not null and not empty
 	 * 
+	 * @param <T>
+	 *            type of element in array
 	 * @param array
 	 *            to be checked
 	 * @param name
@@ -145,6 +167,8 @@ public class Verifier {
 	 * Checks that the provided object is not null and instace of the provided
 	 * type.
 	 * 
+	 * @param <C>
+	 *            type parameter of the class used for the instance check
 	 * @param instance
 	 *            to be checked
 	 * @param name

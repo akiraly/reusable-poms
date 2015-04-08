@@ -46,6 +46,8 @@ public class UuidBase64 {
 	private final Decoder decoder = Base64.getUrlDecoder();
 
 	/**
+	 * @param uuid
+	 *            to be encoded
 	 * @return the 22 length, url safe, base64 encoded form of the uuid
 	 */
 	public String encodeToString(UUID uuid) {
@@ -59,6 +61,7 @@ public class UuidBase64 {
 	/**
 	 * @param encodedUuid
 	 *            the 22 length, url safe, base64 encoded form of the uuid
+	 * @return the decoded uuid
 	 */
 	public UUID decodeFromString(String encodedUuid) {
 		ByteBuffer uuidBytes = ByteBuffer.wrap(decoder.decode(argNotNull(
