@@ -34,7 +34,7 @@ public abstract class BaseEntityWithId<E, I> implements EntityWithId<E, I> {
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof EntityWithId))
 			return false;
 		EntityWithId<?, ?> other = (EntityWithId<?, ?>) obj;
 		I id = getId();

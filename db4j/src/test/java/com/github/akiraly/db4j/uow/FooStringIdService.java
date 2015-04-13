@@ -33,6 +33,7 @@ public class FooStringIdService extends TransactionTemplateAware {
 					LocalDateTime.now(ZoneOffset.UTC)));
 			assertNotNull(entity.getId());
 			assertNotNull(entity.getEntity().getBar());
+			assertEquals(entity, fooDao.lazyFind(entity.getId()));
 			return entity.getId();
 		});
 	}

@@ -33,7 +33,7 @@ import com.github.akiraly.db4j.UuidBase64;
 @Nonnull
 public class UuidBase64Test {
 
-	@Test(timeout = 2000)
+	@Test(timeout = 2200)
 	public void testEncodeDecode() {
 		Set<UUID> generatedUuids = new HashSet<>();
 		IntStream.range(0, 100000).forEach(i -> {
@@ -48,7 +48,7 @@ public class UuidBase64Test {
 		});
 	}
 
-	@Test(timeout = 2000)
+	@Test(timeout = 2200)
 	public void testEncodedRandom() {
 		Set<String> generatedUuids = new HashSet<>();
 		IntStream.range(0, 100000).forEach(i -> {
