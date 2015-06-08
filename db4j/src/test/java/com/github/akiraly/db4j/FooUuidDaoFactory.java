@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.akiraly.db4j.uow;
+package com.github.akiraly.db4j;
 
 import java.sql.Types;
+import java.util.UUID;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -33,12 +34,12 @@ import com.github.akiraly.db4j.SimpleJdbcInsertBuilder;
 import com.github.akiraly.db4j.SqlQueryBuilder;
 import com.github.akiraly.db4j.SqlUpdateBuilder;
 import com.github.akiraly.db4j.UuidBase64;
-import com.github.akiraly.db4j.entity.EntityWithStringId;
-import com.github.akiraly.db4j.entity.EntityWithStringIdDao;
+import com.github.akiraly.db4j.entity.EntityWithUuid;
+import com.github.akiraly.db4j.entity.EntityWithUuidDao;
 import com.google.common.collect.ImmutableMap;
 
 @Nonnull
-public class FooStringIdDaoFactory extends JdbcTemplateAware {
+public class FooUuidDaoFactory extends JdbcTemplateAware {
 	private final SimpleJdbcInsert insert = //
 	new SimpleJdbcInsertBuilder(jdbcTemplate()) //
 			.tableName("foo_uuid") //
@@ -59,31 +60,31 @@ public class FooStringIdDaoFactory extends JdbcTemplateAware {
 					)) //
 			.get();
 
-	public FooStringIdDaoFactory(JdbcTemplate jdbcTemplate) {
+	public FooUuidDaoFactory(JdbcTemplate jdbcTemplate) {
 		super(jdbcTemplate);
 	}
 
-	public FooStringIdDao newDao() {
-		return new FooStringIdDao();
+	public FooUuidDao newDao() {
+		return new FooUuidDao();
 	}
 
 	@Nonnull
-	public class FooStringIdDao extends EntityWithStringIdDao<Foo> {
+	public class FooUuidDao extends EntityWithUuidDao<Foo> {
 		@Override
-		public EntityWithStringId<Foo> lazyPersist(Foo entity) {
+		public EntityWithUuid<Foo> lazyPersist(Foo entity) {
 			return super.lazyPersist(entity);
 		}
 
 		@Override
-		public EntityWithStringId<Foo> lazyFind(String id) {
+		public EntityWithUuid<Foo> lazyFind(UUID id) {
 			return super.lazyFind(id);
 		}
 
 		@Override
-		protected String persist(Foo entity) {
-			final String id = UuidBase64.encodedRandomUUID();
+		protected UUID persist(Foo entity) {
+			final UUID id = UUID.randomUUID();
 			insert.execute(ImmutableMap.of( //
-					"foo_id", id, //
+					"foo_id", UuidBase64.encode(id), //
 					"bar", entity.getBar(), //
 					"dt", Jsr310JdbcUtils.toUtcCalendar(entity.getDt()) //
 					));
@@ -92,8 +93,8 @@ public class FooStringIdDaoFactory extends JdbcTemplateAware {
 
 		@Override
 		@Nullable
-		protected Foo doFind(String id) {
-			return queryById.findObject(id);
+		protected Foo doFind(UUID id) {
+			return queryById.findObject(UuidBase64.encode(id));
 		}
 
 		public int deleteAll() {

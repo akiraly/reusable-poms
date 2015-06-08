@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.akiraly.db4j.uow;
+package com.github.akiraly.db4j;
 
 import static com.github.akiraly.ver4j.Verify.argNotNull;
 import static org.junit.Assert.assertEquals;
@@ -29,8 +29,8 @@ import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import com.github.akiraly.db4j.TransactionTemplateAware;
+import com.github.akiraly.db4j.FooDaoFactory.FooDao;
 import com.github.akiraly.db4j.entity.EntityWithLongId;
-import com.github.akiraly.db4j.uow.FooDaoFactory.FooDao;
 
 @Nonnull
 public class FooService extends TransactionTemplateAware {

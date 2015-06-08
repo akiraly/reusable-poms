@@ -40,12 +40,14 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import com.github.akiraly.db4j.CommonDbConfig;
 import com.github.akiraly.db4j.DatabaseLiquibaseInitializer;
+import com.github.akiraly.db4j.Foo;
+import com.github.akiraly.db4j.FooDaoFactory;
+import com.github.akiraly.db4j.FooDaoFactory.FooDao;
 import com.github.akiraly.db4j.entity.EntityWithLongId;
 import com.github.akiraly.db4j.entity.EntityWithUuid;
 import com.github.akiraly.db4j.pool.EmbeddedDbcpDatabaseBuilder;
 import com.github.akiraly.db4j.uow.AuditedFooDaoFactory.AuditedFooDao;
 import com.github.akiraly.db4j.uow.AuditedFooUuidDaoFactory.AuditedFooUuidDao;
-import com.github.akiraly.db4j.uow.FooDaoFactory.FooDao;
 import com.github.akiraly.db4j.uow.UowDaoFactory.UowDao;
 
 @RunWith(SpringJUnit4ClassRunner.class)
