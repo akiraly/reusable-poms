@@ -24,10 +24,6 @@
 
 	<logger name="net" level="warn" />
 
-	<!-- logger name="org.hibernate.tool.hbm2ddl" level="debug" />
-
-	<logger name="org.hibernate.SQL" level="debug" /-->
-
 	<logger name="org" level="warn" />
 
 	<logger name="$package" level="debug" />

@@ -1,68 +1,37 @@
 package ${package};
 
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
-import java.util.Calendar;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.TimeZone;
+import static com.github.akiraly.ver4j.Verify.argNotNull;
+
+import java.time.LocalDateTime;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
-
-import com.github.akiraly.db4j.converter.Convert;
+import com.github.akiraly.db4j.entity.EntityWithStringId;
 
 @Nonnull
-@Entity
-public class Foo extends AbstractPersistable<Long> {
-	private static final long serialVersionUID = -5858125293405585370L;
+public class Foo {
+	private final EntityWithStringId<Bar> bar;
 
-	@ManyToOne(cascade = { CascadeType.PERSIST }, optional = false)
-	@Nullable
-	private Bar bar;
+	private final String name;
 
-	@Nullable
-	private String name;
+	private final LocalDateTime dt;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Calendar dt = Calendar.getInstance(
-			TimeZone.getTimeZone(ZoneOffset.UTC), Locale.US);
-
-	public Bar getBar() {
-		return bar;
+	public Foo(EntityWithStringId<Bar> bar, String name, LocalDateTime dt) {
+		this.bar = argNotNull(bar, "bar");
+		this.name = argNotNull(name, "name");
+		this.dt = argNotNull(dt, "dt");
 	}
 
-	public void setBar(Bar bar) {
-		this.bar = bar;
+	public EntityWithStringId<Bar> getBar() {
+		return bar;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public LocalDateTime getDt() {
+		return dt;
 	}
 
-	public Optional<OffsetDateTime> getDt() {
-		return Convert.calendar2OptDateTime(dt);
-	}
-
-	public void setDt(Optional<OffsetDateTime> dt) {
-		this.dt = Convert.dateTime2Calendar(dt);
-	}
-
-	@Override
-	public String toString() {
-		return "Foo [getBar()=" + getBar() + ", getName()=" + getName()
-				+ ", getDt()=" + getDt() + ", toString()=" + super.toString()
-				+ "]";
-	}
 }

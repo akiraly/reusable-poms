@@ -1,25 +1,27 @@
 package ${package};
 
-import java.util.Set;
+import java.util.List;
 
 import javax.annotation.Nonnull;
-import javax.persistence.EntityManagerFactory;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.google.common.collect.ImmutableSet;
+import com.github.akiraly.db4j.DatabaseSchemaOperation;
 
 @Configuration
 @Nonnull
 public class FooConfig {
 	@Bean
-	public Set<Package> packagesToScan() {
-		return ImmutableSet.of(Foo.class.getPackage());
+	public BarDaoFactory barDaoFactory(JdbcTemplate jdbcTemplate,
+			List<DatabaseSchemaOperation> schemaOps) {
+		return new BarDaoFactory(jdbcTemplate);
 	}
 
 	@Bean
-	public FooDaoFactory fooDaoFactory(EntityManagerFactory entityManagerFactory) {
-		return new FooDaoFactory(entityManagerFactory);
+	public FooDaoFactory fooDaoFactory(JdbcTemplate jdbcTemplate,
+			List<DatabaseSchemaOperation> schemaOps) {
+		return new FooDaoFactory(jdbcTemplate);
 	}
 }

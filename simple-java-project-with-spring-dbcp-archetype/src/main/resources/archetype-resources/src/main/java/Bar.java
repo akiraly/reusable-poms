@@ -1,15 +1,18 @@
 package ${package};
 
-import javax.annotation.Nonnull;
-import javax.persistence.Entity;
+import static com.github.akiraly.ver4j.Verify.argNotNull;
 
-import org.hibernate.annotations.Immutable;
-import org.springframework.data.jpa.domain.AbstractPersistable;
+import javax.annotation.Nonnull;
 
 @Nonnull
-@Entity
-@Immutable
-public class Bar extends AbstractPersistable<Long> {
-	private static final long serialVersionUID = -3009308007921127448L;
+public class Bar {
+	private final String barProp;
 
+	public Bar(String barProp) {
+		this.barProp = argNotNull(barProp, "barProp");
+	}
+
+	public String getBarProp() {
+		return barProp;
+	}
 }

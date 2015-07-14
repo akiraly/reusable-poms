@@ -1,77 +1,122 @@
 package ${package};
 
-import static com.google.common.collect.Lists.newArrayList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.Nonnull;
+import javax.sql.DataSource;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import com.github.akiraly.db4j.CommonDbConfig;
+import com.github.akiraly.db4j.DatabaseLiquibaseInitializer;
+import com.github.akiraly.db4j.entity.EntityWithLongId;
+import com.github.akiraly.db4j.entity.EntityWithStringId;
+import com.github.akiraly.db4j.pool.EmbeddedDbcpDatabaseBuilder;
+
+import foo.bar.baz.BarDaoFactory.BarDao;
+import foo.bar.baz.FooDaoFactory.FooDao;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { FooTestConfig.class })
 @Nonnull
 public class FooTest {
-	private static final Logger LOGGER = LoggerFactory.getLogger(FooTest.class);
-
 	@Autowired
 	private TransactionTemplate transactionTemplate;
 
 	@Autowired
+	private BarDaoFactory barDaoFactory;
+
+	@Autowired
 	private FooDaoFactory fooDaoFactory;
 
-	@Test(timeout = 4000)
+	@Test(timeout = 1500)
 	public void testFooDao() {
-		final List<Foo> savedEntities = newArrayList();
+		List<EntityWithLongId<Foo>> savedEntities = new ArrayList<>();
 
 		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
 			@Override
 			protected void doInTransactionWithoutResult(TransactionStatus status) {
-				FooDao fooDao = fooDaoFactory.get();
-				Assert.assertEquals(0, fooDao.count());
+				BarDao barDao = barDaoFactory.newDao();
+				FooDao fooDao = fooDaoFactory.newDao(barDao);
+				assertEquals(0, fooDao.count());
 
-				Bar bar = new Bar();
-				Assert.assertNull(bar.getId());
+				Bar bar = new Bar("my bar");
+				EntityWithStringId<Bar> barWithId = barDao.lazyPersist(bar);
 
 				for (int fi = 0; fi < 5; fi++) {
-					Foo entity = new Foo();
-					entity.setBar(bar);
-					Assert.assertNull(entity.getId());
-					fooDao.persist(entity);
-					LOGGER.debug("Saved foo = {}", entity);
-					Assert.assertNotNull(entity.getId());
-					Assert.assertNotNull(entity.getBar().getId());
-					savedEntities.add(entity);
+					Foo entity = new Foo(barWithId, "name " + fi, LocalDateTime
+							.now());
+					EntityWithLongId<Foo> entityWithId = fooDao
+							.lazyPersist(entity);
+					assertNotNull(entityWithId.getId());
+					assertNotNull(entity.getBar().getId());
+					savedEntities.add(entityWithId);
 				}
 
-				Assert.assertEquals(5, fooDao.count());
+				assertEquals(5, fooDao.count());
 			}
 		});
 
 		transactionTemplate.execute(new TransactionCallbackWithoutResult() {
 			@Override
 			protected void doInTransactionWithoutResult(TransactionStatus status) {
-				FooDao fooDao = fooDaoFactory.get();
-				Assert.assertEquals(5, fooDao.count());
+				BarDao barDao = barDaoFactory.newDao();
+				FooDao fooDao = fooDaoFactory.newDao(barDao);
+				assertEquals(5, fooDao.count());
 
-				for (Foo saved : savedEntities) {
+				for (EntityWithLongId<Foo> saved : savedEntities) {
 					Optional<Foo> loaded = fooDao.tryFind(saved.getId());
-					Assert.assertTrue(loaded != null && loaded.isPresent());
-					Assert.assertEquals(saved, loaded.get());
-					Assert.assertEquals(saved.getBar(), loaded.get().getBar());
+					assertTrue(loaded != null && loaded.isPresent());
+					assertFooEquals(saved.getEntity(), loaded.get());
 				}
 			}
+
+			private void assertFooEquals(Foo expected, Foo actual) {
+				assertEquals(expected.getDt(), actual.getDt());
+				assertEquals(expected.getName(), actual.getName());
+				assertEquals(expected.getBar(), actual.getBar());
+				assertEquals(expected.getBar().getEntity().getBarProp(), actual
+						.getBar().getEntity().getBarProp());
+			}
 		});
+	}
+}
+
+@Configuration
+@Import({ FooConfig.class, CommonDbConfig.class })
+@Nonnull
+class FooTestConfig {
+	@Bean
+	public DataSource dataSource() {
+		return new EmbeddedDbcpDatabaseBuilder()
+				.setType(EmbeddedDatabaseType.H2)
+				.setName(FooTest.class.getName() + "db;TRACE_LEVEL_FILE=4")
+				.build();
+	}
+
+	@Bean
+	public DatabaseLiquibaseInitializer databaseLiquibaseInitializer(
+			JdbcTemplate jdbcTemplate) {
+		return new DatabaseLiquibaseInitializer(jdbcTemplate,
+				"foo/bar/baz/foo.xml");
 	}
 }
