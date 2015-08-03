@@ -16,9 +16,12 @@ limitations under the License.
 <!DOCTYPE configuration>
 <configuration>
 	<appender name="appender-console" class="ch.qos.logback.core.ConsoleAppender">
-		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+		<!--  encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<charset>UTF-8</charset>
 			<pattern>%d|%p|%t|%c{36}|%r|%n\t%replace(%caller{1}){'Caller\+\d+\s+at\s+', ''}\t%m%n%xEx</pattern>
+		</encoder-->
+		<encoder class="net.logstash.logback.encoder.LogstashEncoder">
+			<includeCallerData>true</includeCallerData>
 		</encoder>
 		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
 			<level>debug</level>
@@ -40,10 +43,6 @@ limitations under the License.
 	<logger name="net" level="warn" />
 
 	<logger name="org" level="warn" />
-
-	<!--logger name="org.hibernate.tool.hbm2ddl" level="debug" />
-
-	<logger name="org.hibernate.SQL" level="debug" /-->
 
 	<logger name="com.github.akiraly.db4j" level="debug" />
 
